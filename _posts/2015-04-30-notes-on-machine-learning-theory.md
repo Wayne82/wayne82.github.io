@@ -102,7 +102,8 @@ At last, let me wrap all these up a little bit by three aspects: the issue, the 
 This is too high level, and I know there are many different hypothesis classes, such as linear classifier, neural network, SVM, or perceptron, etc. that are worth to understand in details so as to know which class is better for different issues. Besides, to pick the best hypothesis is not just “pick” one by one, especially if the set is infinite, it is not possible to check each of them. Instead, there are many mathematics optimization techniques that can be used to “pick” the one quickly, such as least square or gradient descent. Overall, theory is good that it make things clear, but a good understanding has to be obtained by working on real project about machine learning.
 
 **My expectation** of the strong artificial intelligence is that it doesn’t have to be physically like human beings, but have to pass Turing test that when I talk to “it”, I almost can’t distinguish whether I talk to a machine or a human beings. I think this is the long term goal, and we are far-far away from it (even maybe it never be realized). The short term goal to make machine “intelligent” enough so as to assist human beings to increase productivity I think is more feasible and important with practical significance. 
-As I can see there are no big breakthroughs since AI research staring towards the long term goal. Because, there are four key characteristics that human beings have but a machine doesn’t,
+
+As I can see there are no big breakthroughs towards the long term goal since AI research. Because, there are four key characteristics that human beings have but a machine doesn’t,
 
 1. Human beings are always curious, and can ask questions to unknown. 
 2. Human beings can do experiments, and find natural laws.
