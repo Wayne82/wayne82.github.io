@@ -110,3 +110,17 @@ As I can see there are no big breakthroughs towards the long term goal since AI 
 4. Human beings can evolve, and all good things are encoded into its DNA.
 
 **Closing words** at last, making machine more clever is the trend and inevitable, because kinds of machines are already part of our life.
+
+----------
+
+Update on 5/31/2015, [Large Scale Deep Learning](http://static.googleusercontent.com/media/research.google.com/en/us/people/jeff/CIKM-keynote-Nov2014.pdf), a good summary of latest progress of machine learning from Google, which proved that Deep Neural Network is an important tool in building intelligent system. 
+It is really exciting to see such solid and encouraging improvement and progress. When having time, it is definitely worth to know all the details about DNN, but before that let me just quote the conclusion from the article, 
+
+> Deep neural networks are very effective for wide range of tasks, 
+> 
+>  - By using parallelism, we can quickly train very large and effective deep neural models on very large datasets.
+>  - Automatically build high-level representations to solve desired tasks.
+>  - By using embeddings, can work with sparse data.
+>  - Effective in many domains: speech, vision, language modelling, user prediction, language understanding, translation, advertising, ...
+
+
