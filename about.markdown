@@ -4,5 +4,4 @@ title: About
 permalink: /about/
 ---
 
-Be humble, be curious—the path to discovering the world and oneself.
-
+Contact with me via [Email](mailto:wynw82@gmail.com)
