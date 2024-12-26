@@ -28,9 +28,13 @@ url: "https://wayne82.github.io" # the base hostname & protocol for your site, e
 github_username: wayne82
 
 # Build settings
-theme: minima
+# theme: minima
+
+# User remote theme minima on Github
+remote_theme: jekyll/minima
 plugins:
   - jekyll-feed
+  - jekyll-remote-theme
 
 # Exclude from processing.
 # The following items will not be processed, by default.
