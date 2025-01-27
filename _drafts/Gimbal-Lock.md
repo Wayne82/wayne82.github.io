@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Gimbal Lock: Understanding the Problem"
-date: 2025-01-11 09:45:33 +0800
 categories: graphics
 ---
 
