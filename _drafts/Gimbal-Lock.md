@@ -13,17 +13,22 @@ The term “Gimbal Lock” can be misleading because none of the individual gimb
 
 As I sought to answer these questions by exploring various learning materials - including YouTube videos, Wikipedia articles, and even asking ChatGPT — I began to realize there were many key concepts I needed to understand first. These concepts gradually surfaced as I delved deeper, and I will introduce them in the following section. But before that, let me outline two key observations that form the foundation of my understanding:
 
-- **In a motionless state**: When we define a rotation using three Euler angles, if the **second** angle becomes 90° or -90° and remains fixed, the rotational effect of the first and third axes degrades into behaving like rotations about the same axis. It needs a bit of imagination to "visualize" the effect in head with either intrisic or extrinsic rotation. This is referred to as the `loss of one degree of freedom.`
+- **In a motionless state**: When we define a rotation using three Euler angles, if the **second** angle becomes 90° or -90° and remains fixed, the rotational effect of the first and third axes degrades into behaving like rotations about the same axis. This effect requires some imagination to "visualize" mentally, whether using intrinsic or extrinsic rotations. This is referred to as the `loss of one degree of freedom.`
 
 - **In a motion state**: When animating a transition between an object's orientation A and orientation B by interpolating between keyframes using Euler angles, the `loss of one degree of freedom` caused by Gimbal Lock can lead to unexpected, abrupt "jumps" or rotations. This happens because the Jacobian matrix derived from Euler angles becomes singular. The Jacobian matrix represents how small changes in the Euler angles affect the resulting rotation matrix. When it becomes singular, it indicates that the system's sensitivity to changes in the angles has broken down, leading to unpredictable interpolation paths.
 
 ## A Mathematical Perspective on Gimbal Lock
+Let's dive deep into the mathematical mechanics behind the phenomenon of `loss of one degree of freedom`.
+
+Suppose we use the **Tait–Bryan** convention for Euler angles, with one possible sequence of rotation axes denoted as x-y-z and corresponding angles (α, β, γ). In the **intrinsic rotation** convention, the final rotation matrix represents the composition of three elemental rotations about the axes $x-y'-z''$, where the $y'$ and $z''$ axes represent the transformed axes after each previous rotation. However, it is not as simple as just multiplying the three elemental rotation matrices in the order the rotations are applied, because the coordinate systems or reference frames in which the elemental rotations are defined are different. Instead, to compute the final rotation matrix, the process can be converted into an **extrinsic rotation** composition. In **extrinsic rotations**, all rotations occur about the axes of the same fixed coordinate system, allowing the elemental rotation matrices to be multiplied directly. Additionally, any extrinsic rotation is equivalent to an intrinsic rotation with the same angles but with the order of the elemental rotations reversed (and vice versa). Furthermore, the other conventions discussed in this article apply to **active** rotations of vectors in a **right-handed** coordinate system, performed counterclockwise, and represented by **pre-multiplication** of the rotation matrix.
+
 
 ## Real World Implications of Gimbal Lock
 - **Computer Graphics**
 - **Others**
 
 ## The Key Concepts
+
 - **Euler angles** (geometrical definition, proper and Tait-Bryan angles)
 - **Frame of reference** (handedness)
 - **Active and passive** transformation
