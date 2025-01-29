@@ -2,6 +2,7 @@
 layout: post
 title:  "Gimbal Lock: Understanding the Problem"
 categories: graphics
+mathjax: true
 ---
 
 It's been several years since I first encountered the Gimbal Lock problem, and back then, I didn't quite grasp its underlying mechanics. However, after revisiting the issue more recently, I believe I’ve finally cracked the parts that had confused me for so long. In this blog, I want to share my understanding of Gimbal Lock and how it affects systems like computer graphics.
