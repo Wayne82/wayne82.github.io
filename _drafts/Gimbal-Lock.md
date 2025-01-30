@@ -5,7 +5,7 @@ categories: graphics
 mathjax: true
 ---
 
-It's been several years since I first encountered the Gimbal Lock problem, and back then, I didn't quite grasp its underlying mechanics. However, after revisiting the issue more recently, I believe I’ve finally cracked the parts that had confused me for so long. In this blog, I want to share my understanding of Gimbal Lock and how it affects systems like computer graphics.
+It's been several years since I first encountered the Gimbal Lock problem, and back then, I didn't quite grasp its underlying mechanics. However, after revisiting the issue more recently, I believe I’ve finally cracked the parts that had confused me for so long. In this blog, I want to share my understanding of Gimbal Lock majorly from a mathematical perspective.
 
 ## What is Gimbal Lock?
 Gimbal Lock is a phenomenon that occurs in systems where rotation is described using three angles, often referred to as Euler angles. These systems are widely used in applications like aviation, robotics, and computer graphics to define orientation in three-dimensional space. Gimbal Lock happens when two of the three rotation axes in such a system become aligned, resulting in the loss of one degree of freedom. This means the system can no longer uniquely represent all possible orientations, leading to ambiguity and unexpected behavior.
@@ -80,11 +80,7 @@ The key obervations from this result are that the angles $\alpha$, and $\gamma$ 
 - The rotations about the z axis ($\gamma$) and x axis ($\alpha$) are no longer independent. They effectively, as shown in the calculated rotation matrix, collapse into one single axis $\begin{bmatrix} 1 & 0 & 0 \end{bmatrix}^T$.
 - Instead of having 3 independent paramters $(\alpha, \beta, \gamma)$ representing the full freedom, the system now depends on only 2 parameters: $\beta = 90^\circ$ and $\alpha + \gamma$, which concludes exactly `loss of one degree of freedom`.
 
-The Jacobian matrix $J$ is a $9 * 3$ matrix, where each element represents the partial derivative of the corresponding element of the rotation matrix $R$ in a row-major format with respect to the Euler angles $\alpha$, $\beta$, and $\gamma$. I won't delve too deeply into the mathematical details of the Jacobian matrix, as I am not entirely confident I fully understand it myself. However, what we can infer is that the "singularity" of the Jacobian matrix when Gimbal Lock occurs leads to a degenerative response to small changes in the Euler angles. This could result in sudden, unpredictable behavior, such as discontinuities in interpolation when animating rotations.
-
-## Real World Implications of Gimbal Lock
-- **Computer Graphics**
-- **Others**
+The Jacobian matrix $J$ is a $9 * 3$ matrix, where each element represents the partial derivative of the corresponding element of the rotation matrix $R$ in a row-major format with respect to the Euler angles $\alpha$, $\beta$, and $\gamma$. I won't delve too deeply into the mathematical details of the Jacobian matrix, as I am not entirely confident I fully understand it myself right now. However, what we can infer is that the "singularity" of the Jacobian matrix when Gimbal Lock occurs leads to a degenerative response to small changes in the Euler angles. This could result in sudden, unpredictable behavior, such as discontinuities in interpolation when animating rotations.
 
 ## The Key Concepts
 
@@ -98,7 +94,16 @@ The Jacobian matrix $J$ is a $9 * 3$ matrix, where each element represents the p
 - **Intrinsic and Extrinsic Rotations**
 - **Jacobian Matrix**
 
+## Real World Implications of Gimbal Lock
+- **Computer Graphics**
+- **Others**
+
 ## My Learning Process
+In this section, I’d like to share two pivotal Aha moments that significantly advanced my understanding of Gimbal Lock during the learning process:
+
+1. Understanding Intrinsic vs. Extrinsic Rotation Conventions: Grasping the difference between intrinsic and extrinsic rotation conventions for composing a rotation matrix from three Euler angles—and how to convert between the two—was a crucial insight in understanding the "loss of one degree of freedom" caused by Gimbal Lock. This realization helped clarify why certain rotations become degenerate as the system approaches Gimbal Lock. Specifically, it explained how two axes of rotation can become aligned in terms of their rotational effects (not physically, but in the sense of their combined impact on the object’s orientation), leading to the loss of one degree of freedom.
+
+2. The Role of the Jacobian Matrix: Gaining a general understanding of the Jacobian matrix derived from the rotation matrix was another breakthrough. This matrix is key to understanding why Gimbal Lock can cause unpredictable behavior when animating a transition between two orientations of the same object. Specifically, the Jacobian’s "singularity" can lead to discontinuities or abrupt jumps in the animation, as small changes in the Euler angles no longer produce smooth, continuous rotations.
 
 ## Final Words
 
