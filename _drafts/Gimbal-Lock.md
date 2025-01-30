@@ -14,9 +14,9 @@ The term “Gimbal Lock” can be misleading because none of the individual gimb
 
 As I sought to answer these questions by exploring various learning materials - including YouTube videos, Wikipedia articles, and even asking ChatGPT — I began to realize there were many key concepts I needed to understand first. These concepts gradually surfaced as I delved deeper, and I will introduce them in the following section. But before that, let me outline two key observations that form the foundation of my understanding:
 
-- **In a motionless state**: When we define a rotation using three Euler angles, if the **second** angle becomes 90° or -90° and remains fixed, the rotational effect of the first and third axes degrades into behaving like rotations about the same axis. This effect requires some imagination to "visualize" mentally, whether using intrinsic or extrinsic rotations. This is referred to as the `loss of one degree of freedom.`
+- **In a motionless state**: When we get a **rotation matrix** by defining a rotation using three Euler angles, if the second angle becomes 90° or -90° and remains fixed, the rotational effect of the first and third axes degrades into behaving like rotations about the same axis. This effect requires some imagination to "visualize" mentally, whether using intrinsic or extrinsic rotations. This is referred to as the `loss of one degree of freedom.` See the next section for the mathematical explainations. 
 
-- **In a motion state**: When animating a transition between an object's orientation A and orientation B by interpolating between keyframes using Euler angles, the `loss of one degree of freedom` caused by Gimbal Lock can lead to unexpected, abrupt "jumps" or rotations. This happens because the Jacobian matrix derived from Euler angles becomes singular. The Jacobian matrix represents how small changes in the Euler angles affect the resulting rotation matrix. When it becomes singular, it indicates that the system's sensitivity to changes in the angles has broken down, leading to unpredictable interpolation paths.
+- **In a motion state**: When animating a transition between an object's orientation A and orientation B by interpolating between keyframes using Euler angles, the `loss of one degree of freedom` caused by Gimbal Lock can lead to unexpected, abrupt "jumps" or rotations. This happens because the **Jacobian matrix** derived from the rotation matrix becomes "singular" (its rank is less than 3). The Jacobian matrix represents how small changes in the Euler angles affect the resulting rotation matrix. When it becomes singular, it indicates that the system's sensitivity to changes in the angles has broken down, leading to unpredictable interpolation paths.
 
 ## A Mathematical Perspective on Gimbal Lock
 Let's dive deep into the mathematical mechanics behind the phenomenon of `loss of one degree of freedom`.
@@ -35,7 +35,7 @@ Extrinsic rotation convention:
 
 $$R = X(α)Y(β)Z(γ)$$
 
-Where, X, Y and Z are all the elemental rotations around the 3 principal axes of the initial fixed coordinate system. The proof of the conversion from intrinsic rotation to extrinsic rotation, which results in the inversed order of the multiplication, will be given in the following key concepts section.
+Where, X, Y and Z are all the elemental rotations around the 3 cardinal axes of the initial fixed coordinate system. The proof of the conversion from intrinsic rotation to extrinsic rotation, which results in the inversed order of the multiplication, will be given in the following key concepts section.
 
 Now, we can calculate the rotation matrix given the equation of using the extrinsic rotation convention.
 
@@ -79,6 +79,8 @@ $$
 The key obervations from this result are that the angles $\alpha$, and $\gamma$ now appear only in the combination $\alpha + \gamma$, and the third column is fixed $\begin{bmatrix} 1 & 0 & 0 \end{bmatrix}^T$. This means:
 - The rotations about the z axis ($\gamma$) and x axis ($\alpha$) are no longer independent. They effectively, as shown in the calculated rotation matrix, collapse into one single axis $\begin{bmatrix} 1 & 0 & 0 \end{bmatrix}^T$.
 - Instead of having 3 independent paramters $(\alpha, \beta, \gamma)$ representing the full freedom, the system now depends on only 2 parameters: $\beta = 90^\circ$ and $\alpha + \gamma$, which concludes exactly `loss of one degree of freedom`.
+
+The Jacobian matrix $J$ is a $9 * 3$ matrix, where each element represents the partial derivative of the corresponding element of the rotation matrix $R$ in a row-major format with respect to the Euler angles $\alpha$, $\beta$, and $\gamma$. I won't delve too deeply into the mathematical details of the Jacobian matrix, as I am not entirely confident I fully understand it myself. However, what we can infer is that the "singularity" of the Jacobian matrix when Gimbal Lock occurs leads to a degenerative response to small changes in the Euler angles. This could result in sudden, unpredictable behavior, such as discontinuities in interpolation when animating rotations.
 
 ## Real World Implications of Gimbal Lock
 - **Computer Graphics**
