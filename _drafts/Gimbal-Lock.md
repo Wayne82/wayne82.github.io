@@ -40,7 +40,8 @@ Where, X, Y and Z are all the elemental rotations around the 3 principal axes of
 Now, we can calculate the rotation matrix given the equation of using the extrinsic rotation convention.
 
 $$
-R = \begin{bmatrix}
+\begin{align}
+R & = \begin{bmatrix}
 1 & 0 & 0 \\
 0 & \cos \alpha & -\sin \alpha \\
 0 & \sin \alpha & \cos \alpha
@@ -56,12 +57,13 @@ R = \begin{bmatrix}
 \cos \gamma & -\sin \gamma & 0 \\
 \sin \gamma & \cos \gamma & 0 \\
 0 & 0 & 1
-\end{bmatrix}
-= \begin{bmatrix}
+\end{bmatrix} \\
+& = \begin{bmatrix}
 \cos \beta \cos \gamma & -\cos \beta \sin \gamma & \sin \beta \\
 \cos \alpha \sin \gamma + \cos \gamma \sin \alpha \sin \beta & \cos \alpha \cos \gamma - \sin \alpha \sin \beta \sin \gamma & -\cos \beta \sin \alpha \\
 \sin \alpha \sin \gamma - \cos \alpha \cos \gamma \sin \beta & \sin \alpha \cos \gamma + \cos \alpha \sin \beta \sin \gamma & \cos \alpha \cos \beta
 \end{bmatrix}
+\end{align}
 $$
 
 When Gimbal Lock happens, the Eular Angle $\beta=\pm\frac{\pi}{2}$. Without loss of generality, let's assume $\beta=+\frac{\pi}{2}$. Knowing that $\cos \frac{\pi}{2}=0$ and $\sin \frac{\pi}{2}=1$, the above expression becomes
@@ -73,6 +75,10 @@ R = \begin{bmatrix}
 -\cos(\alpha + \gamma) & \sin(\alpha + \gamma) & 0
 \end{bmatrix}
 $$
+
+The key obervations from this result are that the angles $\alpha$, and $\gamma$ now appear only in the combination $\alpha + \gamma$, and the third column is fixed $\begin{bmatrix} 1 & 0 & 0 \end{bmatrix}^T$. This means:
+- The rotations about the z axis ($\gamma$) and x axis ($\alpha$) are no longer independent. They effectively, as shown in the calculated rotation matrix, collapse into one single axis $\begin{bmatrix} 1 & 0 & 0 \end{bmatrix}^T$.
+- Instead of having 3 independent paramters $(\alpha, \beta, \gamma)$ representing the full freedom, the system now depends on only 2 parameters: $\beta = 90^\circ$ and $\alpha + \gamma$, which concludes exactly `loss of one degree of freedom`.
 
 ## Real World Implications of Gimbal Lock
 - **Computer Graphics**
