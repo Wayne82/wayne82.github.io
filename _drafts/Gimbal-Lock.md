@@ -80,19 +80,36 @@ The key obervations from this result are that the angles $\alpha$, and $\gamma$ 
 - The rotations about the z axis ($\gamma$) and x axis ($\alpha$) are no longer independent. They effectively, as shown in the calculated rotation matrix, collapse into one single axis $\begin{bmatrix} 1 & 0 & 0 \end{bmatrix}^T$.
 - Instead of having 3 independent paramters $(\alpha, \beta, \gamma)$ representing the full freedom, the system now depends on only 2 parameters: $\beta = 90^\circ$ and $\alpha + \gamma$, which concludes exactly `loss of one degree of freedom`.
 
-The Jacobian matrix $J$ is a $9 * 3$ matrix, where each element represents the partial derivative of the corresponding element of the rotation matrix $R$ in a row-major format with respect to the Euler angles $\alpha$, $\beta$, and $\gamma$. I won't delve too deeply into the mathematical details of the Jacobian matrix, as I am not entirely confident I fully understand it myself right now. However, what we can infer is that the "singularity" of the Jacobian matrix when Gimbal Lock occurs leads to a degenerative response to small changes in the Euler angles. This could result in sudden, unpredictable behavior, such as discontinuities in interpolation when animating rotations.
+The Jacobian matrix $J$ is a $9 \times 3$ matrix, where each element represents the partial derivative of the corresponding element of the rotation matrix $R$ in a row-major format with respect to the Euler angles $\alpha$, $\beta$, and $\gamma$. I won't delve too deeply into the mathematical details of the Jacobian matrix, as I am not entirely confident I fully understand it myself right now. However, what we can infer is that the "singularity" of the Jacobian matrix when Gimbal Lock occurs leads to a degenerative response to small changes in the Euler angles. This could result in sudden, unpredictable behavior, such as discontinuities in interpolation when animating rotations.
 
 ## The Key Concepts
+Without expanding into too much details, I want to touch on the key concepts I've learnt so as to reason about the Gimbal Lock problem.
 
-- **Euler angles** (geometrical definition, proper and Tait-Bryan angles)
-- **Frame of reference** (handedness)
-- **Active and passive** transformation
-- **Rotation Matrix** 
+### Euler Angles
+Main resource: Wikipedia - [Euler Angles](https://en.wikipedia.org/wiki/Euler_angles)
 
-  apply to active rotations of vectors counterclockwise in a right-handed coordinate system (y counterclockwise from x) by pre-multiplication (R on the left) of the column vectors.
+A set of three angles introduced by Euler that describe the orientation of a rigid body in 3D space by sequentially rotating it about different axes.
+- Euler angle defines 3 elemental rotations (rotations about the axes of a coordinate system), which composing together can represent any rotation in 3D space.
+- The three elemental rotations may be extrinsic (rotations about the axes xyz of the original coordinate system, which is assumed to remain motionless), or intrinsic (rotations about the axes of the rotating coordinate system XYZ, solidary with the moving body, which changes its orientation with respect to the extrinsic frame after each elemental rotation)
+- The order of the rotation matters, thus there exist twelve possible sequences of rotation axes, divided in two groups: **Proper Euler angles** and **Tait–Bryan angles**
+- Different authors may use different sets of rotation axes to define Euler angles, or different names for the same angles. So, any discussion employing Euler angles should always be preceded by their definition.
 
-- **Intrinsic and Extrinsic Rotations**
-- **Jacobian Matrix**
+### Reference Frame
+Main resource: 
+
+### Active and Passive Transformation
+Main resource: Wikipedia - [Active and passive transformation](https://en.wikipedia.org/wiki/Active_and_passive_transformation)
+
+### Rotation Matrix
+Main resource: Wikipedia - [Rotation Matrix](https://en.wikipedia.org/wiki/Rotation_matrix)
+
+apply to active rotations of vectors counterclockwise in a right-handed coordinate system (y counterclockwise from x) by pre-multiplication (R on the left) of the column vectors.
+
+### Intrinsic and Extrinsic Rotations
+Main resource: Wikipedia - 
+
+### Jacobian Matrix
+
 
 ## My Learning Process
 As I already mentioned at the beginning of the blog, the main resources I used to learn this subject are Wikipedia, Youtube videos, and some assistance from ChatGPT. Many key concepts gradually emerged, helping to shape my understanding. While I believe further reading of formal textbooks in the related fields would deepen my knowledge, the materials I have explored so far have been sufficient to give me a basic grasp of the problem’s main structure. And in this section, I’d like to share two pivotal Aha moments that significantly advanced my understanding of Gimbal Lock during this learing process:
