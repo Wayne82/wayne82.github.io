@@ -21,7 +21,7 @@ As I sought to answer these questions by exploring various learning materials - 
 ## A Mathematical Perspective on Gimbal Lock
 Let's dive deep into the mathematical mechanics behind the phenomenon of `loss of one degree of freedom`.
 
-Suppose we use the **Tait–Bryan** convention for Euler angles, with one possible sequence of rotation axes denoted as x-y-z and corresponding angles (α, β, γ). In the **intrinsic rotation** convention, the final rotation matrix represents the composition of three elemental rotations about the axes $x-y'-z''$, where the $y'$ and $z''$ axes represent the transformed axes after each previous rotation. However, it is not as simple as just multiplying the three elemental rotation matrices in the order the rotations are applied, because the coordinate systems or reference frames in which the elemental rotations are defined are different. Instead, to compute the final rotation matrix, the process can be converted into an **extrinsic rotation** composition. In **extrinsic rotations** convention, all rotations occur about the axes of the same fixed coordinate system, allowing the elemental rotation matrices to be multiplied directly. Additionally, any extrinsic rotation is equivalent to an intrinsic rotation with the same angles but with the order of the elemental rotations reversed (and vice versa). Furthermore, the other conventions discussed in this article apply to **active** rotations of vectors in a **right-handed** coordinate system, performed counterclockwise, and represented by **pre-multiplication** of the rotation matrix.
+Suppose we use the **Tait–Bryan** convention for Euler angles, with one possible sequence of rotation axes denoted as x-y-z and corresponding angles (α, β, γ). In the **intrinsic rotation** convention, the final rotation matrix represents the composition of three elemental rotations about the axes $x-y'-z''$, where the $y'$ and $z''$ axes represent the transformed axes after each previous rotation. However, it is not as simple as just multiplying the three elemental rotation matrices in the order the rotations are applied, because the coordinate systems or reference frames in which the elemental rotations are defined are different. Instead, to compute the final rotation matrix, the process can be converted into an **extrinsic rotation** composition. In **extrinsic rotations** convention, all rotations occur about the axes of the same fixed coordinate system, allowing the elemental rotation matrices to be multiplied directly. Additionally, any extrinsic rotation is equivalent to an intrinsic rotation with the same angles but with the order of the elemental rotations reversed (and vice versa). Furthermore, the other conventions discussed in this article apply to **active** rotations of vectors in a **right-hand** coordinate system, performed counterclockwise, and represented by **pre-multiplication** of the rotation matrix.
 
 Then, let's examine the two equivalent rotation matrices, each composed using different rotation conventions.
 
@@ -95,21 +95,35 @@ A set of three angles introduced by Euler that describe the orientation of a rig
 - Different authors may use different sets of rotation axes to define Euler angles, or different names for the same angles. So, any discussion employing Euler angles should always be preceded by their definition.
 
 ### Reference Frame
-Main resource: 
+A coordinate system used to describe the position and orientation of objects. Transformations and rotations can be interpreted differently depending on whether they are applied relative to a moving (body) frame or a fixed frame.
+- The coordinate system is commonly defined using right hand rule.
+- Transformation or the rotation matrix defined in different reference frame can't be multiplied directly.
 
 ### Active and Passive Transformation
 Main resource: Wikipedia - [Active and passive transformation](https://en.wikipedia.org/wiki/Active_and_passive_transformation)
 
+An active transformation rotates or moves an object while keeping the coordinate system fixed, whereas a passive transformation changes the coordinate system while keeping the object unchanged. 
+- These are mathematically equivalent but conceptually different interpretations of transformations.
+- The actual rotation matrix applied to an object for a passive transformation is the inverse (or transpose) of the rotation matrix applied in an active transformation.
+
 ### Rotation Matrix
 Main resource: Wikipedia - [Rotation Matrix](https://en.wikipedia.org/wiki/Rotation_matrix)
 
-apply to active rotations of vectors counterclockwise in a right-handed coordinate system (y counterclockwise from x) by pre-multiplication (R on the left) of the column vectors.
+Rotation matrix is a transformation matrix that is used to perform a rotation in 3D Euclidean space.
+- A rotation matrix can be constructed using Euler angles, axis-angle representation, or quaternions. 
+- Rotation matrix multiplication is not commutative. Given a column vector to rotate, the order of rotation operations is from right to left.
+- It satisfies the orthogonality condition: $R^T R = I$, meaning its inverse is its transpose. And its determinant is 1.
+- A rotation preserves both distances between points and handedness.
 
 ### Intrinsic and Extrinsic Rotations
-Main resource: Wikipedia - 
+Main resource: Wikipedia - [Davenport chained rotations](https://en.wikipedia.org/wiki/Davenport_chained_rotations)
+
+Intrinsic rotation means the object rotates relative to its own moving coordinate frame, where the axes change after each rotation. Extrinsic rotation means the object rotates about fixed coordinate axes, maintaining the same reference frame throughout. Any intrinsic rotation sequence has an equivalent extrinsic rotation sequence with reversed order.
 
 ### Jacobian Matrix
+Main resource: Wikipedia - [Jacobian Matrix](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant)
 
+A matrix of partial derivatives that describes how small changes in input variables (such as Euler angles) affect output variables (such as rotation matrix elements or object orientation). In the context of 3D rotation, the Jacobian helps analyze how singularities, like Gimbal Lock, impact motion smoothness.
 
 ## My Learning Process
 As I already mentioned at the beginning of the blog, the main resources I used to learn this subject are Wikipedia, Youtube videos, and some assistance from ChatGPT. Many key concepts gradually emerged, helping to shape my understanding. While I believe further reading of formal textbooks in the related fields would deepen my knowledge, the materials I have explored so far have been sufficient to give me a basic grasp of the problem’s main structure. And in this section, I’d like to share two pivotal Aha moments that significantly advanced my understanding of Gimbal Lock during this learing process:
