@@ -120,6 +120,53 @@ Main resource: Wikipedia - [Davenport chained rotations](https://en.wikipedia.or
 
 Intrinsic rotation means the object rotates relative to its own moving coordinate frame, where the axes change after each rotation. Extrinsic rotation means the object rotates about fixed coordinate axes, maintaining the same reference frame throughout. Any intrinsic rotation sequence has an equivalent extrinsic rotation sequence with reversed order.
 
+The proof of conversion from intrinsic rotation to extrinsic rotation can be found in [this wikipedia article](https://en.wikipedia.org/wiki/Davenport_chained_rotations#The_proof_of_the_conversion_in_the_pre-multiply_case). However, the frame notation used in the proof is unfamiliar to me and I do not fully get its usage in the proof. Therefore, I developed my own interpretation of the proof, which I outline below.
+
+We aim to prove that
+
+$$
+R = Z'' Y'X = XYZ
+$$
+where R is the intrinsic rotation sequence expressed in the fixed frame.
+
+First, computing $Y'$,
+
+$$
+Y' = XYX^{-1}
+$$
+
+$Y'$ is the intrinsic elemental rotation matrix around $y'$ axis which is rotated after the first rotation around $x$ axis, and represented in the fixed frame. The reasoning behind this equation is as follows,
+- First, apply $X^{-1}$ to reverse the first elemental rotation $X$, aligning $y'$ back with the original $y$ axis in the fixed frame.
+- Then, apply the elemental rotation matrix $Y$.
+- Finally, re-apply $X$, now with the elemental rotation $Y$ being incorporated into the transformation sequence as well.
+
+Then, computing $Z''$, following the same reasoning,
+
+$$
+\begin{align}
+Z'' & = Y'XZX^{-1}Y'^{-1} \\
+& = (XYX^{-1})XZX^{-1}(XYX^{-1})^{-1} \\
+& = XYX^{-1}XZX^{-1}XY^{-1}X^{-1} \\
+& = XYZY^{-1}X^{-1}
+\end{align}
+$$
+
+$Z''$ is the intrinsic elemental rotation matrix around $z''$ axis which is rotated after both the first and second rotation around $x$ and $y'$ axis respectively, and represented in the fixed frame. The inference process is similar as computing $Y'$.
+
+Finally, substituting the expression for $Y'$ and $Z''$, we can get R,
+
+$$
+\begin{align}
+R & = Z''Y'X \\
+& = (XYZY^{-1}X^{-1})(XYX^{-1})X \\
+& = XYZY^{-1}(X^{-1}X)Y(X^{-1}X) \\
+& = XYZ(Y^{-1}Y) \\
+& = XYZ
+\end{align}
+$$
+
+Thus, we have shown that an intrinsic rotation matrix composition $Z''Y'X$ is mathematically equivalent to an extrinsic rotation matrix composition $XYZ$, which is in reverse order in terms of elemental rotation matrix.
+
 ### Jacobian Matrix
 Main resource: Wikipedia - [Jacobian Matrix](https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant)
 
