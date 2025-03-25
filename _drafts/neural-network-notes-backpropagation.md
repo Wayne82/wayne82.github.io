@@ -45,9 +45,17 @@ As what I have learned so far, the key concepts come to me include,
   * **Test Set**, used to evalaute the final performance of the neural network after training.
 
 ## The Architecture of Neural Network
-## Learning with Gradient Descent
+A vanilla neural network is the simplest and most fundamental type of neural network. Its architecture can be defined as,
+* Consists of **input layer**, one or more **hidden layer**, and an **output layer**.
+* Every neuron in one layer is connected to every neuron in the next layer (**fully connected** layers).
+* Data flows in one direction - **feedforward**, from input to output, with no loops.
 
-# The Backpropagation Algorithm
+And below diagram illustrate this architecture,
+![Image](/assets/images/neural%20network%20architecture.png)
+## Learning with Gradient Descent
+Now, we have a basic neural network as illustrated above, then how can it learn from training dataset and predict on new data input?
+
+# Backpropagation in Details
 ## Chain Rule of Calculus
 ## The 4 Fundamental Equations Behind Backpropagation
 ## Proof of the 4 Fundamental Equations
