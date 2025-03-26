@@ -53,9 +53,54 @@ A vanilla neural network is the simplest and most fundamental type of neural net
 And below diagram illustrate this architecture,
 ![Image](/assets/images/neural%20network%20architecture.png)
 ## Learning with Gradient Descent
-Now, we have a basic neural network as illustrated above, then how can it learn from training dataset and predict on new data input?
+Now, we have a basic neural network as illustrated above, then how can it learn from training dataset and predict well enough on new data input? The goal of the training process is to find the weights and biases so that the output from the network approximates the expected output y for all training dataset input x. To quantify how well we can achieve this goal, we can define the quaratic cost function, 
 
-# Backpropagation in Details
+$$
+\begin{eqnarray}
+C(w,b)=\frac{1}{2n} \sum_x \| y(x) - a\|^2
+\end{eqnarray}
+$$
+
+where, $y(x)$ is the expected output vector and $a$ is the vector of outputs from the network for input $x$. And the cost $C$ is the average of the sum over all $n$ training dataset. The additional coefficent $1/2$ is mainly a convenience for cancelling out the multiplication of number $2$ after derivative. 
+
+Then, the goal of the training is to minimize this cost function so that $C(w, b) \rightarrow 0$. The good news is that this cost function is a smooth or continous function which making small changes in the weights and biases can  get effective improvement in the cost. And the changes of the cost with respect to small changes to $w$ (biases $b$ is the same) is given by 
+
+$$
+\Delta C \approx \nabla C \cdot \Delta w
+$$
+
+where, $\Delta w = (\Delta w_1,\ldots, \Delta w_m)^T$ is the vector of changes made to each weight, $\nabla C$ is the gradient vector with respect to weights,
+
+$$
+\begin{eqnarray}
+  \nabla C \equiv \left(\frac{\partial C}{\partial w_1}, \ldots, 
+  \frac{\partial C}{\partial w_m}\right)^T
+\end{eqnarray}
+$$
+
+And in order to guarantee the changes to the cost $\Delta C$ is **negative** so that the cost $C \rightarrow  C'=C+\Delta C$ can decrease properly, we can choose the small changes to each weight to be,
+
+$$
+\begin{eqnarray}
+  \Delta w = -\eta \nabla C,
+\end{eqnarray}
+$$
+
+where $\eta$ is the learning rate, defining the size or step of the move for a single update for the weights (or biases).
+
+Then, update each weight by this equation,
+
+$$
+\begin{eqnarray}
+  w \rightarrow w' = w-\eta \nabla C.
+\end{eqnarray}
+$$
+
+Repeat this update until the cost approximately converge to zero or can't improve further.
+
+In summary, the gradient descent can be viewed as a way of taking small steps in the direction which does the most to immediately decrease $C$.
+
+# Backpropagation
 ## Chain Rule of Calculus
 ## The 4 Fundamental Equations Behind Backpropagation
 ## Proof of the 4 Fundamental Equations
