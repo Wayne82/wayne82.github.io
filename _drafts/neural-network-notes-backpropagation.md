@@ -63,7 +63,7 @@ $$
 
 where, $y(x)$ is the expected output vector and $a$ is the vector of outputs from the network for input $x$. And the cost $C$ is the average of the sum over all $n$ training dataset. The additional coefficent $1/2$ is mainly a convenience for cancelling out the multiplication of number $2$ after derivative. 
 
-Then, the goal of the training is to minimize this cost function so that $C(w, b) \rightarrow 0$. The good news is that this cost function is a smooth or continous function which making small changes in the weights and biases can  get effective improvement in the cost. And the changes of the cost with respect to small changes to $w$ (biases $b$ is the same) is given by 
+Then, the goal of the training is to minimize this cost function so that $C(w, b) \rightarrow 0$. The good news is that this cost function is a smooth or continous function which making small changes in the weights and biases can get effective improvement in the cost. And the changes of the cost with respect to small changes to $w$ (biases $b$ is the same) is given by 
 
 $$
 \Delta C \approx \nabla C \cdot \Delta w
@@ -126,9 +126,50 @@ $$
 
 From the matrix representation of the weights, you can now see why the notation for an individual weight follows the order of the indices $j$ and $k$. This ordering reflects how the weight matrix left-multiplies the activation vector from the previous layer.
 
+### Regard The Neural Network as a Giant Composite Function
+The neural network can be considered as a **giant composite function**. This is a fundamental way to mathematically understand neural network. A neural network stacks multiple layers of simplier functions (neurions) to form a nested composition of functions. In a simplified form, for a network with $L$ layers, the output $y$ is computed as:
+
+$$
+\mathbf{y} = f_L \left( f_{L-1} \left( \dots f_1(\mathbf{x}) \dots \right) \right)
+$$
+
+For a more detailed representation with respect to weights ($W$), biases ($b$), and activation functions ($\sigma$):
+
+$$
+\mathbf{y} = \sigma_L \left( \mathbf{W}_L \cdot \sigma_{L-1} \left( \mathbf{W}_{L-1} \cdots \sigma_1(\mathbf{W}_1 \mathbf{x} + \mathbf{b}_1) \cdots + \mathbf{b}_{L-1} \right) + \mathbf{b}_L \right)
+$$
+
+It will be mind-blowing to ponder how giant this composite function could be, determined by the depth and width of the neural network.
+* **Depth**: modern networks can have hundreds of layers - deep neural network.
+* **Width**: each layer may container thousands of neurons.
+
+Then, it could produce millions or even billions of weights and biases that could be adjusted through the training to fine-tune the behavior of the giant composite function. And one of the good properties of this composite function is that it is differentiable (if the activation functions are), which make it possible to learn with gradient descent and use the backpropagation algorithm to fast calculate the gradient.
+
 ### Chain Rule of Calculus
+Before we dive deep into the actual backpropagation algorithm, I'd like to highlight the chain rule of calculus, which is the foundational mathematical principle that makes backpropagation possbile in neural networks.
+
+Mathematically, the chain rule of calculus can be described as: given a composite function $h$ of 2 differentiable functions $f$ and $g$, such that $h(x) = f(g(x))$, then the derivative of $h$ is calculated as,
+
+$$
+h' = f'(g(x)) g'(x)
+$$
+
+Then, to remind again the goal of the training of the neural network is to adjust each weight and bias by a small step towards the gradient descent direction. And the key is to calculate the partial derivative of the cost function with respect to each weight and bias. The chain rule breaks this derivative into "composite" parts:
+
+$$
+\frac{\partial C}{\partial W^l} = \underbrace{\frac{\partial C}{\partial a^L}}_{\text{Loss gradient}} \cdot \underbrace{\frac{\partial a^L}{\partial z^L}}_{\text{Output activation}} \cdot \underbrace{\frac{\partial z^L}{\partial a^{L-1}}}_{\text{Linear transform}} \cdots \underbrace{\frac{\partial a^{l+1}}{\partial z^{l+1}}}_{\text{Hidden activation}} \cdot \underbrace{\frac{\partial z^{l+1}}{\partial a^l}}_{\text{Linear transform}} \cdot \underbrace{\frac{\partial a^l}{\partial z^l}}_{\text{Activation derivative}} \cdot \underbrace{\frac{\partial z^l}{\partial W^l}}_{\text{Weight gradient}}
+$$
+
+Where $L$ is the output layer, $l$ is the index of hidden layers. Then, the key components in this equation:
+* $\frac{\partial C}{\partial a^L}$: partial derivative of cost function w.r.t output activations.
+* $\frac{\partial a^l}{\partial z^l}$: partial derivative of activation function of layer $l$ w.r.t the weight inputs.
+* $\frac{\partial z^l}{\partial a^{l-1}}$: partial derivative of weighted input of layer $l$ w.r.t the activation input from previous layer $l-1$
+* $\frac{\partial z^l}{\partial W^{l}}$: partial derivative of weighted input of layer $l$ w.r.t the weights of same layer.
+
+Now, I think I am well prepared to dive deep into next a few sections to uncover the mathematical principles of backpropagation.
 
 ## The 4 Fundamental Equations Behind Backpropagation
+
 ## Proof of the 4 Fundamental Equations
 ## The Vanishing Gradient Problems
 
