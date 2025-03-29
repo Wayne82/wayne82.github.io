@@ -101,7 +101,33 @@ Repeat this update until the cost approximately converge to zero or can't improv
 In summary, the gradient descent can be viewed as a way of taking small steps in the direction which does the most to immediately decrease $C$.
 
 # Backpropagation
-## Chain Rule of Calculus
+Until now, we saw neural network can learn their weights and biases using the gradient descent algorithm. But how to compute the gradient efficiently is what Backpropagation algorithm come into play.
+## Some Preparations
+### A Matrix-Based Approach
+We need an unambiguous way to mark each weight on the connection from neurons in previous layer to neurons in next layer. And the convention is to use $w^l_{jk}$ to denote the **weight** for the connection from the $k^{\rm th}$ neuron in the $(l-1)^{\rm th}$ layer to the $j^{\rm th}$ neuron in the $l^{\rm th}$ layer. Similarly we use $b^l_j$ for the **bias** of the $j^{\rm th}$ neuron in the $l^{\rm th}$ layer, and we use $a^l_j$ for the **activation** of the $j^{\rm th}$ neuron in the $l^{\rm th}$ layer. See diagram below shows a specific weight, related biases and the activiations.
+
+![Image](/assets/images/nn_labeled.png)
+
+Then with these notations, the activation $a^{l}_j$ of the $j^{\rm th}$ neuron in the $l^{\rm th}$ layer is related to the activations in the $(l-1)^{\rm th}$ layer by below equation (here we use the sigmod activation function)
+
+$$
+\begin{eqnarray} 
+  a^{l}_j = \sigma\left( \sum_k w^{l}_{jk} a^{l-1}_k + b^l_j \right)
+\end{eqnarray}
+$$
+
+where the sum is the over all neurons $k$ in the $(l-1)^{\rm th}$ layer. Then, we could write the weights connecting from $(l-1)^{\rm th}$ layer to $l^{\rm th}$ layer as weight matrix $W^l$. Similarly, for each layer $l$ we define bias vector $b^l$, and finally the activations of neurons in the $l^{\rm th}$ layer can be defined as vector $a^l$. The above equation can be rewritten in the compact vectorized form,
+
+$$
+\begin{eqnarray} 
+  a^{l} = \sigma(W^l a^{l-1}+b^l)
+\end{eqnarray}
+$$
+
+From the matrix representation of the weights, you can now see why the notation for an individual weight follows the order of the indices $j$ and $k$. This ordering reflects how the weight matrix left-multiplies the activation vector from the previous layer.
+
+### Chain Rule of Calculus
+
 ## The 4 Fundamental Equations Behind Backpropagation
 ## Proof of the 4 Fundamental Equations
 ## The Vanishing Gradient Problems
