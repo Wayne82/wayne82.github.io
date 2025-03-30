@@ -222,7 +222,7 @@ Then, in summary these are the purpose of the 4 equations,
 * Equation (4): calculate the partial derivative of the cost w.r.t. any bias in the network.
 
 ## Proof of the 4 Fundamental Equations
-**Equation 1**: $$\delta^L = \nabla_a C \odot \sigma'(z^L)$$
+### Equation 1: $$\delta^L = \nabla_a C \odot \sigma'(z^L)$$
 
 **Proof**:
 
@@ -235,11 +235,11 @@ $$
 = \frac{\partial C}{\partial a^L_j} \cdot \sigma'(z^L_j)
 $$
 
-Then, write in the vectorized form: $\delta^L = \nabla_a C \odot \sigma'(z^L)$
+Write in the vectorized form: $\delta^L = \nabla_a C \odot \sigma'(z^L)$
 
 Q.E.D.
 
-**Equation 2**: $\delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)$
+### Equation 2: $\delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)$
 
 **Proof**:
 
@@ -265,7 +265,7 @@ $$
 > * Think the cost function $C$ depends on $z^l_j$ through every neuron $k$ in the $(l+1)^{\rm th}$ layer:
 >
 > $$
-> C = C(z^{l+1}_1, z^{l+1}_2, \cdot, z^{l+1}_K), where \, z^{l+1}_k = f_k(z^j_j)
+> C = C(z^{l+1}_1, z^{l+1}_2, \ldots, z^{l+1}_K), where \, z^{l+1}_k = f_k(z^j_j)
 > $$
 >
 > Then, apply the chain rule for this **multivariable functions** gives the equation above!
@@ -286,7 +286,7 @@ $$
 \delta_{j}^{l} = \sum_{k} \delta_{k}^{l+1} W_{kj}^{l+1} \sigma'(z_{j}^{l}) = \sigma'(z_{j}^{l}) \sum_{k} W_{kj}^{l+1} \delta_{k}^{l+1}
 $$
 
-Last, write the equation in matrix form:
+Write the equation in matrix form:
 
 $$
 \delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)
@@ -296,6 +296,68 @@ $$
 > * In the feedforward process, we use k as indexing on $(l-1)^{\rm th}$ layer, and j as indexing on $l^{\rm th}$ layer.
 > * In the backwards propogation process, we still use j as indexing on $l^{\rm th}$ layer, **BUT** use k as indexing on $(l+1)^{\rm th}$ layer.
 > * The essense of the notation desipte the confusion is that when backwards applying this equation (propogation), the matrix of $W$ need to be transposed.
+
+Q.E.D.
+
+### Equation 3: $\frac{\partial C}{\partial W^l} = \delta^l (a^{l-1})^T$
+
+**Proof**:
+
+Apply the chain rule to the component wise form of this partial derivative,
+
+$$
+\frac{\partial C}{\partial W^l_{jk}} = \frac{\partial C}{\partial z^l_j} \cdot \frac{\partial z^l_j}{\partial W^l_{jk}} \tag{6}
+$$
+
+From $z^l_j = \sum_k W^{l}_{jk} a^{l-1}_k + b^l_j $, we get:
+
+$$
+\frac{\partial z^l_j}{\partial W^{l}_{jk}} = a^{l-1}_k
+$$
+
+Note, the other terms in the sum that are not on the specific $k$ index have been cancelled out after partial derivative.
+
+By definition: $\delta^l_j = \frac{\partial C}{\partial z^l_j}$, then substitue this and the above result back to equation (6),
+
+$$
+\frac{\partial C}{\partial W^l_{jk}} = \delta^l_j \cdot a^{l-1}_k
+$$
+
+Write in matrix form:
+
+$$
+\frac{\partial C}{\partial W^l} = \delta^l (a^{l-1})^T
+$$
+
+Q.E.D.
+
+### Equation 4: $\frac{\partial C}{\partial b^l} = \delta^l$
+
+**Proof**:
+
+Apply the chain rule to the component wise form of this partial derivative:
+
+$$
+\frac{\partial C}{\partial b^l_j} = \frac{\partial C}{\partial z^l_j} \cdot \frac{\partial z^l_j}{\partial b^l_j} \tag{7}
+$$
+
+From $z^l_j = \sum_k W^{l}_{jk} a^{l-1}_k + b^l_j $, we get:
+
+$$
+\frac{\partial z^l_j}{\partial b^l_j} = 1
+$$
+
+By definition: $\delta^l_j = \frac{\partial C}{\partial z^l_j}$, substitute this and the above result back to equation (7),
+
+$$
+\frac{\partial C}{\partial b^l_j} = \delta^l_j
+$$
+
+Write in vector form:
+
+$$
+\frac{\partial C}{\partial b^l} = \delta^l
+$$
 
 Q.E.D.
 
