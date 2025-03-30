@@ -362,6 +362,23 @@ $$
 Q.E.D.
 
 ## The Backpropagation Algorithm
+Finally, we can explicitly write this out in the form of an algorithm. (I mainly quote the algorithm description from this [excellent book](http://neuralnetworksanddeeplearning.com/chap2.html#the_backpropagation_algorithm))
+
+1. **Input x**: Set the corresponding activation $a^1$ for the input layer.
+2. **Feedforward**: For each layer $l=2, 3, \ldots, L$ compute $z^l = \sum_k W^{l} a^{l-1} + b^l$ and $a^l = \sigma(z^l)$.
+3. **Error in output layer L $\delta^L$**: Compute the vector **$\delta^L = \nabla_a C \odot \sigma'(z^L)$** (**Equation 1**).
+4. **Backpropagate the error**: For each layer $l=L−1,L−2, \ldots, 2$ compute **$\delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)$** (**Equation 2**).
+5. **Output**: The gradient of the cost function is given by **$\frac{\partial C}{\partial W^l} = \delta^l (a^{l-1})^T$** (**Equation 3**) and **$\frac{\partial C}{\partial b^l} = \delta^l$** (**Equation 4**).
+
+Note, updates to weights and biases can only be applied after **all gradients are computed by the above backpropagation algorithm.**
+
+$$
+W_{ji}^{l} \leftarrow W_{ji}^{l} - \eta \frac{\partial C}{\partial W_{ji}^{l}}, \quad b_{j}^{l} \leftarrow b_{j}^{l} - \eta \frac{\partial C}{\partial b_{j}^{l}}
+$$
+
+Where $\eta$ is the learning rate.
+
+Again the key point is `All updates are applied after backpropagation completes the backward pass. This ensures gradients are calculated based on a consistent network state.`
 
 # Learning Materials
 
