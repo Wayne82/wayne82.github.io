@@ -378,8 +378,26 @@ $$
 
 Where $\eta$ is the learning rate.
 
-Again the key point is `All updates are applied after backpropagation completes the backward pass. This ensures gradients are calculated based on a consistent network state.`
+Again the **key point** is `All updates are applied after backpropagation completes the backward pass. This ensures gradients are calculated based on a consistent network state.`
 
 # Learning Materials
+I have to say, this is a long learning journey for me to really understand the mathematical principles behind backpropagation algorithm. Again, I am deeply grateful to be in such an era where high-quality learning resources are readily available — a privilege that has made this exploration possible. In sharing my experience, I hope it may inspires others to embark on their own learning adventures.
+
+My background in neural networks was limited, despite having studied the subject briefly during my postgraduate studies two decades ago. So, I want to start with a vedio tutorial to give me a general overview of neural network but still with essential mathemetical explainations. Then I came aross this [terrific video tutorial](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) from [Grant Sanderson](https://en.wikipedia.org/wiki/3Blue1Brown)'s [3Blue1Brown Channel](https://www.youtube.com/@3blue1brown). Grant has a remarkable talent for visualizing complex mathematical concepts, making topics like linear algebra, calculus, and computer science not only accessible but genuinely enjoyable.
+
+The videos helped me progress quickly — until I reached the fourth chapter on [backpropagation calculus](https://www.youtube.com/watch?v=tIeHLnjs5U8&list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi&index=4). Here, I decided to pause to dive deeper into the mathematics behind backpropagation. Then, I discovered this online book - [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/index.html) by [Michael Nielsen](https://michaelnielsen.org/), recommented by Grant in the video.
+
+Then over the next few weeks, I spare time to read through the whole book. It clearly explains the **core concepts** of neural networks, including certain modern techniques for deep learning and a whole [chapter](http://neuralnetworksanddeeplearning.com/chap2.html) to talk about **how the backpropagation algorithm works** with enough mathematical details!
+
+Finally, I decide to write down my notes and learings as this blog. Along the way, I used tools like ChatGPT and Deepseek to clarify some of my doubts, further refine my understanding. (Side note: I found Deepseek’s responses particularly well organized and clear for technical explanations!)
 
 # Final Words
+This learning journey has been profoundly fascinating to me—how a human brain strives to understand an artificial "brain" (a neural network inspired by biological systems) that learns from data and makes accurate predictions. On a deeper level, it prompts me to ponder the very nature of intelligence itself.
+
+Two key insights have stood out so far:
+* **Neural networks are mathematically giant composite functions.**
+* **They can approximate any continuous function** — a property known as the **universal approximation theorem**.
+
+These observations lead me to a provocative thought: Could the universe itself be viewed as a vast, computable function? If so, human intelligence might resemble a neural network’s ability to approximate this function through learning. Yet, while learning is a shared trait across species — enabling survival through adaptation — human intelligence seems unique in its capacity for **proactive exploration of existence of its own**. This innate curiosity, the drive to ask **"why" and "how"**, may well be the defining spark of human **cognition**.
+
+**Perhaps what sets us apart isn’t just learning, but the audacity to seek meaning in the patterns we discover...**
