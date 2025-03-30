@@ -19,20 +19,46 @@ As what I have learned so far, the key concepts come to me include,
   * **Output Layer**: produces the final results. E.g. a classification label.
 * **Connections**, each neuron in a layer is connected to neurons in the next layer through weights and biases, which can be adjusted during training process.
 * **Activation Function**, is a function applying on each neuron in the hidden layers to introduce non-linearity, allowing the network to learn complex patterns. Common activition functions include,
-  * **Sigmoid**, historically used in binary classification problems, because it maps any input value to a range of $[0, 1]$. $$\sigma(x)=\frac{1}{1 + e^{-x}}$$
-  * **ReLU (Rectified Linear Unit)**, default choice for hidden layers in deep neural networks, can help learning fast. $$\text{ReLU}(x) = \max(0, x)$$
-  * **Softmax**, used exclusively in the output layer for multi-class classification problems. $$\text{softmax}(\mathbf{z}) = \left( \frac{e^{z_1}}{\sum_{j=1}^n e^{z_j}}, \frac{e^{z_2}}{\sum_{j=1}^n e^{z_j}}, \dots, \frac{e^{z_n}}{\sum_{j=1}^n e^{z_j}} \right)$$ where $\mathbf{z}=(z_1, z_2, \dots, z_n)$
+  * **Sigmoid**, historically used in binary classification problems, because it maps any input value to a range of $[0, 1]$.
+
+  $$
+  \sigma(x)=\frac{1}{1 + e^{-x}}
+  $$
+
+  * **ReLU (Rectified Linear Unit)**, default choice for hidden layers in deep neural networks, can help learning fast.
+
+  $$
+  \text{ReLU}(x) = \max(0, x)
+  $$
+
+  * **Softmax**, used exclusively in the output layer for multi-class classification problems.
+
+  $$
+  \text{softmax}(\mathbf{z}) = \left( \frac{e^{z_1}}{\sum_{j=1}^n e^{z_j}}, \frac{e^{z_2}}{\sum_{j=1}^n e^{z_j}}, \dots, \frac{e^{z_n}}{\sum_{j=1}^n e^{z_j}} \right)
+  $$
+
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;where $\mathbf{z}=(z_1, z_2, \dots, z_n)$
+
 * **Feedforward**, is the process by which data flows through a neural network in one direction: from the input layer, through the hidden layers, and to the output layer. This is the foundational structure of most neural networks, where data moves forward without any loops. Mathematically, the feedforward is doing calculations at each neuron using activation function with weighted input.
   * **Weighted Input**, $z=\mathbf{w} \cdot \mathbf{x} + b$ where $z$ is the activation of a neuron, $\mathbf{w}$ is the vector of weights connecting to that neuron from previous layer, and $b$ is the bias.
-* **Cost Function**, is also known as **loss function** is a mathematical function that measures how well a neural network performs on a training dataset. It quantifies the difference between the outputs of the network and the actual desired outputs for the training dataset. And the goal of training a neural network is to **minimize the cost function**. One of the common cost functions is **Quadratic Loss Function**, also known as **Mean Squared Error (MSE)** or **L2 Loss**. $$L = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2$$
-* **Gradient Descent**, is the algorithm used to update the weights and biases of the neural network to minimize the cost function. The update equation for a weight $w$ is given by: $$w \leftarrow w - \eta \cdot \frac{\partial L}{\partial w}$$ where,
+* **Cost Function**, is also known as **loss function** is a mathematical function that measures how well a neural network performs on a training dataset. It quantifies the difference between the outputs of the network and the actual desired outputs for the training dataset. And the goal of training a neural network is to **minimize the cost function**. One of the common cost functions is **Quadratic Loss Function**, also known as **Mean Squared Error (MSE)** or **L2 Loss**.
+
+$$
+C = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2
+$$
+
+* **Gradient Descent**, is the algorithm used to update the weights and biases of the neural network to minimize the cost function. The update equation for a weight $w$ is given by:
+
+  $$
+  w \leftarrow w - \eta \cdot \frac{\partial C}{\partial w}
+  $$
 
   $w$: the weight being updated.
 
   $\eta$: the learning rate, a positive number controlling the step size of the update.
 
-  $\frac{\partial L}{\partial w}$, the partial derivative of cost function $L$ with respect to weight $w$. And here the cost function $L$ include the entire training dataset.
-  * **Stochastic Gradient Descent (SGD)**, instead of using the entire dataset, SGD randomly selects a small subset of the dataset, called a **mini-batch** to compute the cost function $L$.
+  $\frac{\partial L}{\partial w}$, the partial derivative of cost function $C$ with respect to weight $w$. And here the cost function $C$ include the entire training dataset.
+  * **Stochastic Gradient Descent (SGD)**, instead of using the entire dataset, SGD randomly selects a small subset of the dataset, called a **mini-batch** to compute the cost function $C$.
 * **Backpropagation**, is the fundamental algorithm used to train neural networks. It efficiently computes the gradients of the cost function with respect to weights and biases by applying the **chain rule of calculus**. These gradients are then used to update the weights and biases via **gradient descent**, and it starts from the output layer and moving **backwards** to the input layer.
 * **Training**, is the process of iteratively updating a neural network's weights and biases to minimize the cost function until it can't improve further.
   * **Epoch**, an epoch is one complete pass through the entire training dataset.
@@ -52,6 +78,7 @@ A vanilla neural network is the simplest and most fundamental type of neural net
 
 And below diagram illustrate this architecture,
 ![Image](/assets/images/neural%20network%20architecture.png)
+
 ## Learning with Gradient Descent
 Now, we have a basic neural network as illustrated above, then how can it learn from training dataset and predict well enough on new data input? The goal of the training process is to find the weights and biases so that the output from the network approximates the expected output y for all training dataset input x. To quantify how well we can achieve this goal, we can define the quaratic cost function,
 
@@ -380,7 +407,7 @@ Where $\eta$ is the learning rate.
 
 Again the **key point** is `All updates are applied after backpropagation completes the backward pass. This ensures gradients are calculated based on a consistent network state.`
 
-# Learning Materials
+# My Journey to Learn this Subject
 I have to say, this is a long learning journey for me to really understand the mathematical principles behind backpropagation algorithm. Again, I am deeply grateful to be in such an era where high-quality learning resources are readily available — a privilege that has made this exploration possible. In sharing my experience, I hope it may inspires others to embark on their own learning adventures.
 
 My background in neural networks was limited, despite having studied the subject briefly during my postgraduate studies two decades ago. So, I want to start with a vedio tutorial to give me a general overview of neural network but still with essential mathemetical explainations. Then I came aross this [terrific video tutorial](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi) from [Grant Sanderson](https://en.wikipedia.org/wiki/3Blue1Brown)'s [3Blue1Brown Channel](https://www.youtube.com/@3blue1brown). Grant has a remarkable talent for visualizing complex mathematical concepts, making topics like linear algebra, calculus, and computer science not only accessible but genuinely enjoyable.
@@ -391,7 +418,7 @@ Then over the next few weeks, I spare time to read through the whole book. It cl
 
 Finally, I decide to write down my notes and learings as this blog. Along the way, I used tools like ChatGPT and Deepseek to clarify some of my doubts, further refine my understanding. (Side note: I found Deepseek’s responses particularly well organized and clear for technical explanations!)
 
-# Final Words
+# Final Words - Reflections on Learning and Intelligence
 This learning journey has been profoundly fascinating to me—how a human brain strives to understand an artificial "brain" (a neural network inspired by biological systems) that learns from data and makes accurate predictions. On a deeper level, it prompts me to ponder the very nature of intelligence itself.
 
 Two key insights have stood out so far:
@@ -400,4 +427,4 @@ Two key insights have stood out so far:
 
 These observations lead me to a provocative thought: Could the universe itself be viewed as a vast, computable function? If so, human intelligence might resemble a neural network’s ability to approximate this function through learning. Yet, while learning is a shared trait across species — enabling survival through adaptation — human intelligence seems unique in its capacity for **proactive exploration of existence of its own**. This innate curiosity, the drive to ask **"why" and "how"**, may well be the defining spark of human **cognition**.
 
-**Perhaps what sets us apart isn’t just learning, but the audacity to seek meaning in the patterns we discover...**
+**Perhaps what sets us apart isn’t just learning, but the audacity (pinned by curiosity) to seek meaning in the patterns we discover...**
