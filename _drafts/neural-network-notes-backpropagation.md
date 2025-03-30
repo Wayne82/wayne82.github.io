@@ -53,7 +53,7 @@ A vanilla neural network is the simplest and most fundamental type of neural net
 And below diagram illustrate this architecture,
 ![Image](/assets/images/neural%20network%20architecture.png)
 ## Learning with Gradient Descent
-Now, we have a basic neural network as illustrated above, then how can it learn from training dataset and predict well enough on new data input? The goal of the training process is to find the weights and biases so that the output from the network approximates the expected output y for all training dataset input x. To quantify how well we can achieve this goal, we can define the quaratic cost function, 
+Now, we have a basic neural network as illustrated above, then how can it learn from training dataset and predict well enough on new data input? The goal of the training process is to find the weights and biases so that the output from the network approximates the expected output y for all training dataset input x. To quantify how well we can achieve this goal, we can define the quaratic cost function,
 
 $$
 \begin{eqnarray}
@@ -61,9 +61,9 @@ C(w,b)=\frac{1}{2n} \sum_x \| y(x) - a\|^2
 \end{eqnarray}
 $$
 
-where, $y(x)$ is the expected output vector and $a$ is the vector of outputs from the network for input $x$. And the cost $C$ is the average of the sum over all $n$ training dataset. The additional coefficent $1/2$ is mainly a convenience for cancelling out the multiplication of number $2$ after derivative. 
+where, $y(x)$ is the expected output vector and $a$ is the vector of outputs from the network for input $x$. And the cost $C$ is the average of the sum over all $n$ training dataset. The additional coefficent $1/2$ is mainly a convenience for cancelling out the multiplication of number $2$ after derivative.
 
-Then, the goal of the training is to minimize this cost function so that $C(w, b) \rightarrow 0$. The good news is that this cost function is a smooth or continous function which making small changes in the weights and biases can get effective improvement in the cost. And the changes of the cost with respect to small changes to $w$ (biases $b$ is the same) is given by 
+Then, the goal of the training is to minimize this cost function so that $C(w, b) \rightarrow 0$. The good news is that this cost function is a smooth or continous function which making small changes in the weights and biases can get effective improvement in the cost. And the changes of the cost with respect to small changes to $w$ (biases $b$ is the same) is given by
 
 $$
 \Delta C \approx \nabla C \cdot \Delta w
@@ -73,7 +73,7 @@ where, $\Delta w = (\Delta w_1,\ldots, \Delta w_m)^T$ is the vector of changes m
 
 $$
 \begin{eqnarray}
-  \nabla C \equiv \left(\frac{\partial C}{\partial w_1}, \ldots, 
+  \nabla C \equiv \left(\frac{\partial C}{\partial w_1}, \ldots,
   \frac{\partial C}{\partial w_m}\right)^T
 \end{eqnarray}
 $$
@@ -111,7 +111,7 @@ We need an unambiguous way to mark each weight on the connection from neurons in
 Then with these notations, the activation $a^{l}_j$ of the $j^{\rm th}$ neuron in the $l^{\rm th}$ layer is related to the activations in the $(l-1)^{\rm th}$ layer by below equation (here we use the sigmod activation function)
 
 $$
-\begin{eqnarray} 
+\begin{eqnarray}
   a^{l}_j = \sigma\left( \sum_k w^{l}_{jk} a^{l-1}_k + b^l_j \right)
 \end{eqnarray}
 $$
@@ -119,7 +119,7 @@ $$
 where the sum is the over all neurons $k$ in the $(l-1)^{\rm th}$ layer. Then, we could write the weights connecting from $(l-1)^{\rm th}$ layer to $l^{\rm th}$ layer as weight matrix $W^l$. Similarly, for each layer $l$ we define bias vector $b^l$, and finally the activations of neurons in the $l^{\rm th}$ layer can be defined as vector $a^l$. The above equation can be rewritten in the compact vectorized form,
 
 $$
-\begin{eqnarray} 
+\begin{eqnarray}
   a^{l} = \sigma(W^l a^{l-1}+b^l)
 \end{eqnarray}
 $$
@@ -169,9 +169,137 @@ Where $L$ is the output layer, $l$ is the index of hidden layers. Then, the key 
 Now, I think I am well prepared to dive deep into next a few sections to uncover the mathematical principles of backpropagation.
 
 ## The 4 Fundamental Equations Behind Backpropagation
+The below 4 fundamental equations behind backpropagation form the backbone of how neural network learn by efficiently computing gradients for each weight and bias. These equations **pave the path** to propagate the gradient calculation backwards through the network.
+
+(Another notation to note first: **$\odot$** to denote element wise multiplication of 2 vectors of same size.)
+
+$$
+\delta^L = \nabla_a C \odot \sigma'(z^L) \tag{1}
+$$
+
+$$
+\delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l) \tag{2}
+$$
+
+$$
+\frac{\partial C}{\partial W^l} = \delta^l (a^{l-1})^T \tag{3}
+$$
+
+$$
+\frac{\partial C}{\partial b^l} = \delta^l \tag{4}
+$$
+
+These are written in vectorized form. They can also be written in the component wise form as below,
+
+$$
+\delta^L_j = \frac{\partial C}{\partial a^L_j} \cdot \sigma'(z^L_j) \tag{1'}
+$$
+
+$$
+\delta^l_j = \left( \sum_{k} W^{l+1}_{kj} \delta^{l+1}_k \right) \cdot \sigma'(z^l_j) \tag{2'}
+$$
+
+$$
+\frac{\partial C}{\partial W^l_{jk}} = \delta^l_j \cdot a^{l-1}_k \tag{3'}
+$$
+
+$$
+\frac{\partial C}{\partial b^l_j} = \delta^l_j \tag{4'}
+$$
+
+We define $\delta^l$ of neuron $j$ in layer $l$ by the partial derivative of $C$ w.r.t the weighted input of neuron $j$ in layer $l$
+
+$$
+\delta^l_j = \frac{\partial C}{\partial z^l_j}
+$$
+
+and this term $\delta^l$ is also called **error** in the backpropagation because it quantifies how much each neuron in layer $l$ contributes to the overall cost of the network.
+
+Then, in summary these are the purpose of the 4 equations,
+* Equation (1): calculate the error - $\delta^L$ in the output layer.
+* Equation (2): calculate the error - $\delta^l$ in terms of the error in the next layer $\delta^{l+1}$.
+* Equation (3): calculate the partial derivative of the cost w.r.t. any weight in the network.
+* Equation (4): calculate the partial derivative of the cost w.r.t. any bias in the network.
 
 ## Proof of the 4 Fundamental Equations
-## The Vanishing Gradient Problems
+**Equation 1**: $$\delta^L = \nabla_a C \odot \sigma'(z^L)$$
+
+**Proof**:
+
+By definition, $\delta^L_j = \frac{\partial C}{\partial z^L_j}$
+
+Apply chain rule to the cost function $C = f(a^L)$, given $a^L_j = \sigma(z^L_j)$ and its derivative $\frac{\partial a^L_j}{\partial z^L_j} = \sigma'(z^L_j)$
+
+$$
+\delta^L_j = \frac{\partial C}{\partial a^L_j} \cdot \frac{\partial a^L_j}{\partial z^L_j}
+= \frac{\partial C}{\partial a^L_j} \cdot \sigma'(z^L_j)
+$$
+
+Then, write in the vectorized form: $\delta^L = \nabla_a C \odot \sigma'(z^L)$
+
+Q.E.D.
+
+**Equation 2**: $\delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)$
+
+**Proof**:
+
+By definition, $\delta^l_j = \frac{\partial C}{\partial z^l_j}$
+
+Apply chain rule to the cost function, w.r.t. weighted inputs on all neurions in the $(l+1)^{\rm th}$ layer.
+
+$$
+\delta^l_j = \sum_{k} \frac{\partial C}{\partial z^{l+1}_k} \cdot \frac{\partial z^{l+1}_k}{\partial z^l_j} \tag{5}
+$$
+
+> This step takes me quite a while to think through and figure out. Eventually, I get that the chain rule applied in this step is the chain rule for **multivariable functions**!
+>
+> Given differentiable function $h = f(g_1, g_2, \dots g_n)$ and $g_i = g_i(x)$ (for each $i$ in $n$), then the partial derivative of h w.r.t x is shown as below,
+>
+> $$
+> \frac{\partial h}{\partial x} = \sum_{i=1}^n \frac{\partial f}{\partial g_i} \cdot \frac{\partial g_i}{\partial x}
+> $$
+>
+> Further more these points also help me to reason about,
+> * Each neuron has full connection to neurons in next layer.
+> * Always keep **the neural network being a giant composite function** in mind.
+> * Think the cost function $C$ depends on $z^l_j$ through every neuron $k$ in the $(l+1)^{\rm th}$ layer:
+>
+> $$
+> C = C(z^{l+1}_1, z^{l+1}_2, \cdot, z^{l+1}_K), where \, z^{l+1}_k = f_k(z^j_j)
+> $$
+>
+> Then, apply the chain rule for this **multivariable functions** gives the equation above!
+
+Next, let's write down the formula weighted input $z^{l+1}_k$, so that we can further calcuate its partial derivative.
+
+$$
+z_{k}^{l+1} = \sum_{i} W_{ki}^{l+1} \sigma(z_{i}^{l}) + b_{k}^{l+1} \implies \frac{\partial z_{k}^{l+1}}{\partial z_{j}^{l}} = W_{kj}^{l+1} \sigma'(z_{j}^{l})
+$$
+
+Note, the partial derivative of $z^{l+1}_k$ w.r.t $z^l_j$ cancel out all the other terms in the equation for $i != j$
+
+Again by definition, $\delta^{l+1}_j = \frac{\partial C}{\partial z^{l+1}_j}$
+
+Then, we substitue $\frac{\partial z_{k}^{l+1}}{\partial z_{j}^{l}}$ and $\frac{\partial C}{\partial z^{l+1}_j}$ into equation (5),
+
+$$
+\delta_{j}^{l} = \sum_{k} \delta_{k}^{l+1} W_{kj}^{l+1} \sigma'(z_{j}^{l}) = \sigma'(z_{j}^{l}) \sum_{k} W_{kj}^{l+1} \delta_{k}^{l+1}
+$$
+
+Last, write the equation in matrix form:
+
+$$
+\delta^l = ((W^{l+1})^T \delta^{l+1}) \odot \sigma'(z^l)
+$$
+
+> There is a caveat for the subscript notation used here on weight. It seems the confusion arises from the conventional indexing in backpropagation derivations, where k and j are often swapped across layers.
+> * In the feedforward process, we use k as indexing on $(l-1)^{\rm th}$ layer, and j as indexing on $l^{\rm th}$ layer.
+> * In the backwards propogation process, we still use j as indexing on $l^{\rm th}$ layer, **BUT** use k as indexing on $(l+1)^{\rm th}$ layer.
+> * The essense of the notation desipte the confusion is that when backwards applying this equation (propogation), the matrix of $W$ need to be transposed.
+
+Q.E.D.
+
+## The Backpropagation Algorithm
 
 # Learning Materials
 
