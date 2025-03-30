@@ -405,7 +405,7 @@ $$
 
 Where $\eta$ is the learning rate.
 
-Again the **key point** is `All updates are applied after backpropagation completes the backward pass. This ensures gradients are calculated based on a consistent network state.`
+Again the key point is: **All updates are applied after backpropagation completes the backward pass. This ensures gradients are calculated based on a consistent network state.**
 
 # My Journey to Learn this Subject
 I have to say, this is a long learning journey for me to really understand the mathematical principles behind backpropagation algorithm. Again, I am deeply grateful to be in such an era where high-quality learning resources are readily available — a privilege that has made this exploration possible. In sharing my experience, I hope it may inspires others to embark on their own learning adventures.
@@ -419,12 +419,10 @@ Then over the next few weeks, I spare time to read through the whole book. It cl
 Finally, I decide to write down my notes and learings as this blog. Along the way, I used tools like ChatGPT and Deepseek to clarify some of my doubts, further refine my understanding. (Side note: I found Deepseek’s responses particularly well organized and clear for technical explanations!)
 
 # Final Words - Reflections on Learning and Intelligence
-This learning journey has been profoundly fascinating to me—how a human brain strives to understand an artificial "brain" (a neural network inspired by biological systems) that learns from data and makes accurate predictions. On a deeper level, it prompts me to ponder the very nature of intelligence itself.
+This learning journey has been profoundly fascinating to me — how a human brain strives to understand an artificial "brain" (a neural network inspired by biological systems) that learns from data and makes accurate predictions. On a deeper level, it prompts me to ponder the very nature of intelligence itself.
 
 Two key insights have stood out so far:
 * **Neural networks are mathematically giant composite functions.**
 * **They can approximate any continuous function** — a property known as the **universal approximation theorem**.
 
 These observations lead me to a provocative thought: Could the universe itself be viewed as a vast, computable function? If so, human intelligence might resemble a neural network’s ability to approximate this function through learning. Yet, while learning is a shared trait across species — enabling survival through adaptation — human intelligence seems unique in its capacity for **proactive exploration of existence of its own**. This innate curiosity, the drive to ask **"why" and "how"**, may well be the defining spark of human **cognition**.
-
-**Perhaps what sets us apart isn’t just learning, but the audacity (pinned by curiosity) to seek meaning in the patterns we discover...**
