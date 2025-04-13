@@ -11,7 +11,7 @@ layout: default
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
         {{ page.date | date: date_format }}
       </time>
-      {% assign page_author = page.author | default: site.author | default: nil | escape %}
+      {% assign page_author = page.author | default: site.author.name | default: nil | escape %}
       {%- if page_author -%}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page_author }}</span></span>
       {%- endif -%}</p>
