@@ -18,7 +18,15 @@ plugins:
 show_excerpts: true
 google_analytics: G-7QQBEZL21K
 
+collections:
+  galleries:
+    output: true
+    permalink: /galleries/:name/
+
 minima:
+  nav_pages:
+    - gallery.md
+    - about.md
   social_links:
     - title: Wayne's Github
       icon: github
