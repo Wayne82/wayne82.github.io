@@ -21,7 +21,9 @@ layout: default
            data-pswp-height="{{ image.height }}"
            target="_blank"
            class="gallery-photo">
-          <img src="{{ thumb_path | relative_url}}" alt="{{ image.alt | escape }}" />
+          <img src="{{ thumb_path | relative_url}}"
+               alt="{{ image.alt | escape }}"
+               loading="lazy"/>
         </a>
       {% endfor %}
     </div>
