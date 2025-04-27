@@ -11,7 +11,7 @@ layout: default
     {{ content }}
 
     {% assign gallery_data = site.data.galleries[page.data] %}
-    <div class="pswp-gallery" id="image-gallery">
+    <div class="gallery-photo-grid" id="image-gallery" data-pswp-gallery="main-gallery">
       {% for image in gallery_data.images %}
       {% assign image_path = gallery_data.path | append: image.name %}
       {% assign thumb_path = gallery_data.path | append: image.thumb %}
@@ -19,7 +19,8 @@ layout: default
         <a href="{{ image_path | relative_url }}"
            data-pswp-width="{{ image.width }}"
            data-pswp-height="{{ image.height }}"
-           target="_blank"">
+           target="_blank"
+           class="gallery-photo">
           <img src="{{ thumb_path | relative_url}}" alt="{{ image.alt | escape }}" />
         </a>
       {% endfor %}
