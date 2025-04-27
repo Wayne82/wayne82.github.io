@@ -1,8 +1,8 @@
-path: "/assets/galleries/sculptures"
+path: "/assets/galleries/sculptures/"
 cover_image: 0
 images:
   - name: "warrior.jpg"
-    thumb: "warrior.jpg"
+    thumb: "warrior-thumb.jpg"
     width: 1279
     height: 1706
-    alt: "A warrior sculpture made of bronze, showcasing intricate details and a fierce expression."
+    alt: "Warrior"

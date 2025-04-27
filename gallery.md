@@ -13,7 +13,7 @@ permalink: /gallery/
   {% for gallery in galleries %}
     {% assign gallery_data = site.data.galleries[gallery.data] %}
     {% assign name = gallery_data.images[gallery_data.cover_image].name %}
-    {% assign src = gallery_data.path | append: '/' | append: name %}
+    {% assign src = gallery_data.path | append: name %}
 
     <div class="gallery-card" data-pswp-gallery="gallery-list">
       <a href="{{ gallery.url | relative_url }}" class="gallery-card-link">

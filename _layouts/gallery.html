@@ -13,8 +13,8 @@ layout: default
     {% assign gallery_data = site.data.galleries[page.data] %}
     <div class="pswp-gallery" id="image-gallery">
       {% for image in gallery_data.images %}
-      {% assign image_path = gallery_data.path | append: '/' | append: image.name %}
-      {% assign thumb_path = gallery_data.path | append: '/' | append: image.thumb %}
+      {% assign image_path = gallery_data.path | append: image.name %}
+      {% assign thumb_path = gallery_data.path | append: image.thumb %}
 
         <a href="{{ image_path | relative_url }}"
            data-pswp-width="{{ image.width }}"
