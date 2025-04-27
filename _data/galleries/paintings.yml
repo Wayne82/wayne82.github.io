@@ -1,0 +1,8 @@
+path: "/assets/galleries/paintings"
+cover_image: 0
+images:
+  - name: "robot-chef.jpg"
+    thumb: "robot-chef.jpg"
+    width: 1280
+    height: 1949
+    alt: "A robot chef preparing a meal in a futuristic kitchen."

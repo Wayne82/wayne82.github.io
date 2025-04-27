@@ -11,10 +11,14 @@ permalink: /gallery/
 <div class="gallery-grid">
   {% assign galleries = site.galleries | sort: 'order' %}
   {% for gallery in galleries %}
+    {% assign gallery_data = site.data.galleries[gallery.data] %}
+    {% assign name = gallery_data.images[gallery_data.cover_image].name %}
+    {% assign src = gallery_data.path | append: '/' | append: name %}
+
     <div class="gallery-card" data-pswp-gallery="gallery-list">
       <a href="{{ gallery.url | relative_url }}" class="gallery-card-link">
         <div class="gallery-card-image-wrapper">
-          <img src="{{ gallery.cover_image }}" alt="{{ gallery.title }}" class="gallery-card-image" />
+          <img src="{{ src }}" alt="{{ gallery.title }}" class="gallery-card-image" />
         </div>
         <div class="gallery-card-title">{{ gallery.title }}</div>
       </a>

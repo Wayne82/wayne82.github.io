@@ -7,14 +7,20 @@ layout: default
     {% if page.description %}
       <p class="gallery-description">{{ page.description }}</p>
     {% endif %}
-  
+
+    {{ content }}
+
+    {% assign gallery_data = site.data.galleries[page.data] %}
     <div class="pswp-gallery" id="image-gallery">
-      {% for image in page.images %}
-        <a href="{{ image.src | relative_url }}"
+      {% for image in gallery_data.images %}
+      {% assign image_path = gallery_data.path | append: '/' | append: image.name %}
+      {% assign thumb_path = gallery_data.path | append: '/' | append: image.thumb %}
+
+        <a href="{{ image_path | relative_url }}"
            data-pswp-width="{{ image.width }}"
            data-pswp-height="{{ image.height }}"
            target="_blank"">
-          <img src="{{ image.thumb | default: image.src | relative_url }}" alt="{{ image.caption }}">
+          <img src="{{ thumb_path | relative_url}}" alt="{{ image.alt | escape }}" />
         </a>
       {% endfor %}
     </div>
