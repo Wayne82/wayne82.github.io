@@ -20,6 +20,11 @@ clean:
 	@echo "Cleaning Jekyll build..."
 	bundle exec jekyll clean
 
+# Build the Jekyll site
+build:
+	@echo "Building Jekyll site..."
+	bundle exec jekyll build
+
 # Variables
 GALLERY_FOLDER=assets/galleries
 DATA_FOLDER=_data/galleries
@@ -34,3 +39,19 @@ update-gallery:
 	  bash $(SCRIPT) "$$dir" "$$yaml_file" ; \
 	done
 	@echo "✅ Gallery metadata update and thumbnails generate complete!"
+
+GALLERIES_COLLECTION=_galleries
+add-new-gallery:
+ifndef name
+	$(error ❌ Please provide a gallery name: 'make add-new-gallery name=your-gallery-name')
+endif
+	@echo "Creating new gallery: $(name)"
+	@mkdir -p $(GALLERY_FOLDER)/$(name)
+	@mkdir -p $(DATA_FOLDER)
+	@mkdir -p $(GALLERIES_COLLECTION)
+	@echo "---" > $(GALLERIES_COLLECTION)/$(name).md
+	@echo "layout: gallery" >> $(GALLERIES_COLLECTION)/$(name).md
+	@echo "title: \"$(name)\"" >> $(GALLERIES_COLLECTION)/$(name).md
+	@echo "data: \"$(name)\"" >> $(GALLERIES_COLLECTION)/$(name).md
+	@echo "---" >> $(GALLERIES_COLLECTION)/$(name).md
+	@echo "✅ New gallery '$(name)' created! Please add images into $(GALLERY_FOLDER)/$(name) and update the metadata using the update-gallery command."
