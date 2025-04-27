@@ -34,3 +34,7 @@ minima:
     - title: Wayne's LinkedIn
       icon: linkedin
       url: https://www.linkedin.com/in/wayne82
+
+exclude:
+  - scripts
+  - Makefile
