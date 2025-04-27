@@ -2,15 +2,34 @@
 layout: default
 ---
 
-<h1>{{ page.title }}</h1>
+<main class="gallery-main">
+    <h1>{{ page.title }}</h1>
+    {% if page.description %}
+      <p class="gallery-description">{{ page.description }}</p>
+    {% endif %}
+  
+    <div class="pswp-gallery" id="image-gallery">
+      {% for image in page.images %}
+        <a href="{{ image.src | relative_url }}"
+           data-pswp-width="{{ image.width }}"
+           data-pswp-height="{{ image.height }}"
+           target="_blank"">
+          <img src="{{ image.thumb | default: image.src | relative_url }}" alt="{{ image.caption }}">
+        </a>
+      {% endfor %}
+    </div>
+</main>
 
-<div class="gallery">
-    {% assign folder = page.gallery %}
-    {% for img in page.images %}
-      <a href="/assets/galleries/{{ folder }}/{{ img }}">
-        <img src="/assets/galleries/{{ folder }}/{{ img }}" alt="Gallery image">
-      </a>
-    {% endfor %}
-</div>
 
-{{ page.content }}
+<link rel="stylesheet" href="{{ '/assets/css/gallery.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/photoswipe.css' | relative_url }}">
+
+<script type="module">
+  import PhotoSwipeLightbox from '/assets/js/photoswipe/photoswipe-lightbox.esm.min.js';
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: '#image-gallery',
+    children: 'a',
+    pswpModule: () => import('/assets/js/photoswipe/photoswipe.esm.min.js'),
+  });
+  lightbox.init();
+</script>
