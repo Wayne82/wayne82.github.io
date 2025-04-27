@@ -9,7 +9,7 @@ GALLERY_DIR="$1"
 OUTPUT_YAML="$2"
 
 THUMB_SUFFIX="-thumb"
-THUMB_WIDTH=320
+THUMB_WIDTH=392
 
 # List of supported image extensions (lowercase)
 IMAGE_EXTENSIONS=("jpg" "jpeg" "png" "webp")

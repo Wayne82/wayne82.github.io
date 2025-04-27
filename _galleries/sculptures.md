@@ -1,8 +1,8 @@
 ---
 layout: gallery
-title: "The Sculptures"
+title: "The Handmade"
 data: "sculptures"
-order: 2
+order: 1
 ---
 
 To be constructed.

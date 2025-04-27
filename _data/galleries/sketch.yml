@@ -1,0 +1,38 @@
+path: "/assets/galleries/sketch/"
+cover_image: 0
+images:
+  - name: "doggy.jpg"
+    thumb: "doggy-thumb.jpg"
+    width: 1200
+    height: 834
+    alt: "Doggy"
+  - name: "haki.jpg"
+    thumb: "haki-thumb.jpg"
+    width: 640
+    height: 544
+    alt: "Haki"
+  - name: "kitty.jpg"
+    thumb: "kitty-thumb.jpg"
+    width: 2000
+    height: 1397
+    alt: "Kitty"
+  - name: "mom.jpg"
+    thumb: "mom-thumb.jpg"
+    width: 959
+    height: 2300
+    alt: "Mom"
+  - name: "robot-chef.jpg"
+    thumb: "robot-chef-thumb.jpg"
+    width: 1280
+    height: 1949
+    alt: "Robot Chef"
+  - name: "wei.jpg"
+    thumb: "wei-thumb.jpg"
+    width: 2000
+    height: 1500
+    alt: "Wei"
+  - name: "xiao.jpg"
+    thumb: "xiao-thumb.jpg"
+    width: 1080
+    height: 1080
+    alt: "Xiao"
