@@ -49,6 +49,7 @@ There are 3 main types of layers to build the ConvNet architectures: Convolution
 * **ConvNet Architectures**, the entire ConvNet architecture is usually formed by stacking these layers - Conv, Pooling, and FC - together with certain patterns. Note, usually we will explicitly write the ReLU activiation function as a layer as well.
   * The most common ConvNet architecture follows the pattern: `INPUT -> [[CONV -> RELU] * N -> POOL?] * M -> [FC -> RELU] * K -> FC`, where `*` indicates repetition, and `POOL?` indicates an optional pooling layer. Moreover, `N>=0` and usually `N<=3`, `M>=0`, `K>=0` and usually `K<3`.
   * Prefer a stack of smaller filter Conv to one large receptive field Conv layer, which can allow us to express more powerful features of the input, and with fewer parameters. But we might need more memory to hold all the intermediate Conv layer activiations for doing backpropagation.
+  * There are several architectures in the field of CNN that have a name, e.g. The first successful applications of CNN was developed by YannLeCun in 1990's, known as LeNet that was used to read zip codes, digits, etc. The famous AlexNet, which popularized CNN in computer vision. And the state of the art CNN as of May 10, 2016 ResNet was developed by Kaiming He et al.
 
 # The Key Points I am Concerning the most
 
