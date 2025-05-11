@@ -29,13 +29,30 @@ Finally, neural network is brought up right afterwards with a few dedicated sect
 Convolutional neural network is a type of neural network, which architecture is designed specifically for image classificaiton problem. To recap, regular neural network has these basic architecture properties: 1) the input data is treated as generic single vector of features, 2) neurons in each hidden layer are fully connected to all nerons in the previous layer, 3) no share connections to the neurons in a given layer. However, the convolutional neural network has a specialized architecture differing in these basic properties as below,
 * By taking advantage of the fact that the input consists of images, we can arrange neurons in the layers of ConvNet in 3 dimensions: **width, height and depth**. Then, we have 3D volumes of neurons in each layer.
 * The neurons in a layer will only be connected to a small region of the layer (aka. **receiptive field**) before it, instead of all of the neurons in a fully connected manner.
-* The weights on the connection of receptive field in the input volume to each neuron in the current layer are **shared** at the same depth.
+* The weights on the connection of receptive field in the input volume to each neuron in the current layer are **shared** at the same depth slice.
 
 In short, `a ConvNet is made of layers. Every layer has a simple API: it transforms an input 3D volume to an output 3D volume with some differeantiable function that may or may not have parameters.`
 
-There are 3 main types of layers to build the ConvNet architectures: Convolutional Layer, Pooling Layer, and Fully- Connected Layer.
-
+There are 3 main types of layers to build the ConvNet architectures: Convolutional Layer, Pooling Layer, and Fully- Connected Layer. Here are a brief notes for what I've learnt about them.
+* **Convolutional Layer**, the Conv layer is the core building block that does most of the computational heavy lifting.
+  * The Conv layer parameters (weights and bias) consist of a set of "filters". Every filter is small spatially (along width and height), but extends through the full depth of the input volume. Then, each neuron is connected to only a local region of the input volume in previous layer through the filter.
+  * There are 3 hyperparameters control the size of the output volume: the **depth**, **stride** and **zero-padding**. **Depth** corresonds to the number of filters we want to use, each filter will be learnt to look for something different in the input. **Stride** is the step for sliding the filter along width and height. E.g. When the stride is 1 then we move the filters one pixel at a time. **Zero-padding** is usually used to control the spatial size of the output volume, and most commonly it is used to preserve the same weight and height of the input volume. Given the input volume size (both weight and height) is **W**, the filter size is **F**, the stride is **S**, and the amount of zero-padding is **P**, the output volume size can be calculated as $(W - F + 2P)/S + 1$.
+  * The parameters used in each filter are shared with all neurons in the same depth slice. E.g. a 11x11x3 filter will have $11 \times 11 \times 3= 363$ weights and 1 bias, and shared by all neurons in each depth slice. Then, the first Conv layer in AlexNet, will have in total $11 \times 11 \times 3 \times 96 = 34848$ weights and 96 biases.
+* **Pooling Layer**, the pooling layer is used to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting. It is common to periodically insert a pooling layer between successive Conv layers. It operates independently on every depth slice of the input and resize it spatially, using the MAX operation. The most common form is using a filter of size 2 by 2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, effectively discarding 75% of the activations.
+  * A pooling layer with filter size 2, strid 2 will downsample the input volume of size [M x M x D] into output volume of size [M/2 x M/2 x D].
+  * A pooling layer does not introduce any parameters, and the backpropagation will just route the gradient to the input that had the highest value in the forward pass.
+  * There are discussions about discarding the pooling layer in favor of architecture that only consists of repreated Conv layers. Then, to reduce the size of the representation, people suggest using larger stride in Conv layer once in a while.
+* **Fully-connected Layer**, the fully-connected layer makes full connections to all activiations in the previous layer, as seen in regular neural networks.
+* **Conversion between Conv and FC layer**, it turns out that it's possible to convert between FC and Conv layer.
+  * For any Conv layer, there is an FC layer that implements the same forward computation. The weight matrix would be a large matrix that is mostly zero except for at certain blocks (the local area where filter is applied), and those weights in many of the blocks are equal (due to parameter sharing).
+  * For any FC layer, it can be converted to a Conv layer, by using a filter with exact the same size of the input volume, no zero-padding, and stride 1. Then, the output volume will become a single depth column, giving the identical result as the initial FC layer.
+* **ConvNet Architectures**, the entire ConvNet architecture is usually formed by stacking these layers - Conv, Pooling, and FC - together with certain patterns. Note, usually we will explicitly write the ReLU activiation function as a layer as well.
+  * The most common ConvNet architecture follows the pattern: `INPUT -> [[CONV -> RELU] * N -> POOL?] * M -> [FC -> RELU] * K -> FC`, where `*` indicates repetition, and `POOL?` indicates an optional pooling layer. Moreover, `N>=0` and usually `N<=3`, `M>=0`, `K>=0` and usually `K<3`.
+  * Prefer a stack of smaller filter Conv to one large receptive field Conv layer, which can allow us to express more powerful features of the input, and with fewer parameters. But we might need more memory to hold all the intermediate Conv layer activiations for doing backpropagation.
 
 # The Key Points I am Concerning the most
 
+
 # My Learning Principles
+
+The steps of learning: 1. understand 2. how it is developed. 3. new findings
