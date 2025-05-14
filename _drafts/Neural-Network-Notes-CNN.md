@@ -51,9 +51,15 @@ There are 3 main types of layers to build the ConvNet architectures: Convolution
   * Prefer a stack of smaller filter Conv to one large receptive field Conv layer, which can allow us to express more powerful features of the input, and with fewer parameters. But we might need more memory to hold all the intermediate Conv layer activiations for doing backpropagation.
   * There are several architectures in the field of CNN that have a name, e.g. The first successful applications of CNN was developed by YannLeCun in 1990's, known as LeNet that was used to read zip codes, digits, etc. The famous AlexNet, which popularized CNN in computer vision. And the state of the art CNN as of May 10, 2016 ResNet was developed by Kaiming He et al.
 
-# The Key Points I am Concerning the most
+# My Intrinsic Curiosity Go Further
+While I am learning the every aspects and details of CNN - a full fledged neural network architecture solving practical and hard computer vision problems, I still ponder on these questions,
+* How was the multiple layers architecture of CNN developed in the first place?
+* Why is a Conv layer interpreted as feature extraction?
+* How is the number of filters chosen?
+* How do we make sure filters learn distinct meaningful features, instead of noisy or redundant features?
+* Is there specialized mathematics explanation for why such architecture can work really well for computer vision problems?
 
+I think I will need more time to explore, research and learn to seek the answers for these questions, so I won't expand further in this blog to cover them. And I will probably leave it to another write up another time.
 
-# My Learning Principles
-
-The steps of learning: 1. understand 2. how it is developed. 3. new findings
+# My Learning Experience
+Every time when I start to learn something, it is all started with a pure curiosity on the subject, trying to figure out how it works. First, I will find the offical materials or authorized books to learn the basics, such as terminologies, definitions, etc., the key concepts, and then the details. Occasionally, I will look for high quality online courses or youtube videos for help me comprend the content further. Then, I will continue exploring why it works this way and how it was developed if possible. I find it is very satisfying to know the developing process of the subject and sometimes it is inspiring to promote further divergent thinking. At last, I will pause and ponder again - are there any potential connections among the knowledges I've beeing learing so far, and could there be any new findings emerging from these connections...
