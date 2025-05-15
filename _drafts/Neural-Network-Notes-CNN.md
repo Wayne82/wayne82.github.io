@@ -10,56 +10,125 @@ After completing my initial exploration and study of neural networks — and doc
 
 Thanks to the open internet, I was able to access a world-class course — [CS231n: Deep Learning for Computer Vision](https://cs231n.github.io/) — from a top university. After spending about two weeks studying eagerly during my evenings, I completed the course. As usual, I would like to document my notes and learning experiences in this blog.
 
-# Prior Arts
-The course has 2 modules, the first one takes up quite a considerable amount of space to introduce the prior arts of image classification, including k-Nearest Neighbor, and linear classification using SVM loss and softmax loss function, further draw forth the vallina neural network introduction. Then, the second module goes to the main theme about CNN.
+## Prior Arts
+The course is structured into two main modules. The first module covers a substantial amount of foundational content, introducing classic methods for image classification such as **k-Nearest Neighbor (k-NN)** and **linear classification** using **SVM loss** and **Softmax loss**. This naturally leads into an introduction to the **vanilla neural network**. The second module focuses on the main theme: **Convolutional Neural Networks (CNNs)**.
 
-First, the image classification problem all these different approaches are developed to solve is the task of assigning an input image one label from a fixed set of categories. Despite it is a simple task for a human, it is extremely difficult for a computer to achieve with a reasonable successful rate. Traditionally, we would think how might we go about writing an algorithm that can classify images into distinct categories? However, at least right now it is not obvious what such an algorithm looks like. Thus, the practical approach that is taken is a data-driven approach, which relies on a training dataset that is well labeled as different classes, let the learning model to learn every class, and then predict the class for new input data.
+At the core, the image classification problem addressed by all these methods is the task of assigning an input image a label from a fixed set of categories. While this is trivially easy for humans, it is extremely difficult for computers to achieve reliably.
 
-It is interesting to see how different classification approaches have their distinct pros and cons repsectively. The KNN classifier takes no time to train, since all that is required is to store and index the training data. However, the cost is paied at prediction time which it needs to compare the input data against every single training exmaple. Just on the other extreme, regarding other classifiers, like Linear Classification, Neural Network, and especially the Deep Neural Network, they are very expensive to train, but once the training is finished, it will be fast and cheap to classify a new input data.
+Traditionally, one might try to handcraft an algorithm to distinguish images, but this is no longer practical. Instead, a data-driven approach is adopted: given a well-labeled dataset, the model learns to map images to their corresponding labels through training, and can then predict the class of new, unseen images.
 
-Unlike KNN, the other classifiers will commonly have 2 major components: a score function that maps the raw data to class scores, and a loss function that quantifies the agreement between the predicated scores and the ground truth labels. The score function is a linear mapping, that maps a single input data, in the form of a vector if the data has multiple features, to a scalar. Here it is $f(x_i, w, b) = wx_i + b$, where $w$ is the weights and $b$ is the bias, and for multiple labeled classes, each will have different set of weights and bias to calculate the scores respectively. Besides, this also can be interpreted as dot product of the weights and the input data, which each weight vector can be considered as a template for one of the classes. With this terminology, the linear classifier is doing template matching, where the "templates" are learned.
+### k-Nearest Neighbor (k-NN)
+Different classification methods offer distinct tradeoffs. For instance, the k-NN classifier requires no training time—it simply stores the labeled training data. However, this results in high prediction cost, as it must compare each test image against all training examples.
 
-Regarding learning, there are 2 loss functions I've learnt so far, the multiclass SVM loss and the softmax classifier with cross-entropy loss (which I will leave it out of this blog). The basic idea of SVM loss is that it expects the correct class for each input data to have a score higher than the other incorrect classes by some fixed margin. And this expectation is expressed using this loss function $L_i = \sum_{j \neq y_i} \max\left(0, s_j - s_{y_i} + \Delta\right)$, where $L_i$ is the loss for the $i-th$ input data. $s_j$ is the score calculated for class $j$, $s_{y_i}$ is the score for the true class $y_i$, $\Delta$ is the margin hyperparameter (typically $\Delta = 1$), and $max(0, -)$ is the Hinge function (activates only when $s_j - s_{y_i} + \Delta > 0$). In practice, there is also a L2 regularization loss added to the function, which prefers smaller and more diffuse weights. This effect can improve the generalization performance and lead to less overfitting. The optimization algorithm to minize this loss function is using gradient descent, which is also used in backpropagation for training neural network.
+### Linear Classifier & SVM Loss
+In contrast, methods like **Linear Classifiers**, **Neural Networks**, and especially **Deep Neural Networks**, demand significant computation during training but offer efficient prediction once trained.
 
-> As a new beginner, with little prior knowledge of SVM, I was somewhat confused with multiclass SVM loss (linear classifier) and kernelized SVM (non-linear classifier). After some search online and diverge the learning path a bit towards support vector machine, I get some basic understanding. The multiclass SVM loss is just a training objective (to minimize) for linear models, and the loss itself doesn't create non-linearity but the learning model architecture does. Thus, multiclass SVM loss pairing with linear model can only learn linear boundaries, but if pairing with neural network which has hidden layers with non-linear activation, e.g. ReLU, Sigmod, etc., it can learn non-linear boundaries and complex patterns. Whereas, kernelized SVM uses kernel to map the non-linear data to higher dimensions that can be linearly separated by the supported vectors. Thus it handles classification for non-linear data out of box. I will leave this topic for now, and come back later for a better understanding mathematically.
+Linear classifiers consist of two main components:
 
-Finally, neural network is brought up right afterwards with a few dedicated sections in the first module, and the introduction continues with score functions without appealing to brain analogies. The difference from the linear model is that neural network has multiple hidden layers, which can be deemed as applying the score functions multiple times with different sets of weights, and then calcuate the final scores in the output layer. So, a 3 layers neural network could calculate the scores like this $s = W_3 max(0, W_2 max(0, W_1 x))$, where the function $max(0, -)$ used to calculate the multiclass SVM loss is just the ReLU activiation function in the neural network term. And the non-linearity classification property of neural network is just derived from such non-linear activiation functions. I won't go further here, as the basics of neural network has been discussed in my previous blog - [Neural Network Notes: the Basics and Backpropagation](https://wayne82.github.io/neural-network/2025/03/30/Neural-Network-Notes-The-Basics-and-Backpropagation.html)
+* A score function, which maps input data to class scores. For linear classification, this is typically $f(x_i, W, b) = wx_i + b$, where $W$ is the weight matrix and $b$ is the bias vector.
+* A loss function, which quantifies the disagreement between predicted scores and the ground truth labels.
 
-# What is Convolutional Neural Network
-Convolutional neural network is a type of neural network, which architecture is designed specifically for image classificaiton problem. To recap, regular neural network has these basic architecture properties: 1) the input data is treated as generic single vector of features, 2) neurons in each hidden layer are fully connected to all nerons in the previous layer, 3) no share connections to the neurons in a given layer. However, the convolutional neural network has a specialized architecture differing in these basic properties as below,
-* By taking advantage of the fact that the input consists of images, we can arrange neurons in the layers of ConvNet in 3 dimensions: **width, height and depth**. Then, we have 3D volumes of neurons in each layer.
-* The neurons in a layer will only be connected to a small region of the layer (aka. **receiptive field**) before it, instead of all of the neurons in a fully connected manner.
-* The weights on the connection of receptive field in the input volume to each neuron in the current layer are **shared** at the same depth slice.
+Here, each weight vector $w_j$ can be viewed as a learned template for a specific class. This leads to a helpful interpretation: linear classification as template matching.
 
-In short, `a ConvNet is made of layers. Every layer has a simple API: it transforms an input 3D volume to an output 3D volume with some differeantiable function that may or may not have parameters.`
+Among the loss functions introduced, the Multiclass SVM Loss is defined as:
 
-There are 3 main types of layers to build the ConvNet architectures: Convolutional Layer, Pooling Layer, and Fully- Connected Layer. Here are a brief notes for what I've learnt about them.
-* **Convolutional Layer**, the Conv layer is the core building block that does most of the computational heavy lifting.
-  * The Conv layer parameters (weights and bias) consist of a set of "filters". Every filter is small spatially (along width and height), but extends through the full depth of the input volume. Then, each neuron is connected to only a local region of the input volume in previous layer through the filter.
-  * There are 3 hyperparameters control the size of the output volume: the **depth**, **stride** and **zero-padding**. **Depth** corresonds to the number of filters we want to use, each filter will be learnt to look for something different in the input. **Stride** is the step for sliding the filter along width and height. E.g. When the stride is 1 then we move the filters one pixel at a time. **Zero-padding** is usually used to control the spatial size of the output volume, and most commonly it is used to preserve the same weight and height of the input volume. Given the input volume size (both weight and height) is **W**, the filter size is **F**, the stride is **S**, and the amount of zero-padding is **P**, the output volume size can be calculated as $(W - F + 2P)/S + 1$.
-  * The parameters used in each filter are shared with all neurons in the same depth slice. E.g. a 11x11x3 filter will have $11 \times 11 \times 3= 363$ weights and 1 bias, and shared by all neurons in each depth slice. Then, the first Conv layer in AlexNet, will have in total $11 \times 11 \times 3 \times 96 = 34848$ weights and 96 biases.
-* **Pooling Layer**, the pooling layer is used to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and hence to also control overfitting. It is common to periodically insert a pooling layer between successive Conv layers. It operates independently on every depth slice of the input and resize it spatially, using the MAX operation. The most common form is using a filter of size 2 by 2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, effectively discarding 75% of the activations.
-  * A pooling layer with filter size 2, strid 2 will downsample the input volume of size [M x M x D] into output volume of size [M/2 x M/2 x D].
-  * A pooling layer does not introduce any parameters, and the backpropagation will just route the gradient to the input that had the highest value in the forward pass.
-  * There are discussions about discarding the pooling layer in favor of architecture that only consists of repreated Conv layers. Then, to reduce the size of the representation, people suggest using larger stride in Conv layer once in a while.
-* **Fully-connected Layer**, the fully-connected layer makes full connections to all activiations in the previous layer, as seen in regular neural networks.
-* **Conversion between Conv and FC layer**, it turns out that it's possible to convert between FC and Conv layer.
-  * For any Conv layer, there is an FC layer that implements the same forward computation. The weight matrix would be a large matrix that is mostly zero except for at certain blocks (the local area where filter is applied), and those weights in many of the blocks are equal (due to parameter sharing).
-  * For any FC layer, it can be converted to a Conv layer, by using a filter with exact the same size of the input volume, no zero-padding, and stride 1. Then, the output volume will become a single depth column, giving the identical result as the initial FC layer.
-* **ConvNet Architectures**, the entire ConvNet architecture is usually formed by stacking these layers - Conv, Pooling, and FC - together with certain patterns. Note, usually we will explicitly write the ReLU activiation function as a layer as well.
-  * The most common ConvNet architecture follows the pattern: `INPUT -> [[CONV -> RELU] * N -> POOL?] * M -> [FC -> RELU] * K -> FC`, where `*` indicates repetition, and `POOL?` indicates an optional pooling layer. Moreover, `N>=0` and usually `N<=3`, `M>=0`, `K>=0` and usually `K<3`.
-  * Prefer a stack of smaller filter Conv to one large receptive field Conv layer, which can allow us to express more powerful features of the input, and with fewer parameters. But we might need more memory to hold all the intermediate Conv layer activiations for doing backpropagation.
-  * There are several architectures in the field of CNN that have a name, e.g. The first successful applications of CNN was developed by YannLeCun in 1990's, known as LeNet that was used to read zip codes, digits, etc. The famous AlexNet, which popularized CNN in computer vision. And the state of the art CNN as of May 10, 2016 ResNet was developed by Kaiming He et al.
+$$
+L_i = \sum_{j \neq y_i} \max\left(0, s_j - s_{y_i} + \Delta\right)
+$$
 
-# My Intrinsic Curiosity Go Further
+where $L_i$ is the loss for the $i-th$ input data. $s_j$ is the score calculated for class $j$, $s_{y_i}$ is the score for the true class $y_i$, $\Delta$ is the margin hyperparameter (typically $\Delta = 1$), and $max(0, -)$ is the Hinge function (activates only when $s_j - s_{y_i} + \Delta > 0$).
+
+This function penalizes cases where the correct class score $s_{y_i}$ does not exceed the incorrect class score $s_j$ by at least a margin $\Delta$.
+
+Furthermore, To improve generalization and reduce overfitting, an L2 regularization term is usually added, encouraging smaller weights. The optimization is typically done via gradient descent, which also forms the foundation of backpropagation in neural networks.
+
+> 📝 Notes
+>
+As a beginner, I was initially confused between Multiclass SVM Loss (used in linear models) and kernelized SVMs (used for non-linear classification). After some detours, I realized that Multiclass SVM Loss is just a training objective and does not introduce non-linearity by itself. The ability to model non-linear boundaries comes from the model architecture, not the loss function. In contrast, kernelized SVMs achieve non-linearity through kernel tricks that implicitly map inputs to a higher-dimensional space, that can be linearly separated by the supported vectors. I will leave the general SVM topic for now, and may come back on this in another time.
+
+### Neural Network
+The concept of neural networks is introduced shortly afterwards, with several dedicated sections in the first module. The explanation proceeds by focusing on score functions, avoiding analogies to the human brain. Unlike linear models, neural networks consist of multiple hidden layers. These can be viewed as applying score functions multiple times using different sets of weights, ultimately computing the final scores in the output layer. For example, a three-layers neural network might compute scores as follows:
+
+$$
+s = W_3 max(0, W_2 max(0, W_1 x))
+$$
+
+where the function $max(0, -)$, used earlier for calculating the multiclass SVM loss, is referred to as the ReLU activation function in the context of neural networks. The non-linear classification capability of neural network arises precisely from such non-linear activation functions.
+
+I won’t delve deeper here, as the foundational concepts of neural networks are covered in my earlier blog post: [Neural Network Notes: the Basics and Backpropagation](https://wayne82.github.io/neural-network/2025/03/30/Neural-Network-Notes-The-Basics-and-Backpropagation.html).
+
+## What is Convolutional Neural Network
+A **Convolutional Neural Network (ConvNet or CNN)** is a specialized type of neural network designed specifically for image classification tasks. To recap, a regular neural network has the following architectural properties:
+* The input data is treated as a generic, one-dimensional vector of features.
+* Neurons in each hidden layer are fully connected to all neurons in the previous layer.
+* Connections to neurons are unique—there is no sharing of weights.
+
+In contrast, a ConvNet architecture differs in several key ways by leveraging the spatial structure of image data:
+* **3D Layer Volumes**: Since the input consists of images, we can arrange neurons in each layer in three dimensions — **width, height, and depth** — resulting in 3D volumes of neurons.
+* **Local Connectivity (Receptive Field)**: Each neuron in a Conv layer is only connected to a small region of the input volume, known as its receptive field, rather than being fully connected.
+* **Weight Sharing**: The weights connecting receptive fields to neurons are shared across all neurons in a given depth slice, greatly reducing the number of parameters.
+
+In short, **a ConvNet is composed of layers that each transform an input 3D volume into an output 3D volume via a differentiable function—some with learnable parameters, others not.**
+
+There are three primary types of layers used to build ConvNet architectures:
+
+### Convolutional Layer
+The convolutional layer is the core building block of a ConvNet and performs most of the computational heavy lifting.
+* The learnable parameters in a Conv layer consist of a set of filters (or kernels). Each filter is small in spatial dimensions (width and height) but extends through the full depth of the input volume. Each neuron connects to a local region in the input volume through a filter.
+* There are three key hyperparameters that determine the output volume size:
+  * **Depth**: Number of filters used; each filter learns to detect a different feature.
+  * **Stride**: The step size used to slide the filter across the input (e.g., a stride of 1 moves one pixel at a time).
+  * **Zero-padding**: Padding added around the border of the input to control the spatial size of the output, often used to preserve input size.
+
+  Then, given input volume size **W**, filter size **F**, stride **S**, and zero-padding **P**, the output volume size is  calculated as
+
+  $$
+  (W - F + 2P)/S + 1
+  $$
+
+* The parameters used in each filter are shared with all neurons in the same depth slice. E.g. a 11x11x3 filter will have $11 \times 11 \times 3= 363$ weights and 1 bias, and shared by all neurons in one depth slice. In AlexNet, the first Conv layer uses 96 such filters, resulting in a total of $11 \times 11 \times 3 \times 96 = 34848$ weights and 96 biases.
+
+### Pooling Layer
+The pooling layer is used to progressively reduce the spatial size of the representation to reduce the amount of parameters and computation in the network, and help to also control overfitting. It is common to periodically insert a pooling layer between successive Conv layers. It operates independently on every depth slice of the input and resize it spatially, using the MAX operation. The most common form is using a filter of size 2 by 2 applied with a stride of 2 downsamples every depth slice in the input by 2 along both width and height, effectively discarding 75% of the activations. E.g. a pooling layer with filter size 2, stride 2 will downsample the input volume of size [M x M x D] to output volume of size [M/2 x M/2 x D].
+  * A pooling layers introduces **no new parameters**. During backpropagation, gradients are routed to the input element that had the maximum value in the forward pass
+  * Some modern architectures suggest omitting pooling layers in favor of Conv layers with larger strides to achieve similar downsampling while preserving parameterization.
+
+### Fully Connected (FC) Layer
+The fully connected layer connects every activation in the previous layer to each neuron in the current layer, just like in a standard neural network.
+
+It is possible to convert between convolutional and fully connected layers:
+* **Conv to FC**: Any Conv layer can be expressed as an FC layer with a sparse weight matrix, where most entries are zero and non-zero entries are shared due to parameter sharing.
+* **FC to Conv**: Any FC layer can be converted into a Conv layer by using a filter with the same spatial dimensions as the input volume, no padding, and stride 1. The output will be a 1×1×D volume — identical to the FC layer output.
+
+### ConvNet Architectures
+Finally, ConvNet architectures are built by stacking the above layers — Convolutional, Pooling, and Fully Connected — often with the ReLU activation function explicitly added between layers.
+* A common architecture pattern is:
+```css
+INPUT -> [[CONV -> RELU] * N -> POOL?] * M -> [FC -> RELU] x K -> FC
+```
+where `*` indicates repetition, and `POOL?` indicates an optional pooling layer. Moreover, `N>=0` and usually `N<=3`, `M>=0`, `K>=0` and usually `K<3`.
+
+* Stacking **smaller Conv filters** is generally preferred over one large receptive field, as it increases non-linearity and reduces the number of parameters while allowing deeper feature extraction. However, it can require more memory during backpropagation to store intermediate activations.
+* Some well-known CNN architectures include:
+  * **LeNet** (1990s, by Yann LeCun): One of the first successful CNNs, used for digit and zip code recognition.
+  * **AlexNet** (2012): Popularized CNNs in computer vision and won the ImageNet competition.
+  * **ResNet** (2015–2016): Developed by Kaiming He et al., introduced residual connections and achieved state-of-the-art results.
+
+## My Intrinsic Curiosity Go Further
+As I dive deeper into the many aspects and technical details of CNNs — a powerful neural network architecture capable of solving challenging real-world computer vision problems — I find myself continuously pondering a few deeper questions:
+
 While I am learning the every aspects and details of CNN - a full fledged neural network architecture solving practical and hard computer vision problems, I still ponder on these questions,
-* How was the multiple layers architecture of CNN developed in the first place?
-* Why is a Conv layer interpreted as feature extraction?
-* How is the number of filters chosen?
-* How do we make sure filters learn distinct meaningful features, instead of noisy or redundant features?
-* Is there specialized mathematics explanation for why such architecture can work really well for computer vision problems?
+* How was the multi-layer architecture of CNNs originally developed?
+* Why is a convolutional layer commonly interpreted as a feature extractor?
+* How is the number of filters in each layer determined?
+* How do we ensure that the filters learn distinct and meaningful features, rather than redundant or noisy ones?
+* Is there a rigorous mathematical explanation for why this architecture works so effectively for visual data?
 
-I think I will need more time to explore, research and learn to seek the answers for these questions, so I won't expand further in this blog to cover them. And I will probably leave it to another write up another time.
+I believe these questions reflect the kind of deeper inquiry that often drives innovation and a stronger conceptual understanding. While I don't attempt to answer them in this already lengthy blog post, they remain open areas of curiosity for me. So, I will leave my further exploration on this subject to another blog in future.
 
-# My Learning Experience
-Every time when I start to learn something, it is all started with a pure curiosity on the subject, trying to figure out how it works. First, I will find the offical materials or authorized books to learn the basics, such as terminologies, definitions, etc., the key concepts, and then the details. Occasionally, I will look for high quality online courses or youtube videos for help me comprend the content further. Then, I will continue exploring why it works this way and how it was developed if possible. I find it is very satisfying to know the developing process of the subject and sometimes it is inspiring to promote further divergent thinking. At last, I will pause and ponder again - are there any potential connections among the knowledges I've beeing learing so far, and could there be any new findings emerging from these connections...
+## My Learning Experience
+Whenever I begin learning a new topic, it usually starts with a simple, genuine curiosity about how something works. My learning process tends to follow a pattern. First, I seek out official materials or authoritative books to establish a solid foundation—starting with terminology, key definitions, and core concepts. I then dig into the more detailed mechanics. Along the way, I supplement this with high-quality online courses or YouTube videos to deepen my understanding and clarify any confusion.
+
+Once I grasp the basics, I like to go further — exploring why things work the way they do and how they were developed. I find it deeply satisfying to understand the origin and evolution of a subject. Often, these historical or developmental insights inspire me to think more broadly and make connections beyond the topic itself.
+
+Finally, I ask myself: Are there connections between this topic and the other domains I've explored? Could new insights or ideas emerge from these intersections? This habit of reflection often leads to exciting directions for further exploration, and sometimes, to surprising discoveries.
