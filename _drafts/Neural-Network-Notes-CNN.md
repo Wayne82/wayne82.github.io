@@ -18,15 +18,15 @@ At the core, the image classification problem addressed by all these methods is 
 Traditionally, one might try to handcraft an algorithm to distinguish images, but this is no longer practical. Instead, a data-driven approach is adopted: given a well-labeled dataset, the model learns to map images to their corresponding labels through training, and can then predict the class of new, unseen images.
 
 ### k-Nearest Neighbor (k-NN)
-Different classification methods offer distinct tradeoffs. For instance, the k-NN classifier requires no training time—it simply stores the labeled training data. However, this results in high prediction cost, as it must compare each test image against all training examples.
+Different classification methods offer distinct tradeoffs. For instance, the k-NN classifier requires no training time — it simply stores the labeled training data. However, this results in high prediction cost, as it must compare each test image against all training examples.
 
 ### Linear Classifier & SVM Loss
 In contrast, methods like **Linear Classifiers**, **Neural Networks**, and especially **Deep Neural Networks**, demand significant computation during training but offer efficient prediction once trained.
 
 Linear classifiers consist of two main components:
 
-* A score function, which maps input data to class scores. For linear classification, this is typically $f(x_i, W, b) = wx_i + b$, where $W$ is the weight matrix and $b$ is the bias vector.
-* A loss function, which quantifies the disagreement between predicted scores and the ground truth labels.
+* **A score function**, which maps input data to class scores. For linear classification, this is typically $f(x_i, W, b) = wx_i + b$, where $W$ is the weight matrix and $b$ is the bias vector.
+* **A loss function**, which quantifies the disagreement between predicted scores and the ground truth labels.
 
 Here, each weight vector $w_j$ can be viewed as a learned template for a specific class. This leads to a helpful interpretation: linear classification as template matching.
 
@@ -36,7 +36,7 @@ $$
 L_i = \sum_{j \neq y_i} \max\left(0, s_j - s_{y_i} + \Delta\right)
 $$
 
-where $L_i$ is the loss for the $i-th$ input data. $s_j$ is the score calculated for class $j$, $s_{y_i}$ is the score for the true class $y_i$, $\Delta$ is the margin hyperparameter (typically $\Delta = 1$), and $max(0, -)$ is the Hinge function (activates only when $s_j - s_{y_i} + \Delta > 0$).
+where $L_i$ is the loss for the $ith$ input data. $s_j$ is the score calculated for class $j$, $s_{y_i}$ is the score for the true class $y_i$, $\Delta$ is the margin hyperparameter (typically $\Delta = 1$), and $max(0, -)$ is the Hinge function (activates only when $s_j - s_{y_i} + \Delta > 0$).
 
 This function penalizes cases where the correct class score $s_{y_i}$ does not exceed the incorrect class score $s_j$ by at least a margin $\Delta$.
 
@@ -47,7 +47,7 @@ Furthermore, To improve generalization and reduce overfitting, an L2 regularizat
 As a beginner, I was initially confused between Multiclass SVM Loss (used in linear models) and kernelized SVMs (used for non-linear classification). After some detours, I realized that Multiclass SVM Loss is just a training objective and does not introduce non-linearity by itself. The ability to model non-linear boundaries comes from the model architecture, not the loss function. In contrast, kernelized SVMs achieve non-linearity through kernel tricks that implicitly map inputs to a higher-dimensional space, that can be linearly separated by the supported vectors. I will leave the general SVM topic for now, and may come back on this in another time.
 
 ### Neural Network
-The concept of neural networks is introduced shortly afterwards, with several dedicated sections in the first module. The explanation proceeds by focusing on score functions, avoiding analogies to the human brain. Unlike linear models, neural networks consist of multiple hidden layers. These can be viewed as applying score functions multiple times using different sets of weights, ultimately computing the final scores in the output layer. For example, a three-layers neural network might compute scores as follows:
+The concept of neural networks is introduced shortly afterwards, with several dedicated sections in the first module of the course. The explanation proceeds by focusing on score functions, avoiding analogies to the human brain. Unlike linear models, neural networks consist of multiple hidden layers. These can be viewed as applying score functions multiple times using different sets of weights, ultimately computing the final scores in the output layer. For example, a three-layers neural network might compute scores as follows:
 
 $$
 s = W_3 max(0, W_2 max(0, W_1 x))
@@ -68,7 +68,7 @@ In contrast, a ConvNet architecture differs in several key ways by leveraging th
 * **Local Connectivity (Receptive Field)**: Each neuron in a Conv layer is only connected to a small region of the input volume, known as its receptive field, rather than being fully connected.
 * **Weight Sharing**: The weights connecting receptive fields to neurons are shared across all neurons in a given depth slice, greatly reducing the number of parameters.
 
-In short, **a ConvNet is composed of layers that each transform an input 3D volume into an output 3D volume via a differentiable function—some with learnable parameters, others not.**
+In short, **a ConvNet is composed of layers that each transform an input 3D volume into an output 3D volume via a differentiable function — some with learnable parameters, others not.**
 
 There are three primary types of layers used to build ConvNet architectures:
 
@@ -104,7 +104,7 @@ It is possible to convert between convolutional and fully connected layers:
 Finally, ConvNet architectures are built by stacking the above layers — Convolutional, Pooling, and Fully Connected — often with the ReLU activation function explicitly added between layers.
 * A common architecture pattern is:
 ```css
-INPUT -> [[CONV -> RELU] * N -> POOL?] * M -> [FC -> RELU] x K -> FC
+INPUT -> [[CONV -> RELU] * N -> POOL?] * M -> [FC -> RELU] * K -> FC
 ```
 where `*` indicates repetition, and `POOL?` indicates an optional pooling layer. Moreover, `N>=0` and usually `N<=3`, `M>=0`, `K>=0` and usually `K<3`.
 
@@ -115,20 +115,16 @@ where `*` indicates repetition, and `POOL?` indicates an optional pooling layer.
   * **ResNet** (2015–2016): Developed by Kaiming He et al., introduced residual connections and achieved state-of-the-art results.
 
 ## My Intrinsic Curiosity Go Further
-As I dive deeper into the many aspects and technical details of CNNs — a powerful neural network architecture capable of solving challenging real-world computer vision problems — I find myself continuously pondering a few deeper questions:
-
-While I am learning the every aspects and details of CNN - a full fledged neural network architecture solving practical and hard computer vision problems, I still ponder on these questions,
+As I dive deeper into the many aspects and technical details of CNNs — a powerful neural network architecture capable of solving challenging real-world computer vision problems — I find myself continuously pondering these questions:
 * How was the multi-layer architecture of CNNs originally developed?
 * Why is a convolutional layer commonly interpreted as a feature extractor?
 * How is the number of filters in each layer determined?
 * How do we ensure that the filters learn distinct and meaningful features, rather than redundant or noisy ones?
 * Is there a rigorous mathematical explanation for why this architecture works so effectively for visual data?
 
-I believe these questions reflect the kind of deeper inquiry that often drives innovation and a stronger conceptual understanding. While I don't attempt to answer them in this already lengthy blog post, they remain open areas of curiosity for me. So, I will leave my further exploration on this subject to another blog in future.
+I believe these questions reflect the kind of deeper inquiry that often drives innovation and a stronger conceptual understanding. While I don't attempt to answer them in this already lengthy blog post, they remain open areas of curiosity for me. So, I will probably leave my further exploration on these areas to another blog in future.
 
 ## My Learning Experience
-Whenever I begin learning a new topic, it usually starts with a simple, genuine curiosity about how something works. My learning process tends to follow a pattern. First, I seek out official materials or authoritative books to establish a solid foundation—starting with terminology, key definitions, and core concepts. I then dig into the more detailed mechanics. Along the way, I supplement this with high-quality online courses or YouTube videos to deepen my understanding and clarify any confusion.
+Whenever I begin learning a new topic, it usually starts with a simple, genuine curiosity about how something works. My learning process tends to follow a pattern. First, I seek out official materials or authoritative books to establish a solid foundation — starting with terminology, key definitions, and core concepts. I then dig into the more detailed mechanics. Along the way, I may refer to high-quality online courses or YouTube videos to deepen my understanding or clarify any confusion.
 
-Once I grasp the basics, I like to go further — exploring why things work the way they do and how they were developed. I find it deeply satisfying to understand the origin and evolution of a subject. Often, these historical or developmental insights inspire me to think more broadly and make connections beyond the topic itself.
-
-Finally, I ask myself: Are there connections between this topic and the other domains I've explored? Could new insights or ideas emerge from these intersections? This habit of reflection often leads to exciting directions for further exploration, and sometimes, to surprising discoveries.
+Once I grasp the basics, I like to go further — exploring why things work the way they do and how they were developed. I find it deeply satisfying to understand the origin and evolution of a subject. Often, these historical or developmental process inspire me to think more broadly and make connections to other domains beyond the topic itself. Then, new insights or ideas may well emerge from these connections involuntarily. Who knows!
