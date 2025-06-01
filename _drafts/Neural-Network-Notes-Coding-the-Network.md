@@ -74,6 +74,13 @@ The four fundamental equations used above are explained in detail in [the book](
 ![Image](/assets/images/equations%20of%20backpropagation.png)
 
 ## Exploring Activation Functions and L2 Regularization
+The initial version of the neural network was quite straightforward: it used the sigmoid activation function for all layers, a quadratic cost function for computing loss, and initialized weights and biases with a standard normal distribution. Even with this simple setup, training a network with 30 hidden neurons for 30 epochs already yielded solid results — around 95% accuracy on the validation set.
+
+To explore whether I could push the performance further, I experimented with changing the activation function. After reading that ReLU is often preferred in deeper networks due to its ability to mitigate the vanishing gradient problem common with sigmoid, I replaced the hidden layer activation function with ReLU while keeping the output layer unchanged.
+
+At the same time, I introduced L2 regularization into the cost function to help reduce overfitting and improve the model’s ability to generalize. Since switching to ReLU can lead to the “dying ReLU” problem — where some neurons stop activating and effectively become untrainable — I adjusted the weight initialization using He initialization to mitigate this risk. Interestingly, this issue was one of the challenges I ran into during experimentation, which I describe in more detail in the next section.
+
+After these updates were properly configured, the network's accuracy improved to around 96.33%. That may not seem like a huge jump at first glance, but in this context, gaining over 1% in accuracy was a clear indication that these adjustments made a real impact.
 
 ## Challenges Along the Way
 The biggest challenge I faced was not knowing where to start debugging when things didn’t work as expected. This happened immediately after I hit "Enter" to start the training process with my first implementation. The accuracy on the validation data set remained stuck at 10% after each epoch — a clear sign that the neural network wasn't learning at all. The weights and biases still appeared to be random, suggesting that the training had no effect.
@@ -92,11 +99,14 @@ Still, I had no better option, so I started printing out weights and activations
 
 After some research, I learned about the "dying ReLU" problem — a common issue where ReLU neurons become inactive due to consistently negative weighted inputs, resulting in both zero gradients and zero activations (no learning). To mitigate this, I adopted He initialization for the weights and also reduced the learning rate, which helped bring the network back on track again.
 
-## Excitment to See - It Works!
+## Excitement to See - It Works!
 Now comes the moment of joy — the moment when everything finally comes together, and the neural network not only trains successfully but also predicts new inputs with remarkable accuracy. That sense of accomplishment reminded me of the simple joy I felt when building things as a kid — except now, it was backed by actual math and code.
 
 What made it especially rewarding was seeing how concepts I had read about — like forward propagation, backpropagation, and SGD — translated into working code. It’s one thing to follow a tutorial or read through equations, but it’s a completely different experience to implement the pieces yourself and watch them work as expected.
 
 At the same time, it was also a good reminder of how much foundational knowledge is packed into even a small project like this. The code may be short, but behind it are decades of research in mathematics, computer science, and neuroscience. I didn’t invent the methods, but by working through them line by line, I gained a deeper appreciation for how everything fits together — and that’s exactly what I was hoping to get out of this learning process.
 
-## This is Just a Beginning
+## This is Just the Beginning
+This basic neural network is both surprisingly simple in code and surprisingly powerful in performance — achieving impressive accuracy with under a hundred lines of Python. But this is just the beginning.
+
+There’s so much more to explore further: modern deep learning architectures, more sophisticated optimization techniques, transfer learning, and eventually, how large language models are built and trained. The road ahead will no doubt bring new challenges and discoveries, but for now, I’ll take a breath, and conclude this blog here.
