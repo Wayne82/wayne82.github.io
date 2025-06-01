@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Neural Network Notes: CNN"
+title:  "Neural Network Notes: Convolutional Neural Network"
 categories: neural-network
 mathjax: true
 comments: true
