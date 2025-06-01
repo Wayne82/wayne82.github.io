@@ -91,13 +91,13 @@ Such situation is particularly difficult for a beginner, because I could be wron
 * There was a bug in my evaluation code — I misused NumPy’s **argmax** function, which led to incorrect outputs even though the network was actually trained correctly.
 * I also ran into some minor issues simply due to my unfamiliarity with certain NumPy data structures and operations.
 
-To catch these low-level bugs, I relied on two basic but effective strategies: carefully re-reading the code and printing out anything that looked suspicious for verification. After a few rounds of this (read → print → verify) cycle, the bugs were gradually ironed out.
+To catch these low-level bugs, I relied on two basic but effective strategies: carefully re-reading the code and printing out anything that looked suspicious for verification. After a few rounds of this **(read → print → verify)** cycle, the bugs were gradually ironed out.
 
 Once the basic neural network started working, I moved on to experimenting with different configurations. But new problems surfaced. One significant issue arose after I literally switched to the ReLU activation from the Sigmoid function. The training accuracy dropped drastically — sometimes even below 50%. At first, I felt stuck. With so many weights, biases, and activations involved, printing them for each mini-batch update resulted in pages of output. It felt impossible to analyze or reason about those values by eye — at least not for me, at this stage.
 
 Still, I had no better option, so I started printing out weights and activations for certain iterations. It turned out that many neurons in the hidden layer had activations stuck at zero after just a few training iterations. This was a red flag.
 
-After some research, I learned about the "dying ReLU" problem — a common issue where ReLU neurons become inactive due to consistently negative weighted inputs, resulting in both zero gradients and zero activations (no learning). To mitigate this, I adopted He initialization for the weights and also reduced the learning rate, which helped bring the network back on track again.
+After some research, I learned about the "**dying ReLU**" problem — a common issue where ReLU neurons become inactive due to consistently negative weighted inputs, resulting in both zero gradients and zero activations (no learning). To mitigate this, I adopted He initialization for the weights and also reduced the learning rate, which helped bring the network back on track again.
 
 ## Excitement to See - It Works!
 Now comes the moment of joy — the moment when everything finally comes together, and the neural network not only trains successfully but also predicts new inputs with remarkable accuracy. That sense of accomplishment reminded me of the simple joy I felt when building things as a kid — except now, it was backed by actual math and code.
