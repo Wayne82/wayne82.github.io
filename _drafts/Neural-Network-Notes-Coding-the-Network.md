@@ -15,13 +15,13 @@ Before moving further, I want to solidify my understanding by getting hands-on �
 Then, I've started this github repo - [nn-learn](https://github.com/Wayne82/nn-learn) for managing my code implementation of the learning. And this blog is to document the experience of coding a basic neural network along the way.
 
 ## The Structure of the Code
-Surprisingly, fewer than 100 lines of Python code are enough to build a basic neural network architecture, implement the training loop, and update weights and biases effectively using stochastic gradient descent (SGD) combined with the backpropagation algorithm. Thanksfully, the Numpy library in Python makes all kinds of matrix operations way easier.
+Surprisingly, fewer than 100 lines of Python code are enough to build a basic neural network architecture, implement the training loop, and update weights and biases effectively using stochastic gradient descent (SGD) combined with the backpropagation algorithm. Thankfully, Python’s NumPy library makes matrix operations significantly easier and more efficient.
 
 After just a few dozens training iterations, the network is already able to predict handwritten digit images with impressive accuracy — often exceeding 95%.
 
 The diagram below provides a visual overview of how the training code is structured:
 
-![Image](/assets/images/neural%20network%20code%20structure.png)
+![Image](/assets/images/neural%20network%20code%20structure.png){:style="display:block; margin-left:auto; margin-right:auto"}
 
 To be clear, I didn’t write all of this entirely from scratch. I referred to the [code example](https://github.com/mnielsen/neural-networks-and-deep-learning) from the excellent online book Neural Networks and Deep Learning by Michael Nielsen (mentioned earlier). My modified version of the implementation can be found in [this file](https://github.com/Wayne82/nn-learn/blob/main/nnet.py) in my GitHub repo, where I’ve added extra comments, rearranged the code a bit, following my own learning process.
 
@@ -71,7 +71,7 @@ One part I want to highlight here is the backpropagation function. I’ve annota
 ```
 The four fundamental equations used above are explained in detail in [the book](http://neuralnetworksanddeeplearning.com/chap2.html#the_four_fundamental_equations_behind_backpropagation) and were also discussed in [my earlier blog post](https://wayne82.github.io/neural-network/2025/03/30/Neural-Network-Notes-The-Basics-and-Backpropagation.html), where I gave the complete proof.
 
-![Image](/assets/images/equations%20of%20backpropagation.png)
+![Image](/assets/images/equations%20of%20backpropagation.png){:style="display:block; margin-left:auto; margin-right:auto"}
 
 ## Exploring Activation Functions and L2 Regularization
 The initial version of the neural network was quite straightforward: it used the sigmoid activation function for all layers, a quadratic cost function for computing loss, and initialized weights and biases with a standard normal distribution. Even with this simple setup, training a network with 30 hidden neurons for 30 epochs already yielded solid results — around 95% accuracy on the validation set.
