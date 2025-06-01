@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Neural Network Notes: Coding the Network"
+title:  "Neural Network Notes: Coding the Network from Scratch"
 categories: neural-network
 mathjax: true
 comments: true
