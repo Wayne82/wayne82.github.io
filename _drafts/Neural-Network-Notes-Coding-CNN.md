@@ -54,10 +54,24 @@ Now, we come to the most important and interesting part of the CNN implementatio
 > The gradients of the weights and biases need to reset to zero before each batch processing, otherwise the gradients will accumulate across batches, which is not what we want. This is done in the `zero_grad` function for layers having trainable parameters (e.g., convolutional and fully connected layers).
 
 ## Training and Optimizations
+Then, we can start to construct our CNN model by adding layers flexibly, but following this common layer patterns: `INPUT -> [[CONV -> RELU]*N -> POOL?]*M -> [FC -> RELU?]*K -> FC`. I started with a simple CNN model with minimum layers: `INPUT -> CONV -> RELU -> POOL -> (Flatten) -> FC`, which is already surprisingly effective to achieve a decent accuracy - higher than 97% on the MNIST dataset.
 
-Optimization path - simple loops -> batch processing -> vectorization
+However, I also noticed the training process was quite slow even with the minimum layers architecture and training on the small MNIST dataset. Comparing to the previous basic neural network implementation, the speed of training was significantly slower about 3 orders of magnitude. This is mainly due to the fact that the convolution operation is computationally more expensive than the matrix multiplication in fully connected layers, and the backpropagation through convolutional layers is also more complex.
+
+To speed up the training process, I mainly applied these 2 optimizations:
+- **Batch Processing**: Instead of processing one sample at a time, I implemented batch processing, which allows the network to process multiple samples in parallel. However, this does not significantly speed up the training process, as the convolution operations are still processed in simple loops.
+- **Vectorization**: Then, I learnt that vectorized convolution is an optimization technique where the standard nested-loop-based convolution operation can be rewritten using numpy's vectorized operations, which are much faster than using simple loops. This is a crucial optimization, as Numpy's vectorized operations are implemented in C and can take advantage of low-level optimizations, making them much faster than Python loops.
+
+After applying these optimizations, the training speed was increased about 100 times, allowing me to try more complex CNN architectures and achieve even higher accuracy on the MNIST dataset. I will share my test results right in the next section.
 
 ## Test Results
+The test results for the 2 CNN models are summarized in the table below. The first model is a simple CNN with minimum layers, and the second model is a more complex CNN with additional convolutional and fully connected layers. Both use the same training dataset MNIST and hyperparameters (batch_size=10, learning_rate=0.05, epochs=30), and the training process is done on a single CPU core.
+
+| Model | Architectures | Accuracy | Training Time |
+|-------|----------------|----------|---------------|
+| Simple CNN | <code style="display: block; background-color: #f5f5f5; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 12px; line-height: 1.4; white-space: pre;">Input (28x28)<br>→ Conv2D (8 filters, 3x3, padding='same')<br>→ ReLU<br>→ MaxPool2D (2x2)<br>→ Flatten<br>→ Fully Connected (8x14x14, 10) <br></code> | 97.67% | ~ minutes |
+| Complex CNN | <code style="display: block; background-color: #f5f5f5; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 12px; line-height: 1.4; white-space: pre;">Input (28x28)<br>→ Conv2D (32 filters, 3x3, padding='same')<br>→ ReLU<br>→ Conv2D (32 filters, 3x3, padding='same')<br>→ ReLU<br>→ MaxPool2D (2x2)<br>→ Conv2D (64 filters, 3x3, padding='same')<br>→ ReLU<br>→ Conv2D (64 filters, 3x3, padding='same')<br>→ ReLU<br>→ MaxPool2D (2x2)<br>→ Flatten<br>→ Fully Connected (64x7x7, 128)<br>→ ReLU<br>→ Fully Connected (128, 10)</code> | 99.33% | ~ hours |
+
 
 ## A bit of Notes about Numpy N-D Arrays
 
