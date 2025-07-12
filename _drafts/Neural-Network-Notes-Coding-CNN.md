@@ -35,7 +35,7 @@ Then, the key layers of the CNN implementation in this exercise can be summarize
 6. **Softmax and Loss Function**: The loss function measures the difference between the predicted output and the true output. One of the loss functions for classification tasks and also used in this implementation is the **Cross-Entropy loss**. And before applying the loss function, the **Softmax** function is often applied to the output layer to convert the raw logits into probabilities.
 
 ## Backpropagation in CNNs
-Now, we come to the most important and interesting part of the CNN implementation, which is the backpropagation algorithm. Essentially, the 4 fundamental backpropagation equations from Michael Nielsen’s book are still applicable, but with some modifications to accommodate the convolutional and pooling layers. The key idea of backpropagation in CNNs is still the same,
+Now, we come to the most important and interesting part of the CNN implementation, which is the backpropagation algorithm. Essentially, the 4 fundamental backpropagation equations from [Michael Nielsen’s book](http://neuralnetworksanddeeplearning.com/chap2.html#the_four_fundamental_equations_behind_backpropagation) are still applicable, but with some modifications to accommodate the convolutional and pooling layers, and also the explicitly separated ReLU layer. The key idea of backpropagation in CNNs is still the same,
 * First, compute the gradients of the loss function with respect to the output (the logits) of the network.
 * Then, propagate these gradients backward through the network, layer by layer. Specifically, there are **at most 3** different gradients to calculate for each layer:
   - The gradient of the loss with respect to the **weights** of the current layer.
