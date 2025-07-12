@@ -64,13 +64,21 @@ To speed up the training process, I mainly applied these 2 optimizations:
 
 After applying these optimizations, the training speed increased about 100 times, allowing me to try more complex CNN architectures and achieve even higher accuracy on the MNIST dataset. I will share my test results right in the next section.
 
+> 📝 Notes
+>
+> The vectorized convolution implementation is much complex than I thought, which though I've implemented them in the code with the help of Copilot, I haven't fully understood the details yet. Mainly because I am still new to Numpy's n-dimensional arrays and their advanced operations. This deserves another dedicated learning session in the future. But for now, let me just leave it here.
+
 ## Test Results
-The test results for the 2 CNN models are summarized in the table below. The first model is a simple CNN with minimum layers, and the second model is a more complex CNN with additional convolutional and fully connected layers. Both use the same training dataset MNIST and hyperparameters (batch_size=10, learning_rate=0.05, epochs=30), and the training process is done on a single CPU core.
+The test results for the 2 CNN models are summarized in the table below. The first model is a simple CNN with minimum layers, and the second model is a more complex CNN with additional convolutional and fully connected layers. Both use the same training dataset MNIST and hyperparameters (batch_size=10, learning_rate=0.05, epochs=30), and the training process is done on CPU.
 
 | Model | Architectures | Accuracy | Training Time |
 |-------|----------------|----------|---------------|
 | Simple CNN | <code style="display: block; background-color: #f5f5f5; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 12px; line-height: 1.4; white-space: pre;">Input (28x28)<br>→ Conv2D (8 filters, 3x3, padding='same')<br>→ ReLU<br>→ MaxPool2D (2x2)<br>→ Flatten<br>→ Fully Connected (8x14x14, 10) <br></code> | 97.67% | ~ minutes |
 | Complex CNN | <code style="display: block; background-color: #f5f5f5; padding: 8px; border-radius: 4px; font-family: monospace; font-size: 12px; line-height: 1.4; white-space: pre;">Input (28x28)<br>→ Conv2D (32 filters, 3x3, padding='same')<br>→ ReLU<br>→ Conv2D (32 filters, 3x3, padding='same')<br>→ ReLU<br>→ MaxPool2D (2x2)<br>→ Conv2D (64 filters, 3x3, padding='same')<br>→ ReLU<br>→ Conv2D (64 filters, 3x3, padding='same')<br>→ ReLU<br>→ MaxPool2D (2x2)<br>→ Flatten<br>→ Fully Connected (64x7x7, 128)<br>→ ReLU<br>→ Fully Connected (128, 10)</code> | 99.33% | ~ hours |
+
+> 📝 Notes
+>
+> The test script can refer to [here](https://github.com/Wayne82/nn-learn/blob/main/test.py), and run `python3 test.py convnet` for the simple CNN model, and `python3 test.py convnet complex` for the complex CNN model.
 
 ## A Brief Notes about Numpy N-D Arrays
 Numpy's n-dimensional arrays (ndarrays) are a powerful feature that allows for efficient storage and manipulation of large datasets. Here are some key points to remember when working with ndarrays, especially in the context of CNNs:
