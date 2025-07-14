@@ -22,10 +22,14 @@ collections:
   galleries:
     output: true
     permalink: /galleries/:name/
+  topics:
+    output: true
+    permalink: /topics/:name/
 
 minima:
   nav_pages:
     - gallery.md
+    - topics.md
     - about.md
   social_links:
     - title: Wayne's Github

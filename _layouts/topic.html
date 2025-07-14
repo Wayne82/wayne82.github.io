@@ -1,0 +1,87 @@
+---
+layout: default
+---
+
+<main class="topic-main">
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+        {% if page.description %}
+            <p class="topic-description">{{ page.description }}</p>
+        {% endif %}
+    </header>
+
+    {{ content }}
+
+    <div class="topic-posts">
+        {% assign category_posts = site.posts | where: "categories", page.category %}
+        {% if category_posts.size > 0 %}
+            <ul class="post-list">
+                {% for post in category_posts %}
+                    <li class="post-item">
+                        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+                        <h3>
+                            <a class="post-link" href="{{ post.url | relative_url }}">
+                                {{ post.title | escape }}
+                            </a>
+                        </h3>
+                        {% if post.excerpt %}
+                            <p class="post-excerpt">{{ post.excerpt | strip_html | truncatewords: 50 }}</p>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No posts found in this topic.</p>
+        {% endif %}
+    </div>
+</main>
+
+<style>
+.topic-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.topic-description {
+    color: #666;
+    font-size: 1.1em;
+    margin-bottom: 0px;
+}
+
+.topic-posts {
+    margin-top: 40px;
+}
+
+.post-list {
+    list-style: none;
+    padding: 0;
+}
+
+.post-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.post-meta {
+    color: #999;
+    font-size: 0.9em;
+}
+
+.post-link {
+    color: #2a7ae4;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+}
+
+.post-excerpt {
+    color: #666;
+    margin-top: 10px;
+    line-height: 1.6;
+}
+</style> 
