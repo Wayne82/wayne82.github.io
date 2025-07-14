@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "Topics"
-description: "Explore posts organized by topics"
+description: "Organize by Topics"
 permalink: /topics/
 ---
 
