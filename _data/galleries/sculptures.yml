@@ -6,3 +6,8 @@ images:
     width: 1279
     height: 1706
     alt: "Warrior"
+  - name: "skull.jpg"
+    thumb: "skull-thumb.jpg"
+    width: 1279
+    height: 1706
+    alt: "Skull"

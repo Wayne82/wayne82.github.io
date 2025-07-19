@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Usage:
-# ./update_gallery_yaml.sh /path/to/gallery_folder /path/to/output.yml
+# Usage: run at the root of the site.
+# gallery_image_gen.sh <gallery_folder> <output_yaml>
+# E.g. ./scripts/gallery_image_gen.sh assets/galleries/sketch/ _data/galleries/sketch.yml
 
 set -e
 

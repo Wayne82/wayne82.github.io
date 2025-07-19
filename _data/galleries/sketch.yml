@@ -1,6 +1,11 @@
 path: "/assets/galleries/sketch/"
 cover_image: 0
 images:
+  - name: "clown.jpg"
+    thumb: "clown-thumb.jpg"
+    width: 1167
+    height: 1207
+    alt: "Clown"
   - name: "doggy.jpg"
     thumb: "doggy-thumb.jpg"
     width: 1200
@@ -36,3 +41,8 @@ images:
     width: 1080
     height: 1080
     alt: "Xiao"
+  - name: "zen.jpg"
+    thumb: "zen-thumb.jpg"
+    width: 2388
+    height: 1668
+    alt: "Zen"
