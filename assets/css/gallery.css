@@ -38,11 +38,39 @@
   }
 
   .gallery-card-title {
-    padding: 1rem;
+    padding: 1rem 1rem 0.5rem 1rem;
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
     background: #f9f9f9;
+  }
+
+  .gallery-card-count {
+    padding: 0 1rem 1rem 1rem;
+    text-align: center;
+    background: #f9f9f9;
+    color: #999;
+    font-size: 0.9em;
+    font-weight: 500;
+    border-top: 1px solid #eee;
+    margin-top: 0rem;
+    padding-top: 0.5rem;
+  }
+
+  .gallery-card-link {
+    text-decoration: none !important;
+  }
+
+  .gallery-card-link:hover {
+    text-decoration: none !important;
+  }
+
+  .gallery-card-link:hover .gallery-card-title {
+    text-decoration: underline !important;
+  }
+
+  .gallery-card-link:hover .gallery-card-count {
+    text-decoration: none !important;
   }
 
   .gallery-photo-grid {

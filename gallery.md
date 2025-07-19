@@ -21,6 +21,7 @@ permalink: /gallery/
           <img src="{{ src }}" alt="{{ gallery.title }}" class="gallery-card-image" />
         </div>
         <div class="gallery-card-title">{{ gallery.title }}</div>
+        <div class="gallery-card-count">{{ gallery_data.images | size }} image{% if gallery_data.images.size != 1 %}s{% endif %}</div>
       </a>
     </div>
   {% endfor %}
