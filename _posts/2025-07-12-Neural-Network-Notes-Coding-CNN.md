@@ -6,7 +6,7 @@ mathjax: true
 comments: true
 ---
 
-Last time, I summarized my learnings of the [basic concepts of Convolutional Neural Networks (CNNs)](https://wayne82.github.io/neural-network/2025/05/15/Neural-Network-Notes-Convolutional-Neural-Network.html) and a [basic neural network implementation from scratch](https://wayne82.github.io/neural-network/2025/05/15/Neural-Network-Notes-Basic-Neural-Network.html). In this post, I will continue sharing my experience and notes on coding a CNN from "scratch", which is still part of my [nn-learn](https://github.com/waynewang/nn-learn) project.
+Last time, I summarized my learnings of the [basic concepts of Convolutional Neural Networks (CNNs)](https://wayne82.github.io/neural-network/2025/05/15/Neural-Network-Notes-Convolutional-Neural-Network.html) and a [basic neural network implementation from scratch](https://wayne82.github.io/neural-network/2025/05/15/Neural-Network-Notes-Basic-Neural-Network.html). In this post, I will continue sharing my experience and notes on coding a CNN from "scratch", which is still part of my [nn-learn](https://github.com/wayne82/nn-learn) project.
 
 ## The Structure of the Code
 The basic code structure of the CNN is very similar to the basic neural network implementation, but with dedicated network layers and functionalities specific to CNNs. See the diagram below for an overview of the code structure.
