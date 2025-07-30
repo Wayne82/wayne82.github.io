@@ -34,6 +34,36 @@ These are the questions I aim to figure out. Since the topic is quite broad, it 
 After that, I hope to be well-prepared to dive deeper into the world of attention, transformers, and modern LLMs.
 
 ## A vanilla RNN Architecture
+The simplest form of an RNN architecture consists of an input layer, a hidden layer with recurrent connections, and an output layer. The key differentiation from traditional neural networks is that the hidden layer's output at each time step is fed back into the same hidden layer for the next time step, allowing the network to maintain a form of memory by incorporating information from previous time steps.
+
+See the figure below:
+
+![Vanilla RNN Architecture](/assets/images/vanilla%20RNN%20architecture.png)
+
+Usually, the architecture can also be represented in an unrolled form, where each time step is shown separately, making it easier to visualize the flow of data input through time.
+
+![Unrolled RNN Architecture](/assets/images/RNN%20unrolled%20architecture.png)
+
+It is also worth to expand the simple form of RNN architecture to show neurons for each layer in its compact form, which can illustrate a direct comparison with traditional feedforward networks.
+
+![RNN Neurons](/assets/images/RNN%20neurons.png)
+
+The mathematical expression for the RNN can be written as follows:
+
+$$\begin{align}
+h_t &= f(W_{hh} h_{t-1} + W_{xh} x_t + b_h) \\
+y_t &= W_{hy} h_t + b_y
+\end{align}$$
+
+where:
+- **$$h_t$$** is the hidden state at time $$t$$
+- **$$x_t$$** is the input at time $$t$$
+- **$$y_t$$** is the output at time $$t$$
+- **$$W_{hh}$$** is the weight matrix from hidden to hidden (recurrent weights)
+- **$$W_{xh}$$** is the weight matrix from input to hidden
+- **$$W_{hy}$$** is the weight matrix from hidden to output
+- **$$b_h$$** and **$$b_y$$** are the biases for the hidden and output layers, respectively
+- **$$f$$** is the activation function (commonly tanh or ReLU)
 
 ## Backpropagation Through Time (BPTT)
 
