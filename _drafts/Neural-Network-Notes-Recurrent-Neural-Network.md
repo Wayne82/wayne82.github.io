@@ -65,11 +65,14 @@ where:
 - **$$b_h$$** and **$$b_y$$** are the biases for the hidden and output layers, respectively
 - **$$f$$** is the activation function (commonly tanh or ReLU)
 
-> 📝 Notes
->
-> The weight matrix and biases are shared across all time steps. This actually is the same as the feedforward neural network, where the weights and biases are shared across all inputs.
+There are a few things to note about the architecture:
+* The architecture demonstrated above is the simplest form with only one hidden layer, so it is not deep at all. However, it can be extended to have **multiple hidden layers**, similar to deep feedforward networks. And each hidden layer corresponds to a new hidden state, and has its own set of weights and biases.
+* For multilayer RNNs, **the key structure remains the same**: each hidden state at time **$$t$$** is passed to the next time step **$$t+1$$** of the same layer **$$l$$**, as well as to the next layer **$$l+1$$** of current time step **$$t$$**. See the figure below for a simple illustration:
+![Deep RNN Architecture](/assets/images/Deep%20RNN.png)
+* The weight matrix and biases at each hidden layer are **shared across all time steps**. This actually is the same as the feedforward neural network, where the weights and biases at each hidden layer are shared across all inputs.
 
 ## Backpropagation Through Time (BPTT)
+
 
 ## Vanishing Gradient Problem
 
