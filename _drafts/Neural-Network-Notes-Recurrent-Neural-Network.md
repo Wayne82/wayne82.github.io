@@ -65,6 +65,10 @@ where:
 - **$$b_h$$** and **$$b_y$$** are the biases for the hidden and output layers, respectively
 - **$$f$$** is the activation function (commonly tanh or ReLU)
 
+> 📝 Notes
+>
+> The weight matrix and biases are shared across all time steps. This actually is the same as the feedforward neural network, where the weights and biases are shared across all inputs.
+
 ## Backpropagation Through Time (BPTT)
 
 ## Vanishing Gradient Problem
