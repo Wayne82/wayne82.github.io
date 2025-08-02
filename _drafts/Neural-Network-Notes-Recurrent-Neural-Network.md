@@ -52,13 +52,15 @@ The mathematical expression for the RNN can be written as follows:
 
 $$\begin{align}
 h_t &= f(W_{hh} h_{t-1} + W_{xh} x_t + b_h) \\
-y_t &= W_{hy} h_t + b_y
+z_t &= W_{hy} h_t + b_y \tag{1} \\
+y_t &= \text{softmax}(z_t)
 \end{align}$$
 
 where:
 - **$$h_t$$** is the hidden state at time $$t$$
 - **$$x_t$$** is the input at time $$t$$
-- **$$y_t$$** is the output at time $$t$$
+- **$$z_t$$** is the raw output (logits) at time $$t$$
+- **$$y_t$$** is the output probabilities at time $$t$$ after applying softmax
 - **$$W_{hh}$$** is the weight matrix from hidden to hidden (recurrent weights)
 - **$$W_{xh}$$** is the weight matrix from input to hidden
 - **$$W_{hy}$$** is the weight matrix from hidden to output
@@ -72,7 +74,109 @@ There are a few things to note about the architecture:
 * The weight matrix and biases at each hidden layer are **shared across all time steps**. This actually is the same as the feedforward neural network, where the weights and biases at each hidden layer are shared across all inputs.
 
 ## Backpropagation Through Time (BPTT)
+Now, it is the fun part. How backpropagation works in RNNs? Though the concept of backpropagation is similar to that in feedforward networks, the recurrent nature of RNNs introduces a unique characteristic: **Backpropagation Through Time (BPTT)**. This method can be understood by unrolling the RNN through time, treating each time step as a separate layer, and then applying backpropagation as if it were a feedforward network.
 
+See the figure below for a simple illustration which highlights that the gradient of the loss at time step 3 is backpropagated through all previous time steps and then affect the calculation of gradients of weights and biases accordingly.
+
+![RNN BPTT](/assets/images/RNN%20BPTT.png)
+
+Let's define the loss function to be cross-entropy loss at time step **$$t$$**:
+
+$$L_t = -y_{t} \log(\hat{y}_{t}) \tag{2}$$
+
+where **$$y_{t}$$** is the true label and **$$\hat{y}_{t}$$** is the predicted output at time step **$$t$$**.
+
+Then, the total loss over all time steps is
+
+$$L = \sum_{t} L_t = -\sum_{t} y_{t} \log(\hat{y}_{t}) \tag{3}$$
+
+Now, we can compute the gradients of the total loss with respect to the **weights and biases** in the RNN.
+
+The gradients w.r.t. the output layer weights and biases can be computed as follows:
+
+$$\begin{align}
+\frac{\partial L}{\partial W_{hy}}
+&= \sum_{t} \frac{\partial L_t}{\partial W_{hy}} \\
+&= \sum_{t} \frac{\partial L_t}{\partial \hat{y}_{t}} \cdot \frac{\partial \hat{y}_{t}}{\partial z_{t}} \cdot \frac{\partial z_{t}}{\partial W_{hy}} \\
+&= \sum_{t} (\hat{y}_{t} - y_{t}) \cdot h_{t}^T \tag{4}
+\end{align}$$
+
+$$\begin{align}
+\frac{\partial L}{\partial b_y}
+&= \sum_{t} \frac{\partial L_t}{\partial b_y} \\
+&= \sum_{t} \frac{\partial L_t}{\partial \hat{y}_{t}} \cdot \frac{\partial \hat{y}_{t}}{\partial z_{t}} \cdot \frac{\partial z_{t}}{\partial b_y} \\
+&= \sum_{t} (\hat{y}_{t} - y_{t}) \tag{5}
+\end{align}$$
+
+> 📝 Notes
+>
+> When computing gradients for the softmax cross-entropy loss, it's much more efficient to calculate the gradient of the loss with respect to the output layer logits **$$z_t$$** directly. This gives us the clean result $$\frac{\partial L_t}{\partial z_t} = \hat{y}_t - y_t$$, rather than computing the gradient with respect to the softmax probabilities **$$\hat{y}_t$$** and then the gradient from probabilities to logits **$$z_t$$** as separate steps and multiplying them together.
+
+The calculation of gradients w.r.t. the hidden layer weights and biases is more complex due to the recurrent connections. We need to consider the contributions from all previous time steps that affect the hidden state at time **$$t$$**.
+
+First, we apply the chain rule to expand the gradients calculation as below:
+
+$$\begin{align}
+\frac{\partial L}{\partial W_{hh}}
+&= \sum_{t} \frac{\partial L_t}{\partial W_{hh}} \\
+&= \sum_{t} \frac{\partial L_t}{\partial \hat{y}_{t}} \cdot \frac{\partial \hat{y}_{t}}{\partial z_{t}} \cdot \frac{\partial z_{t}}{\partial h_{t}} \cdot \frac{\partial h_{t}}{\partial W_{hh}} \tag{6}
+\end{align}$$
+
+Note, $h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$, depends on $W_{hh}$ again through the previous hidden state **$$h_{t-1}$$**, which further depends on $W_{hh}$ through time step **$$t-2$$** and so on. Then, applying chain rule recursively, we can calculate its gradient as follows:
+
+$$\begin{align}
+\frac{\partial h_t}{\partial W_{hh}}
+&= \sum_{k=1}^{t} \frac{\partial h_t}{\partial h_k} \cdot \frac{\partial h_k}{\partial W_{hh}} \tag{7}
+\end{align}$$
+
+To obtain equation (7), we need to apply the **multivariable chain rule** to each time steps inclusive before **$$t$$**. Let's simplify the notation a bit, and denote **$$h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$$** as **$$h_t = f(uv)$$**, where **$$u = W_{hh}$$** and **$$v = h_{t-1}$$**. Then, we can apply the multivariable chain rule as follows:
+
+$$\begin{align}
+\frac{\partial h_t}{\partial W_{hh}}
+&= \frac{\partial f(uv)}{\partial u} \cdot \frac{\partial u}{\partial W_{hh}} + \frac{\partial f(uv)}{\partial v} \cdot \frac{\partial v}{\partial W_{hh}} \\
+&= \frac{\partial f(uv)}{\partial u} \cdot 1 + \frac{\partial f(uv)}{\partial v} \cdot \frac{\partial v}{\partial W_{hh}} \\
+&= \frac{\partial f(uv)}{\partial u} + \frac{\partial f(uv)}{\partial h_{t-1}} \cdot \frac{\partial h_{t-1}}{\partial W_{hh}} \text{  ( substituting f(uv) back with h_t )} \\
+&= \frac{\partial h_t}{\partial W_{hh}} + \frac{\partial h_t}{\partial h_{t-1}} \cdot \frac{\partial h_{t-1}}{\partial W_{hh}} \tag{8}
+\end{align}$$
+
+> 📝 Notes
+>
+> The left-hand side of equation (8) is the gradient of the hidden state at time step **$$t$$** with respect to the weights **$$W_{hh}$$** **recursively**. The first term on the right-hand side is the direct contribution from the weights at the **current time step**, while the second term captures how the weights from the previous hidden state **$$h_{t-1}$$** contributes to the current hidden state.
+
+Then, continue calculating partial derivative of **$$h_{t-1}$$** with respect to **$$W_{hh}$$** recursively, until we reach the first time step **$$h_1$$**.
+
+$$\begin{align}
+\frac{\partial h_{t-1}}{\partial W_{hh}}
+&= \frac{\partial h_{t-1}}{\partial W_{hh}} + \frac{\partial h_{t-1}}{\partial h_{t-2}} \cdot \frac{\partial h_{t-2}}{\partial W_{hh}} \\
+\ldots \tag{9} \\
+\frac{\partial h_1}{\partial W_{hh}}
+&= \frac{\partial h_1}{\partial W_{hh}} + \frac{\partial h_1}{\partial h_0} \cdot \frac{\partial h_0}{\partial W_{hh}} \\
+&= \frac{\partial h_1}{\partial W_{hh}} + 0 \text{ (since h_0 is constant) } \\
+&= \frac{\partial h_1}{\partial W_{hh}}
+\end{align}$$
+
+Now, we can substitute all equations in (9) back into equation (8) recursively to get the final expression for the gradient of **$$h_t$$** with respect to **$$W_{hh}$$**:
+
+$$\begin{align}
+\frac{\partial h_t}{\partial W_{hh}}
+&= \frac{\partial h_t}{\partial W_{hh}} + \frac{\partial h_t}{\partial h_{t-1}} \cdot \left( \frac{\partial h_{t-1}}{\partial W_{hh}} + \frac{\partial h_{t-1}}{\partial h_{t-2}} \cdot \left( \ldots + \frac{\partial h_1}{\partial W_{hh}} \right) \right) \\
+&= \frac{\partial h_t}{\partial W_{hh}} + \frac{\partial h_t}{\partial h_{t-1}} \cdot \frac{\partial h_{t-1}}{\partial W_{hh}} + \frac{\partial h_t}{\partial h_{t-1}} \cdot \frac{\partial h_{t-1}}{\partial h_{t-2}} \cdot \frac{\partial h_{t-2}}{\partial W_{hh}} + \ldots + \frac{\partial h_t}{\partial h_{t-1}} \ldots \frac{\partial h_t}{\partial h_1} \cdot \frac{\partial h_1}{\partial W_{hh}}  \tag{10} \\
+&= \sum_{k=1}^{t} \left( \prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} \right) \frac{\partial h_k}{\partial W_{hh}}
+\end{align}$$
+
+where the product term $$\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}}$$ represents the chain of gradients flowing backward from time step $$t$$ to time step $$k+1$$, and when $$k = t$$, this product is defined as 1.
+
+Finally, we can substitute equation (10) back into equation (6) to get the gradient of the loss with respect to **$$W_{hh}$$**:
+
+$$\begin{align}
+\frac{\partial L}{\partial W_{hh}}
+&= \sum_{t} \frac{\partial L_t}{\partial W_{hh}} \\
+&= \sum_{t} \frac{\partial L_t}{\partial \hat{y}_{t}} \cdot \frac{\partial \hat{y}_{t}}{\partial z_{t}} \cdot \frac{\partial z_{t}}{\partial h_{t}} \cdot \frac{\partial h_{t}}{\partial W_{hh}} \\
+&= \sum_{t} (\hat{y}_{t} - y_{t}) \cdot W_{hy}^T \cdot \frac{\partial h_t}{\partial W_{hh}} \\
+&= \sum_{t} (\hat{y}_{t} - y_{t}) \cdot W_{hy}^T \cdot \sum_{k=1}^{t} \left( \prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} \right) \frac{\partial h_k}{\partial W_{hh}} \tag{11}
+\end{align}$$
+
+The gradients with respect to **$$W_{xh}$$** and **$$b_h$$** can be calculated in a similar fashion, by considering how the input and bias at each time step contribute to the loss.
 
 ## Vanishing Gradient Problem
 
