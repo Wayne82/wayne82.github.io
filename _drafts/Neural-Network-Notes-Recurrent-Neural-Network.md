@@ -188,6 +188,47 @@ $$\begin{align}
 \end{align}$$
 
 ## Vanishing Gradient Problem
+We have already heard about the **vanishing gradient problem** in the context of training deep neural networks. This issue is particularly pronounced in RNNs due to their recurrent nature.
+
+To understand why, let's consider the gradients computed in equations (11), (12), and (13). The term **$$\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}}$$** represents the product of gradients flowing backward through time.
+
+Let's calculate this gradient explicitly. Recall that:
+
+$$h_j = f(W_{hh} h_{j-1} + W_{xh} x_j + b_h)$$
+
+Taking the derivative with respect to $$h_{j-1}$$ and applying the chain rule:
+
+$$\frac{\partial h_j}{\partial h_{j-1}} = f'(W_{hh} h_{j-1} + W_{xh} x_j + b_h) \cdot W_{hh}$$
+
+For the common activation functions:
+- **Tanh**: $$f'(z) = 1 - \tanh^2(z)$$, which is bounded by $$[0, 1]$$
+- **Sigmoid**: $$f'(z) = \sigma(z)(1-\sigma(z))$$, which is bounded by $$[0, 0.25]$$
+- **ReLU**: $$f'(z) = 1$$ if $$z > 0$$, else $$0$$
+
+Now, the product becomes:
+
+$$\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} = \prod_{j=k+1}^{t} f'(\cdot) \cdot W_{hh}$$
+
+**Why gradients vanish:**
+1. **Activation function derivatives**: For tanh and sigmoid, $$f'(\cdot) \leq 1$$, often much smaller
+2. **Weight matrix**: If the largest eigenvalue of $$W_{hh}$$ is less than 1, repeated multiplication will quickly scale down the gradients.
+3. **Long sequences**: For a sequence of length $$T$$, we multiply up to $$T-1$$ terms.
+
+**Mathematical analysis:**
+If we assume
+$$\left|f'(\cdot)\right| \leq \gamma < 1$$ and $$||W_{hh}|| \leq \lambda$$, then:
+
+$$\left|\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}}\right| \leq (\gamma \lambda)^{t-k}$$
+
+So, for $$\gamma \lambda < 1$$, this product will decay exponentially as $$(t-k)$$ increases. **Conversely, exploding gradients** can occur when $$\gamma \lambda > 1$$, causing gradients to grow exponentially, leading to unstable training.
+
+>📝 Notes
+>
+> The vanishing gradient problem doesn't mean the network can't learn at all, it just means that it struggles to learn **long-term dependencies** effectively, which is just illustrated in the analysis above, that the portion of the gradients accumulated from distant time steps through $$\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}}$$ relative to the current time step **decays exponentially**.
+>
+> This means that **gradients from distant past time steps contribute very little to the weight updates**, making it difficult for the RNN to learn long-term dependencies.
+
+There are several techniques to mitigate the vanishing gradient problem so as to learn long-term dependencies, such as **Long Short-Term Memory (LSTM)** networks and **Gated Recurrent Units (GRUs)**, which introduce gating mechanisms to control the flow of information and gradients. But I won't cover them in this post, and probably will consider next time.
 
 ## My Learning Process and Looking Ahead
 
