@@ -236,8 +236,6 @@ Still, my learning on a specific topic is always driven by curiosity and the des
 
 My learning structure is usually composed of 2 parts: **the grasp of the overall concepts & architecture**, and **the in-depth understanding of the key components**. Returning back to this RNNs topic, following this structure, I first focused on the overall architecture of RNNs and how they differ from traditional feedforward networks. Secondly, I delved into the mathematical details (derivation process) of how **backpropagation** works in RNNs, as this stays at the core of training RNNs and understanding their limitations, such as the vanishing gradient problem, which motivated the development of more advanced architectures like LSTMs and GRUs, etc.
 
-One learning experience I have is that not just learn the final results, but also seek to understand how certain techniques or methods were developed, through which sometimes, I can feel a joy of discovery maybe like the original researchers did, and this may also lead to inadvertently deeper insights and a more intuitive understanding of the subject matter.
-
 At the end of this post, looking ahead, though I want to get my hands-on a vanilla RNNs implementations, I can't wait to start my next learning journey about **attention mechanisms, transformers, and modern LLMs**. The "Attention is All You Need" paper stays at the top of my reading list, and it very well catches my **attention** 😊.
 
 ## References
