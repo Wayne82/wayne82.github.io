@@ -10,7 +10,7 @@ Until now, I am quite happy with the progress of my neural network learning jour
 
 > 📝 Notes
 >
-> Just a kind reminder to those who occasionally come across my blog: I'm not an expert in neural networks—I'm still learning. The notes here and in the [entire series](https://wayne82.github.io/topics/neural-network/) are mainly a record of my personal learning journey. That said, I'm glad if any part of them is helpful to you as well.
+> Just a kind reminder to those who occasionally come across my blog: I'm not an expert in neural networks—I'm still learning. This blog and the [entire neural network series](https://wayne82.github.io/topics/neural-network/) are mainly a record of my personal learning journey. That said, I'm glad if any part of them is helpful to you as well.
 
 ## What is a Recurrent Neural Network?
 A Recurrent Neural Network (RNN) is a type of neural network specialized for processing sequences, where the order of inputs matters — such as in text, speech, or time-series data. Unlike traditional feedforward networks, RNNs introduce recurrent connections, meaning the output at each time step is fed back into the network to influence future predictions. This feedback loop allows the model to retain a form of memory, making it suitable for tasks involving context and temporal dependencies.
@@ -92,7 +92,7 @@ $$L = \sum_{t} L_t = -\sum_{t} y_{t} \log(\hat{y}_{t}) \tag{3}$$
 
 Now, we can compute the gradients of the total loss with respect to the **weights and biases** in the RNN.
 
-The gradients w.r.t. the output layer weights and biases can be computed as follows:
+The gradients w.r.t. the weights and biases in output layer can be computed as follows:
 
 $$\begin{align}
 \frac{\partial L}{\partial W_{hy}}
@@ -122,7 +122,7 @@ $$\begin{align}
 &= \sum_{t} \frac{\partial L_t}{\partial \hat{y}_{t}} \cdot \frac{\partial \hat{y}_{t}}{\partial z_{t}} \cdot \frac{\partial z_{t}}{\partial h_{t}} \cdot \frac{\partial h_{t}}{\partial W_{hh}} \tag{6}
 \end{align}$$
 
-Note, $h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$, depends on $W_{hh}$ again through the previous hidden state **$$h_{t-1}$$**, which further depends on $W_{hh}$ through time step **$$t-2$$** and so on. Then, applying chain rule recursively, we can calculate its gradient as follows:
+Note, $h_t = f(W_{hh} h_{t-1} + W_{xh} x_t + b_h)$, depends on $W_{hh}$ again through the previous hidden state **$$h_{t-1}$$**, which further depends on $W_{hh}$ through hidden state **$$h_{t-2}$$** and so on. Then, applying chain rule recursively, we can calculate its gradient as follows:
 
 $$\begin{align}
 \frac{\partial h_t}{\partial W_{hh}}
@@ -141,16 +141,15 @@ $$\begin{align}
 
 > 📝 Notes
 >
-> The left-hand side of equation (8) is the gradient of the hidden state at time step **$$t$$** with respect to the weights **$$W_{hh}$$** **recursively**. The first term on the right-hand side is the direct contribution from the weights at the **current time step**, while the second term captures how the weights from the previous hidden state **$$h_{t-1}$$** contributes to the current hidden state.
-
-Then, continue calculating partial derivative of **$$h_{t-1}$$** with respect to **$$W_{hh}$$** recursively, until we reach the first time step **$$h_1$$**.
+> The left-hand side of equation (8) is the gradient of the hidden state at time step **$$t$$** with respect to the weights **$$W_{hh}$$** **recursively**. The first term on the right-hand side is the direct contribution from the weights at the **current time step**, while the second term captures how the weights from the previous hidden state **$$h_{t-1}$$** contributes to the gradient of the current hidden state.
+>
+> Then, continue calculating partial derivative of **$$h_{t-1}$$** with respect to **$$W_{hh}$$** recursively, until we reach the first time step **$$h_1$$**.
 
 $$\begin{align}
 \frac{\partial h_{t-1}}{\partial W_{hh}}
 &= \frac{\partial h_{t-1}}{\partial W_{hh}} + \frac{\partial h_{t-1}}{\partial h_{t-2}} \cdot \frac{\partial h_{t-2}}{\partial W_{hh}} \\
 \ldots \tag{9} \\
 \frac{\partial h_1}{\partial W_{hh}}
-&= \frac{\partial h_1}{\partial W_{hh}} + \frac{\partial h_1}{\partial h_0} \cdot \frac{\partial h_0}{\partial W_{hh}} \\
 &= \frac{\partial h_1}{\partial W_{hh}} + 0 \text{ (since h_0 is constant) } \\
 &= \frac{\partial h_1}{\partial W_{hh}}
 \end{align}$$
@@ -216,7 +215,7 @@ $$\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} = \prod_{j=k+1}^{t} f'
 
 **Mathematical analysis:**
 If we assume
-$$\left|f'(\cdot)\right| \leq \gamma < 1$$ and $$||W_{hh}|| \leq \lambda$$, then:
+$$\left|f'(\cdot)\right| \leq \gamma \leq 1$$ and $$||W_{hh}|| \leq \lambda$$, then:
 
 $$\left|\prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}}\right| \leq (\gamma \lambda)^{t-k}$$
 
@@ -231,5 +230,32 @@ So, for $$\gamma \lambda < 1$$, this product will decay exponentially as $$(t-k)
 There are several techniques to mitigate the vanishing gradient problem so as to learn long-term dependencies, such as **Long Short-Term Memory (LSTM)** networks and **Gated Recurrent Units (GRUs)**, which introduce gating mechanisms to control the flow of information and gradients. But I won't cover them in this post, and probably will consider next time.
 
 ## My Learning Process and Looking Ahead
+It is time to self-reflect again on my learning process about new topics like RNNs.
+
+Still, my learning on a specific topic is always driven by curiosity and the desire to understand how things work, as I've outlined at the beginning of this post about the questions I want to figure out. I find that having a clear set of questions helps me stay focused and motivated.
+
+My learning structure is usually composed of 2 parts: **the grasp of the overall concepts & architecture**, and **the in-depth understanding of the key components**. Returning back to this RNNs topic, following this structure, I first focused on the overall architecture of RNNs and how they differ from traditional feedforward networks. Secondly, I delved into the mathematical details (derivation process) of how **backpropagation** works in RNNs, as this stays at the core of training RNNs and understanding their limitations, such as the vanishing gradient problem, which motivated the development of more advanced architectures like LSTMs and GRUs, etc.
+
+One learning experience I have is that not just learn the final results, but also seek to understand how certain techniques or methods were developed, through which sometimes, I can feel a joy of discovery maybe like the original researchers did, and this may also lead to inadvertently deeper insights and a more intuitive understanding of the subject matter.
+
+At the end of this post, looking ahead, though I want to get my hands-on a vanilla RNNs implementations, I can't wait to start my next learning journey about **attention mechanisms, transformers, and modern LLMs**. The "Attention is All You Need" paper stays at the top of my reading list, and it very well catches my **attention** 😊.
 
 ## References
+On this very learning subject, I have referred to the following resources:
+
+Online Courses:
+* [Stanford Lecture 10 - Recurrent Neural Networks](https://www.youtube.com/watch?v=6niqTuYFZLQ&t=1126s)
+* [MIT 6.S191 (2024): Recurrent Neural Networks, Transformers, and Attention](https://www.youtube.com/watch?v=dqoEU9Ac3ek)
+
+Blogs:
+* [The Effectiveness of Recurrent Neural Networks](https://karpathy.github.io/2015/05/21/rnn-effectiveness/)
+* [Understanding LSTM Networks](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+* [Recurrent Neural Networks Tutorial](https://dennybritz.com/posts/wildml/recurrent-neural-networks-tutorial-part-1/)
+
+Papers:
+* [Recurrent Neural Networks (RNNs): A gentle Introduction and Overview](https://arxiv.org/abs/1912.05911)
+* [On the difficulty of training Recurrent Neural Networks](https://arxiv.org/abs/1211.5063)
+* [Long Short-Term Memory](https://www.bioinf.jku.at/publications/older/2604.pdf)
+
+Interactive Tools:
+* ChatGPT: I used it to clarify my understanding of the concepts and to help me derive the equations for BPTT.
