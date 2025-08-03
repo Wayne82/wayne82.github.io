@@ -176,7 +176,16 @@ $$\begin{align}
 &= \sum_{t} (\hat{y}_{t} - y_{t}) \cdot W_{hy}^T \cdot \sum_{k=1}^{t} \left( \prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} \right) \frac{\partial h_k}{\partial W_{hh}} \tag{11}
 \end{align}$$
 
-The gradients with respect to **$$W_{xh}$$** and **$$b_h$$** can be calculated in a similar fashion, by considering how the input and bias at each time step contribute to the loss.
+The gradients with respect to **$$W_{xh}$$** and **$$b_h$$** can be calculated in a similar manner. I will ommit the derivation process here, but the final expressions are as follows:
+$$\begin{align}
+\frac{\partial L}{\partial W_{xh}}
+&= \sum_{t} (\hat{y}_{t} - y_{t}) \cdot W_{hy}^T \cdot \sum_{k=1}^{t} \left( \prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} \right) \frac{\partial h_k}{\partial W_{xh}} \tag{12}
+\end{align}$$
+
+$$\begin{align}
+\frac{\partial L}{\partial b_h}
+&= \sum_{t} (\hat{y}_{t} - y_{t}) \cdot W_{hy}^T \cdot \sum_{k=1}^{t} \left( \prod_{j=k+1}^{t} \frac{\partial h_j}{\partial h_{j-1}} \right) \frac{\partial h_k}{\partial b_h} \tag{13}
+\end{align}$$
 
 ## Vanishing Gradient Problem
 
