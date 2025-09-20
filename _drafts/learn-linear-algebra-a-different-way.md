@@ -6,7 +6,7 @@ mathjax: true
 comments: true
 ---
 
-It's been a while since my last post about neural networks, which covers certain mathematical details, to my own interest. As originally planned, my next learning topic is attention mechanism and transformers. However, the book of "[Linear Algebra Done Right](https://linear.axler.net/LADR4e.pdf)" by Sheldon Axler lying on the table for quite a while caught my attention eventually. And one day, I can't help picking it up and start reading. Until now, I have read the first 7 chapters, and find it is quite a fresh way to learn linear algebra for someone like me who only learned it in college as a general course 2 decades ago. There are 2 more chapters to go, but I think it is good for me to stop at this point and write down some notes about what I have learned so far.
+It’s been a while since my last post on neural networks, where I explored some mathematical details out of personal interest. My original plan was to move on to attention mechanisms and transformers. But the book [Linear Algebra Done Right](https://linear.axler.net/LADR4e.pdf) by Sheldon Axler, which had been sitting on my desk for quite some time, eventually caught my attention. One day, I couldn’t resist picking it up and starting to read. So far, I’ve worked through the first seven chapters, and I’ve found it to be a refreshing way to relearn linear algebra — especially for someone like me who last studied it as a general college course two decades ago. There are still two more chapters ahead, but I think this is a good point to pause and jot down some notes on what I’ve learned so far.
 
 ## The Essence of Linear Algebra
 Linear algebra is the study of linear structures, which covers:
@@ -19,6 +19,7 @@ It is less about solving linear equations in the traditional sense, but more abo
 
 ## The Key Definitions (Chapters 1-3)
 Here I will simply record the key definitions I have learned so far, as a quick reference for myself.
+
 * **Field**, a set **F** with two operations (addition and multiplication) satisfying certain axioms: commutativity, associativity, distributivity, additive identity, multiplicative identity, additive inverse, and multiplicative inverse.
   * Examples: real numbers **R**, complex numbers **C**, etc.
 * **Vector space**, a set **V** on a field **F** along with an addition and a scalar multiplication on **V**, satisfying certain axioms: commutativity, associativity, additive identity, additive inverse, multiplicative identity, and distributivity.
