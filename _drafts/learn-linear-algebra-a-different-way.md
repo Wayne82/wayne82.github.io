@@ -1,33 +1,28 @@
 ---
 layout: post
-title:  "Learn Linear Algebra a Different Way"
+title:  "Learn Linear Algebra a Different Way - Notes on Key Definitions"
 categories: mathematics
 mathjax: true
 comments: true
 ---
 
-It's been a while since my last post about neural networks, which covers certain mathematical details, to my own interest. As originally planned, my next learning topic is attention mechanism and transformers. However, the book of "Linear Algebra Done Right" by Sheldon Axler lying on the table for quite a while caught my attention eventually. And one day, I can't help picking it up and start reading. Until now, I have read the first 7 chapters, and find it is quite a fresh way to learn linear algebra for someone like me who only learned it in college as a general course 2 decades ago. There are 2 more chapters to go, but I think it is good for me to stop at this point and write down some notes about what I have learned so far.
+It's been a while since my last post about neural networks, which covers certain mathematical details, to my own interest. As originally planned, my next learning topic is attention mechanism and transformers. However, the book of "[Linear Algebra Done Right](https://linear.axler.net/LADR4e.pdf)" by Sheldon Axler lying on the table for quite a while caught my attention eventually. And one day, I can't help picking it up and start reading. Until now, I have read the first 7 chapters, and find it is quite a fresh way to learn linear algebra for someone like me who only learned it in college as a general course 2 decades ago. There are 2 more chapters to go, but I think it is good for me to stop at this point and write down some notes about what I have learned so far.
 
 ## The Essence of Linear Algebra
 Linear algebra is the study of linear structures, which covers:
-* **The linear space (vector space)**, which is a set **V** along with an addition on **V** and a scalar multiplication on **V**, satisfying certain axioms: commutativity, associativity, additive identity, additive inverse, multiplicative identity, and distributivity.
-  * Examples: **R**^n, polynomials, etc.
-* **The linear transformation (linear map)**, which is defined as a function T: **V** → **W** with the property of additivity and homogeneity.
-  * $$T(u + v) = T(u) + T(v)$$ and $$T(cv) = cT(v)$$ for all vectors u, v in **V** and all scalars c.
-  * Examples: differentiation, integration, etc.
-* **The linear representation (matrix)**, which is a way to represent a linear transformation with respect to the bases of the vector spaces involved.
-  * Linear maps can be represented by matrices once you choose a basis for the domain and codomain vector spaces.
-  * Changing the basis gives different representations, but the underlying transformation is the same!
-  * Much of linear algebra is about finding the "best" basis to understand a map (diagonalization, orthogonal bases).
-  * Examples: rotation matrix, projection matrix, etc.
-* **The structure and invariants**, which are the properties of linear spaces and linear transformations that remain unchanged under certain operations, such as dimension, rank, nullity, eigenvalues, and eigenvectors.
+* **The linear space (vector space)**
+* **The linear transformation (linear map)**
+* **The linear representation (matrix)**
+* **The structure and invariants (properties)**
 
 It is less about solving linear equations in the traditional sense, but more about understanding the geometry and structure of linear systems, how they transform and what invariants they preserve.
 
-## The Key Definitions
+## The Key Definitions (Chapters 1-3)
 Here I will simply record the key definitions I have learned so far, as a quick reference for myself.
 * **Field**, a set **F** with two operations (addition and multiplication) satisfying certain axioms: commutativity, associativity, distributivity, additive identity, multiplicative identity, additive inverse, and multiplicative inverse.
+  * Examples: real numbers **R**, complex numbers **C**, etc.
 * **Vector space**, a set **V** on a field **F** along with an addition and a scalar multiplication on **V**, satisfying certain axioms: commutativity, associativity, additive identity, additive inverse, multiplicative identity, and distributivity.
+  * Examples: **R**^n, polynomials, etc.
 * **Subspace**, a subset of **V** that is also a vector space.
 * **Sum of subspaces**, the smallest subspace containing all the given subspaces.
 
@@ -52,6 +47,16 @@ Here I will simply record the key definitions I have learned so far, as a quick 
   $$T(u + v) = T(u) + T(v)$$
 
   $$T(cv) = cT(v)$$
+
+  * Examples: rotation matrix, projection matrix, etc.
+
+> 📝 Notes
+>
+> * Linear maps can be represented by matrices once you choose a basis for the domain and codomain vector spaces.
+> * Changing the basis gives different representations, but the underlying transformation is the same!
+> * Much of linear algebra is about finding the "best" basis to understand a map (diagonalization, orthogonal bases).
+>
+
 * **Null space (kernel)**, the set of vectors in **V** that map to the zero vector in **W**.
 
   $$Null(T) = \{v \in V | T(v) = 0\}$$
@@ -165,3 +170,8 @@ Here I will simply record the key definitions I have learned so far, as a quick 
   * The original vector space **V** and its subspace **U**, on field **F**.
   * The dual space **V'** and its subspace $U^0$, on field of **linear functionals**.
   * All dual maps **T'**: **W'** → **V'**, on field of **linear map which maps linear functionals to linear functionals.**
+>
+> It is quite mind-bending, so abstract, but also fascinating!
+
+## Conclude and Continue
+Originally, I planned to finish the notes on key definitions from Chapters 1–7, but as I wrote and reviewed them, the list grew longer than expected. So I’ve decided to stop here for now. I’ll start another post to cover the remaining four chapters, and likely a few more posts to record my understanding of certain key theorems.
