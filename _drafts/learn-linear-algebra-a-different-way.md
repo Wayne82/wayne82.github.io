@@ -98,3 +98,70 @@ Here I will simply record the key definitions I have learned so far, as a quick 
 > Here, a higher level of abstraction is introduced by taking **$L(V, W)$**, the set of all linear maps from **V** to **W**, as a vector space itself, which the elements in it are linear maps. This is a **key insight** in linear algebra, allowing us to study the properties of linear maps in a more general and abstract way.
 >
 > A basis for **L(V,W)** is a set of simple, fundamental linear maps. Each basis map is constructed to do one very specific job: it maps a single basis vector of **V** to a single basis vector of **W** and sends all other basis vectors of **V** to zero.
+
+* **Notion of $v + U$**, where **v** is a vector in **V** and **U** is a subspace of **V**, defined as:
+
+  $$v + U = \{v + u | u \in U\}$$
+
+  This set is called an affine subset or a coset of **U** in **V**. It represents all vectors that can be obtained by adding the vector **v** to each vector in the subspace **U**. Note that **v + U** is not a subspace unless **v** is the zero vector, but it is a translation of the subspace **U** by the vector **v**.
+
+* **Quotient space**, denoted as **V/U**, is the set of all cosets of a subspace **U** in a vector space **V**. Each element of the quotient space is of the form **v + U**, where **v** is a vector in **V**. The quotient space itself can be given a vector space structure by defining addition and scalar multiplication as follows:
+
+  - Addition: $$(v + U) + (w + U) = (v + w) + U$$
+  - Scalar multiplication: $$c(v + U) = (cv) + U$$
+
+  for all vectors **v, w** in **V** and all scalars **c** in the field over which the vector space is defined.
+
+  The dimension of the quotient space **V/U** is given by:
+
+  $$dim(V/U) = dim(V) - dim(U)$$
+
+  This means that the dimension of the quotient space is equal to the dimension of the original vector space minus the dimension of the subspace **U**.
+
+  And quotient spaces allow us to study the structure of vector spaces by examining the relationships between subspaces and their complements.
+
+> 📝 Notes
+> This is another case of abstraction in linear algebra, where we deliberately construct a new vector space (the quotient space) from an existing vector space and one of its subspaces. And its element is not individual vectors, but rather a set of vectors - called cosets or a translate of the subspace in question.
+
+* **Linear functional**, is a linear map from **V** to **F**. In other words, a linear functional is an element of **L(V, F)**.
+
+* **Dual space**, denoted as **V'**, is the vector space of all linear functionals on **V**. **V' = L(V, F)**. Suppose **V** is finite-dimensional with dimension n, then **V'** is also finite-dimensional with the same dimension n.
+
+* **Dual basis**, if $v_1, v_2, \ldots, v_n$ is a basis for **V**, then the dual basis for **V'** is a set of linear functionals $φ_1, φ_2, \ldots, φ_n$ such that:
+
+  $$φ_i(v_j) = \begin{cases} 1 & \text{if } i = j \\ 0 & \text{if } i \neq j \end{cases}$$
+
+  for all i, j from 1 to n.
+
+> 📝 Notes
+>
+> This is a special case of **L(V, W)** where **W** is the field **F**.
+
+* **Dual map**, suppose **T**: **V** → **W** is a linear map, then the dual map **T'**: **W'** → **V'** is defined by:
+
+  $$(T'(φ))(v) = φ(T(v))$$
+
+  for all φ in **W'** and all v in **V**.
+
+  In other words, the dual map **T'** takes a linear functional φ on **W** and produces a linear functional on **V** by pre-composing φ with the linear map **T**.
+
+* **Annihilator**, for $U \subseteq V$, the annihilator of **U**, denoted as $$U^0$$, is defined as:
+
+  $$U^0 = \{φ \in V' | φ(u) = 0 \text{ for all } u \in U\}$$
+
+  In other words, the annihilator $$U^0$$ is the set of all linear functionals on **V** that vanish on every vector in the subspace **U**.
+
+  $$U^0$$ is a subspace of **V'**, and if **V** is finite-dimensional, then:
+
+  $$dim(U) + dim(U^0) = dim(V)$$
+
+> 📝 Notes
+>
+> The dimension formula above is really interesting, that it expresses a relationship between the dimension of subspaces on field **F**, and the dimension of a subspace on field of linear functionals.
+>
+> Intuitively, we can say that every degree of freedom in **V** is either captured by movement inside **U**, or by a constraint (linear functionals) in **U^0**.
+>
+> We see there are 3 different vector spaces involved here:
+  * The original vector space **V** and its subspace **U**, on field **F**.
+  * The dual space **V'** and its subspace $U^0$, on field of **linear functionals**.
+  * All dual maps **T'**: **W'** → **V'**, on field of **linear map which maps linear functionals to linear functionals.**
