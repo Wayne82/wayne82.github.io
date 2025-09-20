@@ -165,7 +165,7 @@ Here I will simply record the key definitions I have learned so far, as a quick 
 >
 > The dimension formula above is really interesting, that it expresses a relationship between the dimension of subspaces on field **F**, and the dimension of a subspace on field of linear functionals.
 >
-> Intuitively, we can say that every degree of freedom in **V** is either captured by movement inside **U**, or by a constraint (linear functionals) in **U^0**.
+> Intuitively, we can say that every degree of freedom in **V** is either captured by movement inside **U**, or by a constraint (linear functionals) in **$U^0$**.
 >
 > We see there are 3 different vector spaces involved here:
   * The original vector space **V** and its subspace **U**, on field **F**.
