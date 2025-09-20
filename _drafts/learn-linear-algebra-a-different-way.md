@@ -89,3 +89,12 @@ Here I will simply record the key definitions I have learned so far, as a quick 
   In this case, **S** is called the inverse of **T**, denoted as **T**^(-1).
 
 * **Isomorphism**, is an invertible or bijective linear map. If there exists an isomorphism between **V** and **W**, they are said to be isomorphic.
+  - Two finite-dimensional vector spaces over the same field are isomorphic if and only if they have the same dimension.
+  - Every finite-dimensional vector space over a field **F** is isomorphic to **F**^n for some non-negative integer n.
+  - $L(V, W)$ and $F^{m, \space n}$ are isomorphic if **V** and **W** are finite-dimensional with dimensions n and m respectively.
+
+> 📝 Notes
+>
+> Here, a higher level of abstraction is introduced by taking **$L(V, W)$**, the set of all linear maps from **V** to **W**, as a vector space itself, which the elements in it are linear maps. This is a **key insight** in linear algebra, allowing us to study the properties of linear maps in a more general and abstract way.
+>
+> A basis for **L(V,W)** is a set of simple, fundamental linear maps. Each basis map is constructed to do one very specific job: it maps a single basis vector of **V** to a single basis vector of **W** and sends all other basis vectors of **V** to zero.
