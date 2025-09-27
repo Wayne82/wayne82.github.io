@@ -22,12 +22,13 @@
 /**
  * Artifakt Element
  */
-@font-face {
+/* @font-face {
   font-family: "Artifakt Element";
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair+Italic.eot);
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair+Italic.woff2) format('woff2');
   font-weight: 100;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -35,6 +36,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Hair.woff2) format('woff2');
   font-weight: 100;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -42,6 +44,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin+Italic.woff2) format('woff2');
   font-weight: 200;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -49,6 +52,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Thin.woff2) format('woff2');
   font-weight: 200;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -56,6 +60,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light+Italic.woff2) format('woff2');
   font-weight: 300;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -63,6 +68,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Light.woff2) format('woff2');
   font-weight: 300;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -70,6 +76,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Italic.woff2) format('woff2');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -77,6 +84,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Regular.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Regular.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Regular.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Regular.woff2) format('woff2');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -84,6 +92,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book+Italic.woff2) format('woff2');
   font-weight: 500;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -91,6 +100,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Book.woff2) format('woff2');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -98,6 +108,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium+Italic.woff2) format('woff2');
   font-weight: 600;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -105,6 +116,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Medium.woff2) format('woff2');
   font-weight: 600;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -112,6 +124,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold+Italic.woff2) format('woff2');
   font-weight: 700;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -119,6 +132,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Bold.woff2) format('woff2');
   font-weight: 700;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -126,6 +140,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black+Italic.woff2) format('woff2');
   font-weight: 800;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -133,6 +148,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Black.woff2) format('woff2');
   font-weight: 800;
   font-style: normal;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -140,6 +156,7 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy+Italic.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy+Italic.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy+Italic.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy+Italic.woff2) format('woff2');
   font-weight: 900;
   font-style: italic;
+  font-display: swap;
 }
 @font-face {
   font-family: "Artifakt Element";
@@ -147,11 +164,13 @@
   src: url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy.eot?#iefix) format('embedded-opentype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy.ttf) format('truetype'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy.woff) format('woff'), url(https://cdn.web-platform.io/artifakt/release/v1.2.0/Artifakt+Element+Heavy.woff2) format('woff2');
   font-weight: 900;
   font-style: normal;
-}
+  font-display: swap;
+} */
 
 body {
-  font-family: "Artifakt Element";
+  font-family: "Artifakt Element", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
+  font-display: swap;
 }
 
 #main-content h1 {
