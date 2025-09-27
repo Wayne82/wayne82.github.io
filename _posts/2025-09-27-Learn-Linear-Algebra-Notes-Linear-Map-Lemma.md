@@ -36,7 +36,7 @@ So, if we have two linear maps, $S: V \to W$ and $T: V \to W$, we say $S$ and $T
 >
 > In mathematics, **extensionality** is the principle that an object's identity is determined solely by **its contents**, not by **how it is defined or described**. The most common example is the axiom of extensionality in set theory, which states that two sets are equal if and only if they have exactly the same members. This means that regardless of the words used to define a set or the method by which its elements were gathered, two sets with the identical collection of elements are considered the same set.
 
-### "Form" vs "Function"
+### The Form of the Linear Map Doesn't Matter
 We don't care about the "form" of the linear map. The linear map is defined by its input-output relationship, not the specific formula we write down.
 
 For example, in regular algebra, the functions $f(x)=(x−1)(x+1)$ and $g(x)=x^2−1$ are the **exact same function**. They might look different, but for every input $x$, they produce the same output.
