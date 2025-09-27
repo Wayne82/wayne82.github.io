@@ -25,4 +25,40 @@ The initial confusion is what I mentioned in the first paragraph: I was thinking
 This leads to the very heart of the question: what a function or linear map is in mathematics. I asked my confusion to Google Gemini, and I get a very good response, which I will summarize right in the next section.
 
 ## Understanding What is Linear Map
-### What It Means for Two Maps to Be Equal
+### What It Means for Two Linear Maps to Be Equal
+Following the principle of **extensionality** in mathematics, two functions (or linear maps) are considered identical if and only if they meet two conditions:
+* They have the **exact same domain**.
+* For every single element in that domain, they produce the **exact same output**.
+
+So, if we have two linear maps, $S: V \to W$ and $T: V \to W$, we say $S$ and $T$ are equal if and only if $S(v) = T(v)$ for **every vector** $v \in V$.
+
+> 📝 Notes
+>
+> In mathematics, **extensionality** is the principle that an object's identity is determined solely by **its contents**, not by **how it is defined or described**. The most common example is the axiom of extensionality in set theory, which states that two sets are equal if and only if they have exactly the same members. This means that regardless of the words used to define a set or the method by which its elements were gathered, two sets with the identical collection of elements are considered the same set.
+
+### "Form" vs "Function"
+We don't care about the "form" of the linear map. The linear map is defined by its input-output relationship, not the specific formula we write down.
+
+For example, in regular algebra, the functions $f(x)=(x−1)(x+1)$ and $g(x)=x^2−1$ are the **exact same function**. They might look different, but for every input $x$, they produce the same output.
+
+Similarly, I could define a linear map $T:R^2 \to R^2$ by the formula $T(x,y)=(x+y,x−y)$. Someone else could define a map $S$ by specifying its action on the basis vectors: $S(1,0)=(1,1)$ and $S(0,1)=(1,−1)$. The **Linear Map Lemma** shows that these are not just two different maps that happen to give the same answers; they are the same map. Their "form" or "definition" started differently, but their action on the vector space is identical.
+
+### The Domain is the Vector Space
+This is another key point. When we define a linear map $T:V \to W$:
+* The domain is exactly the **vector space $V$**. It's not some larger space that happens to include $V$.
+* The map is only defined for elements within $V$. The question of what $T$ might do to something outside of $V$ is meaningless because the domain is precisely $V$.
+
+This is why we care so much about properties like closure in vector spaces — it guarantees that our operations stay within the defined domain.
+
+### Connects Back to the Lemma
+To prove that two linear maps S and T are the same, we could check every single vector $$v \in V$$ and see if $$S(v)=T(v)$$. But if $$V$$ is anything other than the zero space, it contains infinitely many vectors! That's an impossible task.
+
+The lemma tells us: "Don't bother checking all infinite vectors. Just check the handful of vectors in a basis."
+
+If $$v_1, v_2, \ldots, v_n$$ is a basis for $$V$$, and you can show that:
+
+$$S(v_i) = T(v_i)$$
+
+for each $$i = 1, 2, \ldots, n$$, then the lemma's guarantee of **uniqueness** allows you to conclude that $$S = T$$ for the entire space. You're done.
+
+I will omit the proof here, as the book "[Linear Algebra Done Right](https://linear.axler.net/LADR4e.pdf)" by Sheldon Axler has a very clear proof of it. And once the confusion is resolved, the proof is clear and straightforward.
