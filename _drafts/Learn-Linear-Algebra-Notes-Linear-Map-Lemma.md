@@ -62,3 +62,32 @@ $$S(v_i) = T(v_i)$$
 for each $$i = 1, 2, \ldots, n$$, then the lemma's guarantee of **uniqueness** allows you to conclude that $$S = T$$ for the entire space. You're done.
 
 I will omit the proof here, as the book "[Linear Algebra Done Right](https://linear.axler.net/LADR4e.pdf)" by Sheldon Axler has a very clear proof of it. And once the confusion is resolved, the proof is clear and straightforward.
+
+## The Basis of L(V, W)
+Let's take a look at an application of the lemma.
+
+As we know, all linear maps from a vector space **V** to a vector space **W** form a **vector space** themselves, denoted as **L(V, W)**. The "vectors" in this space are the linear maps. Then, what is the basis of this vector space?
+To find it, we can use the **Linear Map Lemma**.
+
+The **Linear Map Lemma** tells us that to define a unique linear map, we only need to decide where the basis vectors of the domain V are sent. We can use this principle to construct the simplest possible non-zero linear maps, which will serve as the basis for the entire space $L(V,W)$.
+
+Suppose:
+* **V** has dimension $$n$$ with basis $${v_1, v_2, \ldots, v_n}$$.
+* **W** has dimension $$m$$ with basis $${w_1, w_2, \ldots, w_m}$$.
+
+To build a basis "vector" for the space $L(V,W)$, we need to define a single linear map. Let's call one such map $T_{ij}$. According to the lemma, we just have to say what $T_{ij}$ does to each $v_k$ in the basis of $V$.
+
+We can define $T_{ij}$ as follows:
+
+$$
+T_{ij}(v_k) = \begin{cases}
+w_j & \text{if } k = i \\
+0 & \text{if } k \neq i
+\end{cases}
+$$
+
+This effectively sends the $i$th basis vector of $V$ to the $j$th basis vector of $W$. Send all other basis vectors of $V$ to the zero vector in $W$. And this creates a "building-block" map. It has exactly one job: to connect one specific starting basis vector ($v_i$) to one specific destination basis vector ($w_j$).
+
+Since we can do this for every combination of a starting vector $v_j$ (of which there are $n$) and a destination vector $w_i$ (of which there are $m$), we can create $n \times m$ unique, simple linear maps. This set of all possible $T_{ij}$ maps forms the basis for $L(V, W)$.
+
+Q.E.D.
