@@ -25,6 +25,17 @@ There are two main architectures in the Word2Vec model:
 The goal of the 2 architectures is the same, which is to learn the word embeddings using a **shallow neural network**, which are trained using large corpora of text data.
 
 ## The Neural Network Structure
+The shallow neural network used in Word2Vec consists of 3 layers:
+1. **Input Layer**: This layer represents the input word (or context words in CBOW). Each word is represented as a **one-hot encoded vector**.
+2. **Hidden Layer**: This layer contains the weights that will be learned during training. The size of this layer determines the dimensionality of the word embeddings.
+3. **Output Layer**: This layer produces a probability distribution over the vocabulary, predicting the target word (or context words in Skip-Gram).
+
+This shallow neural network took me a bit of time to reason about, as it is a little bit different from the typical neural networks, in below aspects:
+
+* There is no activation function between the input layer and the hidden layer, and a **softmax activation function** is applied at the output layer to convert the logits into probabilities.
+* The inputs for CBOW are average of **multiple context word vectors**, while for Skip-Gram, the input is the **only one target word vector**.
+* The outputs for CBOW is the **only one target word**, while for Skip-Gram, the outputs are **multiple context words**.
+* Once the training is done, the word embeddings are obtained from the weights between the input layer and the hidden layer as the final results. And then, the entire neural network is no longer needed and there is no further prediction to be made either.
 
 ## Key Notes
 
