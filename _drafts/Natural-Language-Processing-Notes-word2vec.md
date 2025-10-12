@@ -80,3 +80,4 @@ There are a few other key points I feel worthy to highlight:
   * More advanced models like BERT and GPT use context to generate different embeddings for the same word based on its usage (different contexts).
 
 ## What is Next?
+Now, I feel I am well prepared to continue the courses of [CS224N](https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D), and the next exciting topic is **Attention Mechanism**. I am looking forward to learning more about it and how it contributes to the power of modern NLP models like Transformers and LLMs.
