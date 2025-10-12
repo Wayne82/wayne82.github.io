@@ -6,7 +6,7 @@ mathjax: true
 comments: true
 ---
 
-Now, I’ve set off on a new learning journey into Large Language Models (LLMs). As always, I prefer to begin with the fundamentals and gradually build up my understanding. Recently, I came across the Stanford course — [CS224N: NLP with Deep Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D) — available on YouTube. After going through its syllabus, I found it to be an excellent resource for learning the core concepts of Natural Language Processing (NLP) and for preparing myself for more advanced topics related to LLMs.
+Now, I’ve set off on a new learning journey into Large Language Models (LLMs). As always, I prefer to start from the fundamentals and gradually build up my understanding. Recently, I came across the Stanford course — [CS224N: NLP with Deep Learning](https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D) — available on YouTube. After going through its syllabus, I found it to be an excellent resource for learning the core concepts of Natural Language Processing (NLP) and for preparing myself for more advanced topics related to LLMs.
 
 The course begins with an introduction to the Word2Vec model — a foundational technique for learning word embeddings, which are numerical vector representations of words that capture their semantic meaning and relationships. It is quite a fundamental concept in NLP, so that I spent some extra time going through the details, and eventually felt it would be worthwhile to write down my learning notes as a separate blog post.
 
@@ -49,7 +49,7 @@ Another way to understand the 2 architectures is to look straight at their loss 
 
   The probability P(w_t \| w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}) is then computed using the softmax function:
 
-  $$ P(c|o) = \frac{exp(v_c^T v_o)}{\sum_{w=1}^{V} exp(v_w^T v_o)} $$
+  $$ P(w_t|w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}) = \frac{exp(v_c^T v_o)}{\sum_{w=1}^{V} exp(v_w^T v_o)} $$
 
   where (v_c) is the vector representation of the center word (w_t), (v_o) is the vector representation of average of the context words (w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}), and (V) is the vocabulary size.
 
@@ -61,8 +61,8 @@ Another way to understand the 2 architectures is to look straight at their loss 
 
   The probability P(w_{t+j} \| w_t) is computed using the softmax function:
 
-  $$ P(o|c) = \frac{exp(v_o^T v_c)}{\sum_{w=1}^{V} exp(v_w^T v_c)} $$
-  
+  $$ P(w_{t+j}|w_t) = \frac{exp(v_o^T v_c)}{\sum_{w=1}^{V} exp(v_w^T v_c)} $$
+
   where (v_c) is the vector representation of the center word (w_t), (v_o) is the vector representation of the context word (w_{t+j}), and (V) is the vocabulary size.
 
   > 📝 Notes
@@ -80,4 +80,4 @@ There are a few other key points I feel worthy to highlight:
   * More advanced models like BERT and GPT use context to generate different embeddings for the same word based on its usage (different contexts).
 
 ## What is Next?
-Now, I feel I am well prepared to continue the courses of [CS224N](https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D), and the next exciting topic is **Attention Mechanism**. I am looking forward to learning more about it and how it contributes to the power of modern NLP models like Transformers and LLMs.
+With this foundation, I feel more confident continuing through the rest of the [CS224N courses](https://www.youtube.com/playlist?list=PLoROMvodv4rOaMFbaqxPDoLWjDaRAdP9D). The next exciting topic is the **Attention Mechanism**, which plays a central role in modern NLP architectures such as Transformers and LLMs. I’m looking forward to exploring how it revolutionized the way machines understand and process language.
