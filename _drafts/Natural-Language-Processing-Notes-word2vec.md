@@ -70,5 +70,13 @@ Another way to understand the 2 architectures is to look straight at their loss 
   > The 2 vectors (v_c) and (v_o) used in the 2 loss functions are pairs of vectors for each word, one for when the word is an input (learnt as the weights between the input layer and the hidden layer), and another for when the word is an output (learnt as the weights between the hidden layer and the output layer).
 
 ## Key Notes
+There are a few other key points I feel worthy to highlight:
+* The goal of Word2Vec is **not prediction at runtime — it’s to learn word embeddings**,
+  * After training, the entire neural network is not used anymore.
+  * What we care about is the geometry of the embedding space (semantic similarity).
+  * The word embeddings are obtained from **the weights between the input layer and the hidden layer**, which are sufficient for downstream tasks (classification, clustering, search, etc.).
+* Word2Vec only gives **one static embedding per word**, learned from all contexts mixed together.
+  * It does not handle polysemy (multiple meanings for the same word).
+  * More advanced models like BERT and GPT use context to generate different embeddings for the same word based on its usage (different contexts).
 
 ## What is Next?
