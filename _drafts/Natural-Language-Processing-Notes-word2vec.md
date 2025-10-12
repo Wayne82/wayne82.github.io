@@ -35,7 +35,39 @@ This shallow neural network took me a bit of time to reason about, as it is a li
 * There is no activation function between the input layer and the hidden layer, and a **softmax activation function** is applied at the output layer to convert the logits into probabilities.
 * The inputs for CBOW are average of **multiple context word vectors**, while for Skip-Gram, the input is the **only one target word vector**.
 * The outputs for CBOW is the **only one target word**, while for Skip-Gram, the outputs are **multiple context words**.
-* Once the training is done, the word embeddings are obtained from the weights between the input layer and the hidden layer as the final results. And then, the entire neural network is no longer needed and there is no further prediction to be made either.
+* There are **2 vectors per word** this neural network to learn: one for when the word is an input (learnt as the weights between the input layer and the hidden layer), and another for when the word is an output (learnt as the weights between the hidden layer and the output layer).
+* Once the training is done, the word embeddings are obtained from **the weights between the input layer and the hidden layer**, and the weights between the hidden layer and the output layer are usually discarded. Besides, the entire neural network is no longer needed and there is no further prediction to be made either.
+
+## The Loss Functions
+Another way to understand the 2 architectures is to look straight at their loss functions respectively, which is a good way to understand the shallow neural network structure as well.
+
+* **CBOW Loss Function**: The loss function for CBOW is the negative log likelihood of the target word given the context words. It can be expressed as:
+
+  $$ L = -\frac{1}{T} \sum_{t=1}^{T} \log P(w_t | w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}) $$
+
+  where (w_t) is the center word, and (w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}) are the context words within a window of size (m).
+
+  The probability P(w_t \| w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}) is then computed using the softmax function:
+
+  $$ P(c|o) = \frac{exp(v_c^T v_o)}{\sum_{w=1}^{V} exp(v_w^T v_o)} $$
+
+  where (v_c) is the vector representation of the center word (w_t), (v_o) is the vector representation of average of the context words (w_{t-m}, ..., w_{t-1}, w_{t+1}, ..., w_{t+m}), and (V) is the vocabulary size.
+
+* **Skip-Gram Loss Function**: The loss function for Skip-Gram is the negative log likelihood of the context words given the target word. It can be expressed as:
+
+  $$ L = -\frac{1}{T} \sum_{t=1}^{T} \sum_{-m \leq j \leq m, j \neq 0} \log P(w_{t+j} | w_t) $$
+
+  where (w_t) is the center word, and (w_{t+j}) are the context words within a window of size (m).
+
+  The probability P(w_{t+j} \| w_t) is computed using the softmax function:
+
+  $$ P(o|c) = \frac{exp(v_o^T v_c)}{\sum_{w=1}^{V} exp(v_w^T v_c)} $$
+  
+  where (v_c) is the vector representation of the center word (w_t), (v_o) is the vector representation of the context word (w_{t+j}), and (V) is the vocabulary size.
+
+  > 📝 Notes
+  >
+  > The 2 vectors (v_c) and (v_o) used in the 2 loss functions are pairs of vectors for each word, one for when the word is an input (learnt as the weights between the input layer and the hidden layer), and another for when the word is an output (learnt as the weights between the hidden layer and the output layer).
 
 ## Key Notes
 
