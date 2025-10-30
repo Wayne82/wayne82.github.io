@@ -51,6 +51,12 @@ Then the attention mechanism turns out to be very powerful computational primiti
 ![Self Attention](/assets/images/self%20attention%20layer.png)
 * This is called **self-attention**, where it has only one inputs, but project to 3 different things - queries, keys, and values.
 
+![Masked Self Attention](/assets/images/masked%20self%20attention%20layer.png)
+* This is called **masked self-attention**, where it is used in predicting the next token in a sequence. The mask ensures that the model can only attend to previous tokens and not future ones.
+
+![Multiheaded Self Attention](/assets/images/multiheaded%20self%20attention%20layer.png)
+* This is called **multi-headed self-attention**, where multiple attention heads can be run in parallel, allowing the model to learn different types of relationships simultaneously.
+
 ## Transformer Architecture
 
 ## Learning Resources
