@@ -20,7 +20,7 @@ My main approach is to start from the basics of neural networks, and follow the 
 Now here I am.
 
 ## From RNN to Attention
-In my previous post on [Recurrent Neural Networks and BPTT](http://localhost:4000/neural-network/2025/08/03/Neural-Network-Notes-Recurrent-Neural-Network-and-BPTT.html), I had this question - "How did the development of RNNs lead to attention mechanisms, Transformers, GPT, and modern LLMs?", and after a few weeks of learning with various resources, I gradually gained a general picture of the evolution from RNNs to attention mechanisms, and further to Transformer architectures.
+In my previous post on [Recurrent Neural Networks and BPTT](http://localhost:4000/neural-network/2025/08/03/Neural-Network-Notes-Recurrent-Neural-Network-and-BPTT.html), I had this question - `"How did the development of RNNs lead to attention mechanisms, Transformers, GPT, and modern LLMs?"`, and after a few weeks of learning with various resources, I gradually gained a general picture of the evolution from RNNs to attention mechanisms, and further to Transformer architectures.
 
 * RNNs were designed to handle sequential data back in the 1980s. Instead of treating each input independently, it maintains a **hidden state** that captures information about previous inputs. However, RNNs suffer from issues like **vanishing gradients**, making it difficult to learn long-range dependencies in sequences.
 * To mitigate the vanishing gradient problem, **LSTM and GRU** architectures were introduced in late 1990s and early 2010s. They can capture longer-term dependencies better than vanilla RNNs, but they are still sequential in nature - can't parallelize well during training.
@@ -33,6 +33,23 @@ In my previous post on [Recurrent Neural Networks and BPTT](http://localhost:400
   - **Layer normalization and residual connections** - To stabilize and accelerate training of very deep attention stacks.
 
 ## The Attention Mechanism
+I find the Stanford CS231N Lecture 8 on Attention Mechanism and Transformers very helpful to understand the attention mechanism conceptually and how it is developed from RNNs.
+
+### Attention in Seq2Seq RNNs
+This diagram below illustrates the attention mechanism initially introduced in the seq2seq model with RNNs to address the single context vector bottleneck:
+![Attention in RNN](/assets/images/attention%20in%20rnn.png)
+* Now each step in the decoder can attend to different parts of the input sequence by introducing the context vector \(c_t\).
+* The context vector \(c_t\) is computed as a weighted sum of the encoder hidden states \(h_i\).
+* The weights \(alpha_{t,i}\) are the (scalar) alignment scores that are computed by applying a "linear layer" followed by a softmax function to normalize the alignment scores to get the attention weights.
+* The "linear layer" can be implemented in various ways, such as using the **Bahdanau attention** (additive) or **Luong attention** (multiplicative/dot-product).
+
+### General Attention Mechanism
+Then the attention mechanism turns out to be very powerful computational primitive for neural networks in its own right, and can be used without RNNs at all. It is a general operator that takes in 3 inputs: **queries (Q)**, **keys (K)**, and **values (V)**. It computes a weighted sum of the values, where the weights are determined by the similarity between the queries and keys.
+![Cross Attention](/assets/images/cross%20attention%20layer.png)
+* This is called **cross-attention**, where it has 2 sets of inputs - one is the query vectors, and the other is the data vectors which are used to project to keys and values.
+
+![Self Attention](/assets/images/self%20attention%20layer.png)
+* This is called **self-attention**, where it has only one inputs, but project to 3 different things - queries, keys, and values.
 
 ## Transformer Architecture
 
