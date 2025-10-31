@@ -26,11 +26,7 @@ In my previous post on [Recurrent Neural Networks and BPTT](http://localhost:400
 * To mitigate the vanishing gradient problem, **LSTM and GRU** architectures were introduced in late 1990s and early 2010s. They can capture longer-term dependencies better than vanilla RNNs, but they are still sequential in nature - can't parallelize well during training.
 * Later when tasks like machine translation became popular, a sequence to sequence (**seq2seq**) model based on RNNs was proposed, which enables end-to-end learning from input to output, and achieves high performance. However, it still struggles with long sequences, and the single “**context vector**” becomes a bottleneck — it forces the entire meaning of a long sentence into one fixed-size vector.
 * To solve the “**context vector**” bottleneck, **attention** was introduced in the Seq2Seq model! Attention allows the model to dynamically **attend to** different parts of the input sequence when generating each part of the output sequence. This means that instead of relying on a single context vector, the model can attend to relevant parts of the input as needed, greatly improving performance on tasks like translation. Until then, this attention idea still relies on RNNs as the backbone architecture, so it still has the sequential processing limitation.
-* Time advanced to 2017, the **Transformer** architecture was proposed in the landmark paper "Attention is All You Need". This was the revolutionary leap - it uses **attention without recurrence** at all! The radical ideas introduced in this paper include:
-  - **No recurrence at all** - Instead of processing sequences step by step, the Transformer processes the entire sequence **in parallel** using **self-attention** mechanisms. This allows for much faster training and better scalability using GPUs.
-  - **Positional encoding** - Since the Transformer does not have a built-in notion of sequence order (unlike RNNs), it uses positional encodings to inject information about the position of each token in the sequence.
-  - **Multi-head attention** - Multiple attention heads allow the model to learn different types of relationships simultaneously (e.g., syntactic, semantic, positional).
-  - **Layer normalization and residual connections** - To stabilize and accelerate training of very deep attention stacks.
+* Time advanced to 2017, the **Transformer** architecture was proposed in the landmark paper "Attention is All You Need". This was the revolutionary leap - it uses **attention without recurrence** at all!
 
 ## The Attention Mechanism
 I find the Stanford CS231N Lecture 8 on Attention Mechanism and Transformers very helpful to understand the attention mechanism conceptually and how it is developed from RNNs.
@@ -40,11 +36,19 @@ This diagram below illustrates the attention mechanism initially introduced in t
 ![Attention in RNN](/assets/images/attention%20in%20rnn.png)
 * Now each step in the decoder can attend to different parts of the input sequence by introducing the context vector \(c_t\).
 * The context vector \(c_t\) is computed as a weighted sum of the encoder hidden states \(h_i\).
-* The weights \(alpha_{t,i}\) are the (scalar) alignment scores that are computed by applying a "linear layer" followed by a softmax function to normalize the alignment scores to get the attention weights.
-* The "linear layer" can be implemented in various ways, such as using the **Bahdanau attention** (additive) or **Luong attention** (multiplicative/dot-product).
+* The weights \(alpha_{t,i}\) are the (scalar) alignment scores that are computed by applying a "linear layer" to the concatenation of one of the decoder hidden states and the encoder hidden states, followed by a softmax function to normalize the alignment scores to get the attention weights.
+* The "linear layer" can be implemented in various ways, such as using the **Bahdanau attention** (additive), **Luong attention**, or **dot-product attention** (multiplicative).
 
 ### General Attention Mechanism
-Then the attention mechanism turns out to be very powerful computational primitive for neural networks in its own right, and can be used without RNNs at all. It is a general operator that takes in 3 inputs: **queries (Q)**, **keys (K)**, and **values (V)**. It computes a weighted sum of the values, where the weights are determined by the similarity between the queries and keys.
+Then the attention mechanism turns out to be very powerful computational primitive for neural networks in its own right, and can be used without RNNs at all. It is a general operator that takes in 3 set of vectors: **queries (Q)**, **keys (K)**, and **values (V)**. It computes a weighted sum of the values, where the weights are determined by the similarity between the queries and keys.
+* The inputs can be query vectors and data vectors in the cross-attention case, or just one set of input vectors in the self-attention case.
+* The learnable weight matrices will be the key matrix, value matrix, and optional query matrix in the cross-attention case.
+* The attention can be calculated using scaled dot-product attention method:
+
+$$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+
+Below are the different types of attention layers I've captured from the lecture:
+
 ![Cross Attention](/assets/images/cross%20attention%20layer.png)
 * This is called **cross-attention**, where it has 2 sets of inputs - one is the query vectors, and the other is the data vectors which are used to project to keys and values.
 
