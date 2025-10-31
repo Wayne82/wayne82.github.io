@@ -40,10 +40,10 @@ This diagram below illustrates the attention mechanism initially introduced in t
 * The "linear layer" can be implemented in various ways, such as using the **Bahdanau attention** (additive), **Luong attention**, or **dot-product attention** (multiplicative).
 
 ### General Attention Mechanism
-Then the attention mechanism turns out to be very powerful computational primitive for neural networks in its own right, and can be used without RNNs at all. It is a general operator that takes in 3 set of vectors: **queries (Q)**, **keys (K)**, and **values (V)**. It computes a weighted sum of the values, where the weights are determined by the similarity between the queries and keys.
+Then the attention mechanism turns out to be very powerful computational primitive for neural networks in its own right, and can be used without RNNs at all. It is a general operator that takes in 3 set of vectors: **queries (Q)**, **keys (K)**, and **values (V)**, and computes a weighted sum of the values, where the weights are determined by the similarity between the queries and keys.
 * The inputs can be query vectors and data vectors in the cross-attention case, or just one set of input vectors in the self-attention case.
-* The learnable weight matrices will be the key matrix, value matrix, and optional query matrix in the cross-attention case.
-* The attention can be calculated using scaled dot-product attention method:
+* There are learnable weight matrices: the key matrix, value matrix, and optional query matrix in the cross-attention case.
+* The outputs can be calculated using scaled dot-product attention method:
 
 $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
 
