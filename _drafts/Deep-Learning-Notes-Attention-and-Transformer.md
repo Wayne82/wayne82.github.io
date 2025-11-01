@@ -42,7 +42,7 @@ This diagram below illustrates the attention mechanism initially introduced in t
 ### General Attention Mechanism
 Then the attention mechanism turns out to be very powerful computational primitive for neural networks in its own right, and can be used without RNNs at all. It is a general operator that takes in 3 set of vectors: **queries (Q)**, **keys (K)**, and **values (V)**, and computes a weighted sum of the values, where the weights are determined by the similarity between the queries and keys.
 * The inputs can be query vectors and data vectors in the cross-attention case, or just one set of input vectors in the self-attention case.
-* There are learnable weight matrices: the key matrix, value matrix, and optional query matrix in the cross-attention case.
+* The learnable weight matrices are the key matrix, value matrix, and query matrix in the self-attention case.
 * The outputs can be calculated using scaled dot-product attention method:
 
 $$\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
@@ -62,6 +62,29 @@ Below are the different types of attention layers I've captured from the lecture
 * This is called **multi-headed self-attention**, where multiple attention heads can be run in parallel, allowing the model to learn different types of relationships simultaneously.
 
 ## Transformer Architecture
+Now, I can read the original paper "[Attention is All You Need](https://arxiv.org/pdf/1706.03762)", much easier than the first attempt a few years ago. The main breakthrough of the Transformer architecture is that it relies solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Besides, there are also some other key components in the Transformer architecture, taking important roles. Put them together comes the whole picture (image is referenced from the paper):
+![Transformer Architecture](/assets/images/transformer%20architecture.png)
+* The original Transformer model consists of an encoder and a decoder, each composed of multiple identical layers.
+* Each encoder layer has two sub-layers: a multi-headed self-attention component and a fully connected feed-forward network.
+* Each decoder layer has three sub-layers: a masked multi-headed self-attention component and a multi-headed cross-attention component, followed by a fully connected feed-forward network.
+* Residual connections and layer normalization are applied after each sub-layer to stabilize training.
+* Positional encoding is added to input embeddings for both the encoder and decoder to provide information about the position of tokens in the sequence, since the recurrent structure with the natural sequence order is removed completely.
+* The word embeddings are part of the transformer model itself, that are learned during the training process. This means there isn't a pre-existing, separate word embedding table (like Word2Vec or GloVe) that the model starts with. Instead, the embedding vectors for every word in the vocabulary are parameters of the Transformer model and are learned from scratch simultaneously with the rest of the model's weights during the training process.
+* For a sequence of n tokens input, each head in the multi-headed attention layer products n output vectors - one per token. Then, these outputs from all heads are concatenated along the same token positions, and projected to produce the final n output vectors of the multi-headed attention layer. The mathematical formulation is as follows:
+
+  $$\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \text{head}_2, ..., \text{head}_h)W^O$$
+
+  $$\text{head}_i = \text{Attention}(XW_i^Q, XW_i^K, XW_i^V)$$
+
+  where, $X$ is the input sequence, and $W_i^Q$, $W_i^K$, $W_i^V$, $W^O$ are learnable weight matrices.
+
+* At the end of the Transformer model after going through all layers, we get n contextual enriched embeddings corresponding to the n input tokens. Each embedding will be individually passed through a linear layer followed by a softmax function:
+
+  $$ P(w_{i+1}|w_1, w_2, \ldots, w_i) = \text{softmax}(E_i W^P + b^P) $$
+
+  which gives n probability distributions of next token for each input token.
+
+* Finally, when using the pre-trained Transformer model to predict the next token in a sequence, we only take the last token's output probability distribution to produce it.
 
 ## Learning Resources
 - [Stanford CS231N \| Lecture 8: Attention Mechanism and Transformers](https://www.youtube.com/watch?v=RQowiOF_FvQ&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16&index=8&pp=iAQB)
