@@ -85,13 +85,17 @@ Now, I can read the original paper "[Attention is All You Need](https://arxiv.or
 
   where, $X$ is the input sequence, and $W_i^Q$, $W_i^K$, $W_i^V$, $W^O$ are learnable weight matrices.
 
-* At the end of the Transformer model after going through all layers, we get **n** contextual enriched embeddings corresponding to the **n** input tokens. Each embedding $$E_i$$ will be individually passed through a linear layer followed by a softmax function:
-
-  $$ P(w_{i+1}|w_1, w_2, \ldots, w_i) = \text{softmax}(E_i W^P + b^P) $$
-
-  which gives **n** probability distributions of next token for each input token.
-
-* Finally during inference, only the **last token’s** probability distribution is used to generate the next predicted token.
+> 📝 Notes
+>
+> If the transformer is used to predict the next token given an input sequence of **n** tokens (like in GPT models),
+>
+> * During training, after going through all layers, we get **n** contextual enriched embeddings corresponding to the **n** input tokens. Each embedding $$E_i$$ will be individually passed through a linear layer followed by a softmax function:
+>
+>   $$ P(w_{i+1}|w_1, w_2, \ldots, w_i) = \text{softmax}(E_i W^P + b^P) $$
+>
+>   which gives **n** probability distributions of next token for each input token.
+>
+> * During inference, only the **last token’s** probability distribution is used to generate the next predicted token. The generated token is then appended to the input sequence for the next prediction.
 
 ## Learning Resources
 I’m deeply grateful for all the excellent free learning resources available online. Here are the ones I find particularly valuable in my learning of this topic:
