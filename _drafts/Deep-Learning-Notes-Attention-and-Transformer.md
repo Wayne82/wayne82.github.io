@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "Deep Learning Notes: Attention and Transformer"
+title:  "Large Language Model Notes: Attention and Transformer"
 categories: neural-network
 mathjax: true
 comments: true
 ---
 
-Eventually, my journey through neural networks has brought me to a point where I feel equipped with enough foundational knowledge to delve into the **attention mechanism** and **transformer models** in deep learning. I can’t help but start this post to record what I’ve learned so far, even as I continue exploring and deepening my understanding of this intriguing subject.
+Eventually, my journey through neural networks has brought me to a point where I feel equipped with enough foundational knowledge to delve into the **attention mechanism** and **transformer models** in deep learning. I can’t help but start this post to record what I’ve learned so far, even as I continue exploring and deepening my understanding of these 2 intriguing topics.
 
 ## Look Back Where I Started
 Since this is a big milestone for me where I feel confident in understanding the 2 advanced topics, I want to take a moment to reflect on how I got here.
@@ -29,7 +29,7 @@ In my previous post on [Recurrent Neural Networks and BPTT](http://localhost:400
 * Time advanced to 2017, the **Transformer** architecture was proposed in the landmark paper "Attention is All You Need". This was the revolutionary leap - it uses **attention without recurrence** at all!
 
 ## The Attention Mechanism
-I find the Stanford CS231N Lecture 8 on Attention Mechanism and Transformers very helpful to understand the attention mechanism conceptually and how it is developed from RNNs.
+I find the [Stanford CS231N Lecture 8 on Attention Mechanism and Transformers](https://www.youtube.com/watch?v=RQowiOF_FvQ&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16&index=8&pp=iAQB) very helpful to understand the attention mechanism conceptually and how it is developed from RNNs.
 
 ### Attention in Seq2Seq RNNs
 This diagram below illustrates the attention mechanism initially introduced in the seq2seq model with RNNs to address the single context vector bottleneck:
@@ -64,13 +64,13 @@ Below are the different types of attention layers I've captured from the lecture
 ## Transformer Architecture
 Now, I can read the original paper "[Attention is All You Need](https://arxiv.org/pdf/1706.03762)", much easier than the first attempt a few years ago. The main breakthrough of the Transformer architecture is that it relies solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Besides, there are also some other key components in the Transformer architecture, taking important roles. Put them together comes the whole picture (image is referenced from the paper):
 ![Transformer Architecture](/assets/images/transformer%20architecture.png)
-* The original Transformer model consists of an encoder and a decoder, each composed of multiple identical layers.
-* Each encoder layer has two sub-layers: a multi-headed self-attention component and a fully connected feed-forward network.
-* Each decoder layer has three sub-layers: a masked multi-headed self-attention component and a multi-headed cross-attention component, followed by a fully connected feed-forward network.
-* Residual connections and layer normalization are applied after each sub-layer to stabilize training.
-* Positional encoding is added to input embeddings for both the encoder and decoder to provide information about the position of tokens in the sequence, since the recurrent structure with the natural sequence order is removed completely.
-* The word embeddings are part of the transformer model itself, that are learned during the training process. This means there isn't a pre-existing, separate word embedding table (like Word2Vec or GloVe) that the model starts with. Instead, the embedding vectors for every word in the vocabulary are parameters of the Transformer model and are learned from scratch simultaneously with the rest of the model's weights during the training process.
-* For a sequence of n tokens input, each head in the multi-headed attention layer products n output vectors - one per token. Then, these outputs from all heads are concatenated along the same token positions, and projected to produce the final n output vectors of the multi-headed attention layer. The mathematical formulation is as follows:
+* The original Transformer model consists of an **encoder** and a **decoder**, each composed of multiple identical layers.
+* Each encoder layer has two sub-layers: a **multi-headed self-attention component** and a **fully connected feed-forward network**.
+* Each decoder layer has three sub-layers: a **masked multi-headed self-attention component**, a **multi-headed cross-attention component**, followed by a **fully connected feed-forward network**.
+* **Residual connections** and **layer normalization** are applied after each sub-layer to stabilize training.
+* **Positional encoding** is added to input embeddings for both the encoder and decoder to provide information about the position of tokens in the sequence, since the recurrent structure with the natural sequence order is removed completely.
+* The **word embeddings** are part of the transformer model itself, that are **learned during the training process**. This means there isn't a pre-existing, separate word embedding table (like Word2Vec or GloVe) that the model starts with. Instead, the embedding vectors for every word in the vocabulary are parameters of the Transformer model and are learned from scratch simultaneously with the rest of the model's weights during the training process.
+* For a sequence of **n** tokens input, each head in the multi-headed attention layer products **n** output vectors - one per token. Then, these outputs from all heads are concatenated along the same token positions, and projected to produce the final **n** output vectors of the multi-headed attention layer. The mathematical formulation is as follows:
 
   $$\text{MultiHead}(Q, K, V) = \text{Concat}(\text{head}_1, \text{head}_2, ..., \text{head}_h)W^O$$
 
@@ -78,16 +78,24 @@ Now, I can read the original paper "[Attention is All You Need](https://arxiv.or
 
   where, $X$ is the input sequence, and $W_i^Q$, $W_i^K$, $W_i^V$, $W^O$ are learnable weight matrices.
 
-* At the end of the Transformer model after going through all layers, we get n contextual enriched embeddings corresponding to the n input tokens. Each embedding will be individually passed through a linear layer followed by a softmax function:
+* At the end of the Transformer model after going through all layers, we get **n** contextual enriched embeddings corresponding to the **n** input tokens. Each embedding will be individually passed through a linear layer followed by a softmax function:
 
   $$ P(w_{i+1}|w_1, w_2, \ldots, w_i) = \text{softmax}(E_i W^P + b^P) $$
 
-  which gives n probability distributions of next token for each input token.
+  which gives **n** probability distributions of next token for each input token.
 
-* Finally, when using the pre-trained Transformer model to predict the next token in a sequence, we only take the last token's output probability distribution to produce it.
+* Finally, when using the pre-trained Transformer model to predict the next token in a sequence, we only take the **last token's** output probability distribution to produce it.
 
 ## Learning Resources
+I can't appreciate more for all the great learning resources available online and free to access. Here are the ones I found most helpful in my learning on this topic:
+
+- [Attention is All You Need (Vaswani et al., 2017)](https://arxiv.org/pdf/1706.03762)
+- [Visualizing transformers and attention from Grant Sanderson](https://www.youtube.com/watch?v=KJtZARuO3JY)
+- [Stanford CS224N: Lecture 7 - Attention, Final Projects and LLM Intro](https://www.youtube.com/watch?v=J7ruSOIzhrE)
 - [Stanford CS231N \| Lecture 8: Attention Mechanism and Transformers](https://www.youtube.com/watch?v=RQowiOF_FvQ&list=PLoROMvodv4rOmsNzYBMe0gJY2XS8AQg16&index=8&pp=iAQB)
 - [Stanford CS25: V2 I Introduction to Transformers w/ Andrej Karpathy](https://jalammar.github.io/illustrated-transformer/)
 
 ## Conclusion and Next Steps
+I am glad that I have gained the basic but foundational understanding of the attention mechanism and transformer architecture. Though I only scratched the surface of these complex topics, this is very important first step for me, to continue exploring them in depth, and gradually get into many other more advanced aspects of modern large language models (LLMs).
+
+Until now, I think I have done enough learning on the theoretical side of things by reading and watching. Next, I plan to get my hands dirty with some practical coding for actually training a small transformer model, by which I believe it can solidify my understanding of transformer architecture further.
