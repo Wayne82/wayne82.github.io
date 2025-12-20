@@ -8,13 +8,12 @@ author:
   name: Wayne Wang
   email: wynw82@gmail.com
 
-# User remote theme minima on Github
-remote_theme: jekyll/minima@ded17a1
+# Use local minima theme via GitHub Pages gem (avoids remote_theme HTTPS fetch)
+theme: minima
 plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
-  - jekyll-remote-theme
 
 show_excerpts: true
 google_analytics: G-7QQBEZL21K
