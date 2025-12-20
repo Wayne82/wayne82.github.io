@@ -83,3 +83,34 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 > 📝 Note
 >
 > Immediately, we can get every operator on a finite-dimensional complex vector space has an upper triangular matrix with respect to some basis of $V$.
+
+* **Diagonal Matrix**, A diagonal matrix is a square matrix that is 0 everywhere except possibly on the diagonal.
+
+* **Diagonalizable Operator**, An operator $T \in L(V)$ is called diagonalizable if the operator has a diagonal matrix with respect to some basis of $V$.
+
+* **Conditions Equivalent to Diagonalizability**, Let $\lambda_1, ..., \lambda_m$ be the distinct eigenvalues of $T$. The following conditions are equivalent for an operator $T \in L(V)$:
+  * $T$ is diagonalizable.
+  * $V$ has a basis consisting of eigenvectors of $T$.
+  * $V = E(\lambda_1, T) \oplus \cdots \oplus E(\lambda_m, T)$, where $E(\lambda_i, T)$ is the eigenspace of $T$ corresponding to $\lambda_i$.
+  * $dimV = dimE(\lambda_1, T) + ... + dimE(\lambda_m, T)$.
+
+  Then, if T has dimV distinct eigenvalues, then T is diagonalizable.
+
+* **Necessary and Sufficient Conditions for Diagonalizability**, T is diagonalizable if and only if the minimal polynomial of T equals $(z - \lambda_1)...(z - \lambda_m)$ for some list of distinct $\lambda_1, ..., \lambda_m \in F$.
+
+> 📝 Note
+>
+> The difference of the above condition and the condition to have an upper triangular matrix is that the minimal polynomial of T must have distinct roots.
+
+* **Gershgorin Disk Theorem**, Each eigenvalue of T is contained in some Gershgorin disk of T, where the Gershgorin disks are defined as follows:
+
+  $$ D_i = \{ z \in F : |z - A_{j,j}| \leq \sum_{k = 1, j \neq k}^{n} |A_{j, k}| \} $$
+
+  for each $j = 1, 2, ..., n$, where $A_{j, k}$ is the entry in the $j$-th row and $k$-th column of the matrix representation of T.
+
+* **Commute**, Two operators $S, T \in L(V)$ commute if $S(T(v)) = T(S(v))$ for all $v \in V$. And S and T commute if and only if their matrix representations with respect to some basis of $V$ commute.
+  * **Eigenspace is Invariant Under Commuting Operators**, If $S, T \in L(V)$ commute, then the eigenspace of $S$ corresponding to an eigenvalue $\lambda$ is invariant under $T$.
+  * **Simultaneous Diagonalizability**, Two diagonalizable operators on the same vector space have diagonal matrices with respect to the same basis if and only if they commute.
+  * **Common Eigenvector for Commuting Operators**, Every pair of commuting operators on a finite-dimensional nonzero complex vector space has a common eigenvector.
+
+* **Commuting Operators are Simultaneously Upper Triangularizable**, Two commuting operators on a finite-dimensional complex vector space have upper triangular matrices with respect to the same basis.
