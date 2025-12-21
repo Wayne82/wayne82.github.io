@@ -114,3 +114,77 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
   * **Common Eigenvector for Commuting Operators**, Every pair of commuting operators on a finite-dimensional nonzero complex vector space has a common eigenvector.
 
 * **Commuting Operators are Simultaneously Upper Triangularizable**, Two commuting operators on a finite-dimensional complex vector space have upper triangular matrices with respect to the same basis.
+
+* **Inner Product**, An inner product on a vector space $V$ over a field $F$ is a function that takes each ordered pair (u, v) of vectors in $V$ and returns a scalar in $F$, denoted by $\langle u, v \rangle$, satisfying the following properties:
+  1. **Positivity**: $\langle u, u \rangle \geq 0$ for all $u \in V$.
+  2. **Definiteness**: $\langle u, u \rangle = 0$ if and only if $u = 0$.
+  3. **Additivity in first slot**: $\langle u + v, w \rangle = \langle u, w \rangle + \langle v, w \rangle$ for all $u, v, w \in V$.
+  4. **Homogeneity in first slot**: $\langle cu, v \rangle = c \langle u, v \rangle$ for all $u, v \in V$ and $c \in F$.
+  5. **Conjugate symmetry**: $\langle u, v \rangle = \overline{\langle v, u \rangle}$ for all $u, v \in V$.
+* **Inner Product Space**, A vector space $V$ over a field $F$ with an inner product is called an inner product space.
+
+* **Norm**, The norm of a vector $v \in V$ is defined as $$\|v\| = \sqrt{\langle v, v \rangle}$$.
+
+* **Orthogonal**, Two vectors $u, v \in V$ are orthogonal if $\langle u, v \rangle = 0$.
+
+* **Pythagorean Theorem**, For any two vectors $u, v \in V$, we have $$\|u + v\|^2 = \|u\|^2 + \|v\|^2$$ if and only if $u$ and $v$ are orthogonal.
+
+* **Cauchy-Schwarz Inequality**, For any two vectors $u, v \in V$, we have $$\|\langle u, v \rangle\| \leq \|u\| \|v\|$$. The equality holds if and only if $u$ and $v$ are linearly dependent.
+
+> 📝 Note
+>
+> The Cauchy-Schwarz inequality is arguably the most important inequality in all of linear algebra. Without this inequality, we couldn't define the angle in inner product space. Because the angle is defined as $\cos \theta = \frac{\langle u, v \rangle}{\|u\| \|v\|}$, and the Cauchy-Schwarz inequality guarantees that the absolute value of the cosine is always less than or equal to 1.
+
+* **Triangle Inequality**, For any two vectors $u, v \in V$, we have $$\|u + v\| \leq \|u\| + \|v\|$$. The equality holds if and only if $u$ and $v$ are linearly dependent.
+
+* **Orthonormal**, A list of vectors is called orthonormal if each vector in the list has norm 1 and is orthogonal to every other vector in the list.
+  $$\langle e_i, e_j \rangle = \begin{cases} 1 & \text{if } i = j \\ 0 & \text{if } i \neq j \end{cases}$$
+  * $$\|a_1 e_1 + \cdots + a_n e_n\|^2 = |a_1|^2 + \cdots + |a_n|^2$$
+  * Every orthonormal list of vectors is linearly independent.
+  * **Bessel's Inequality**, For any vector $v \in V$ and any orthonormal list of vectors $e_1, ..., e_n$, we have $$\|v\|^2 \geq \|\langle v, e_1 \rangle\|^2 + \cdots + \|\langle v, e_n \rangle\|^2$$
+
+* **Orthonormal Basis**, An orthonormal basis of an inner product space $V$ is an orthonormal list of vectors that spans $V$. Suppose $e_1, ..., e_n$ is an orthonormal basis of $V$,
+  * $v = \langle v, e_1 \rangle e_1 + \cdots + \langle v, e_n \rangle e_n$
+  * $\|v\|^2 = \|\langle v, e_1 \rangle\|^2 + \cdots + \|\langle v, e_n \rangle\|^2$
+  * $\langle u, v \rangle = \langle u, e_1 \rangle \overline{\langle v, e_1 \rangle} + \cdots + \langle u, e_n \rangle \overline{\langle v, e_n \rangle}$
+  * Every finite-dimensional inner product space has an orthonormal basis.
+  * Every orthonormal list exteds to an orthonormal basis of $V$.
+
+* **Gram-Schmidt Process**, The Gram-Schmidt process is a method for constructing an orthonormal basis from a basis of a vector space. Given a basis $v_1, ..., v_n$ of $V$, the Gram-Schmidt process produces an orthonormal basis $e_1, ..., e_n$ as follows:
+  1. Let $f_1 = v_1$.
+  2. For $i = 2, ..., n$, let
+     $$ f_i = v_i - \frac{\langle v_i, f_1 \rangle}{\|f_1\|^2} f_1 - \cdots - \frac{\langle v_i, f_{i-1} \rangle}{\|f_{i-1}\|^2} f_{i-1} $$
+  3. Normalize $f_i$ to get $e_i = \frac{f_i}{\|f_i\|}$.
+
+* **Schur's Theorem**, Every operator $T \in L(V)$ on a finite-dimensional complex vector space has an upper triangular matrix with respect to some orthonormal basis of $V$.
+
+* **Riesz Representation Theorem**, Every continuous linear functional on a finite-dimensional inner product space can be represented as an inner product with a fixed vector in the space. Specifically, for every linear functional $f$ on an inner product space $V$, there exists a unique vector $v \in V$ such that for all $u \in V$, we have $$ f(u) = \langle u, v \rangle $$.
+
+> 📝 Note
+>
+> This is a very surprising result, as it shows that every linear functional can be represented as an inner product with a fixed vector in the space.
+> * It does not care what elements are in the vector space, as long as they follow the rules of a **vector space**.
+> * It also does not care how the functional is defined, as long as it is **linear**.
+> * It also does not care which inner product is used, as long as it satisfies the properties of an inner product.
+>
+> **Crucial Nuance**: the specific vector $v$ changes depending on the inner product we choose.
+
+* **Orthogonal Complement**, The orthogonal complement of a subspace $U$ of an inner product space $V$ is the set of all vectors in $V$ that are orthogonal to every vector in $U$. It is denoted by $U^\perp$ and defined as follows:
+
+  $$ U^\perp = \{ v \in V : \langle u, v \rangle = 0 \text{ for all } u \in U \} $$
+
+* **Orthogonal Projection**, The orthogonal projection of $V$ onto $U$ is the operator $P_U \in L(V)$ defined as follows: For each $v \in V$, write $v = u + w$, where $u \in U$ and $w \in U^\perp$. Then, the orthogonal projection of $v$ onto $U$ is given by $P_U(v) = u$.
+
+* **Minimizing Distance**, The orthogonal projection of $v \in V$ onto $U$ minimizes the distance from $v$ to $U$. Specifically, for any $u \in U$, we have
+
+  $$ \|v - P_U(v)\| \leq \|v - u\| $$
+
+* **Pseudoinverse**, Suppose that $V$ is finite dimensional and $T \in L(V, W)$. The pseudoinverse $T^+ \in L(W, V)$ of $T$ is the linear map from W to V defined by
+
+  $$ T^+(w) = (T|_{null(T)^\perp})^{-1} P_{range(T)}(w) $$
+
+  for each $w \in W$.
+
+* **Pesudoinverse Provides Best Approximation**, Suppose $V$ is finite dimensional, and $T \in L(V, W)$, and $b \in W$. Then,
+  * If $x \in V$, $$\|T(T^+b) - b\| \leq \|Tx - b\|$$
+  * If $x \in T^+b + null(T)$, then $$\|T^+b\| \leq \|x\|$$
