@@ -29,6 +29,13 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Invariant Subspace**, Suppose $T \in L(V)$. A subspace $U$ of $V$ is called invariant under $T$ if $T(u) \in U$ for every $u \in U$.
 
+> 📝 Note
+>
+> We could consider there are 3 different kinds of subspaces:
+> * **Random Subspace**: Vectors in the subspace get kicked out ($T(u) \notin U$).
+> * **Invariant Subspace**: Vectors in the subspace stay in the subspace ($T(u) \in U$), but might be rotated, sheared, or mixed.
+> * **Eigenspace**: Vectors in the subspace stay in the subspace and are only scaled ($T(u) = \lambda u$ for some scalar $\lambda$).
+
 * **Eigenvalue and Eigenvector**, Suppose $T \in L(V)$. A scalar $\lambda$ is called an eigenvalue of $T$ if there exists a nonzero vector $v \in V$ such that $T(v) = \lambda v$. The vector $v$ is called an eigenvector of $T$ corresponding to the eigenvalue $\lambda$.
 
 * **Linear Independent Eigenvectors**, Suppose $T \in L(V)$. Then every list of eigenvectors of $T$ corresponding to distinct eigenvalues of $T$ is linearly independent.
@@ -188,3 +195,10 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 * **Pesudoinverse Provides Best Approximation**, Suppose $V$ is finite dimensional, and $T \in L(V, W)$, and $b \in W$. Then,
   * If $x \in V$, $$\|T(T^+b) - b\| \leq \|Tx - b\|$$
   * If $x \in T^+b + null(T)$, then $$\|T^+b\| \leq \|x\|$$
+
+## Conclusion
+These chapters introduce numerous foundational definitions and lemmas. The Fundamental Theorem of Algebra serves as a cornerstone for richer theories in linear algebra, particularly through the application of polynomials to operators. A key insight is that every operator possesses a minimal polynomial, the roots of which correspond exactly to the operator's eigenvalues.
+
+Eigenvalues and eigenvectors act as the structural 'building blocks' of an operator and are essential for deciphering its internal mechanics. While operators in complex vector spaces can always be represented by an upper-triangular matrix, they are diagonalizable if and only if their minimal polynomial has distinct roots. Consequently, a vector space can be decomposed into a direct sum of eigenspaces only when the operator is diagonalizable.
+
+Finally, inner product spaces introduce the vector space with geometric structure by defining length and angle. A very surprising result is the Riesz Representation Theorem, which shows that every linear functional can be uniquely represented as an inner product with a specific vector in the space.
