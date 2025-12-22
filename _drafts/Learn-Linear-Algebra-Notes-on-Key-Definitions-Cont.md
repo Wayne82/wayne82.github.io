@@ -202,3 +202,5 @@ These chapters introduce numerous foundational definitions and lemmas. The Funda
 Eigenvalues and eigenvectors act as the structural 'building blocks' of an operator and are essential for deciphering its internal mechanics. While operators in complex vector spaces can always be represented by an upper-triangular matrix, they are diagonalizable if and only if their minimal polynomial has distinct roots. Consequently, a vector space can be decomposed into a direct sum of eigenspaces only when the operator is diagonalizable.
 
 Finally, inner product spaces introduce the vector space with geometric structure by defining length and angle. A very surprising result is the Riesz Representation Theorem, which shows that every linear functional can be uniquely represented as an inner product with a specific vector in the space.
+
+The learning notes of the rest of the 3 chapters will go on in the future post.
