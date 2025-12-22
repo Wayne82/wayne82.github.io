@@ -8,12 +8,12 @@ default: serve
 # Run Jekyll server with drafts enabled by default
 serve:
 	@echo "Starting Jekyll server with drafts..."
-	bundle exec jekyll serve --drafts
+	RUBYOPT="-r./disable_ssl_verify" bundle exec jekyll serve --drafts
 
 # Run Jekyll server with standard configuration
 serve-prod:
 	@echo "Starting Jekyll server..."
-	bundle exec jekyll serve
+	RUBYOPT="-r./disable_ssl_verify" bundle exec jekyll serve
 
 # Clean the Jekyll build artifacts
 clean:
@@ -23,7 +23,7 @@ clean:
 # Build the Jekyll site
 build:
 	@echo "Building Jekyll site..."
-	bundle exec jekyll build
+	RUBYOPT="-r./disable_ssl_verify" bundle exec jekyll build
 
 # Variables
 GALLERY_FOLDER=assets/galleries
