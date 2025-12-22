@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Learn Linear Algebra a Different Way - Notes on Key Definitions Cont."
+title:  "Learn Linear Algebra a Different Way - Notes on Key Definitions (1)"
 categories: mathematics
 mathjax: true
 comments: true
