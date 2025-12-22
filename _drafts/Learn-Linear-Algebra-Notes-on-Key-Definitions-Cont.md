@@ -29,12 +29,12 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Invariant Subspace**, Suppose $T \in L(V)$. A subspace $U$ of $V$ is called invariant under $T$ if $T(u) \in U$ for every $u \in U$.
 
-> 📝 Note
->
-> We could consider there are 3 different kinds of subspaces:
-> * **Random Subspace**: Vectors in the subspace get kicked out ($T(u) \notin U$).
-> * **Invariant Subspace**: Vectors in the subspace stay in the subspace ($T(u) \in U$), but might be rotated, sheared, or mixed.
-> * **Eigenspace**: Vectors in the subspace stay in the subspace and are only scaled ($T(u) = \lambda u$ for some scalar $\lambda$).
+  > 📝 Note
+  >
+  > We could consider there are 3 different kinds of subspaces:
+  > * **Random Subspace**: Vectors in the subspace get kicked out ($T(u) \notin U$).
+  > * **Invariant Subspace**: Vectors in the subspace stay in the subspace ($T(u) \in U$), but might be rotated, sheared, or mixed.
+  > * **Eigenspace**: Vectors in the subspace stay in the subspace and are only scaled ($T(u) = \lambda u$ for some scalar $\lambda$).
 
 * **Eigenvalue and Eigenvector**, Suppose $T \in L(V)$. A scalar $\lambda$ is called an eigenvalue of $T$ if there exists a nonzero vector $v \in V$ such that $T(v) = \lambda v$. The vector $v$ is called an eigenvector of $T$ corresponding to the eigenvalue $\lambda$.
 
@@ -76,10 +76,10 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Operators on Odd-Dimensional Spaces**, Every operator on an odd-dimensional **real** vector space has an eigenvalue.
 
-> 📝 Note
->
-> * We already know that every operator on a finite-dimensional complex vector space has an eigenvalue, so this is specific for real vector spaces.
-> * The proof of this lemma relies on another lemma, "Suppose $T \in L(V)$ and $b, c \in R$ with $b^2 - 4c < 0$. Then dim null($T^2 + bT + cI$) is an even number."
+  > 📝 Note
+  >
+  > * We already know that every operator on a finite-dimensional complex vector space has an eigenvalue, so this is specific for real vector spaces.
+  > * The proof of this lemma relies on another lemma, "Suppose $T \in L(V)$ and $b, c \in R$ with $b^2 - 4c < 0$. Then dim null($T^2 + bT + cI$) is an even number."
 
 * **Upper Triangular Matrix**, A square matrix is called upper triangular if all entries below the diagonal are zero.
 
@@ -87,9 +87,9 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Condition to Have an Upper Triangular Matrix**, T has an upper triangular matrix with respect to some basis of $V$ if and only if the minimal polynomial of $T$ equals $(z - \lambda_1)...(z - \lambda_m)$ for some $\lambda_1, ..., \lambda_m \in F$.
 
-> 📝 Note
->
-> Immediately, we can get every operator on a finite-dimensional complex vector space has an upper triangular matrix with respect to some basis of $V$.
+  > 📝 Note
+  >
+  > Immediately, we can get every operator on a finite-dimensional complex vector space has an upper triangular matrix with respect to some basis of $V$.
 
 * **Diagonal Matrix**, A diagonal matrix is a square matrix that is 0 everywhere except possibly on the diagonal.
 
@@ -105,9 +105,9 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Necessary and Sufficient Conditions for Diagonalizability**, T is diagonalizable if and only if the minimal polynomial of T equals $(z - \lambda_1)...(z - \lambda_m)$ for some list of distinct $\lambda_1, ..., \lambda_m \in F$.
 
-> 📝 Note
->
-> The difference of the above condition and the condition to have an upper triangular matrix is that the minimal polynomial of T must have distinct roots.
+  > 📝 Note
+  >
+  > The difference of the above condition and the condition to have an upper triangular matrix is that the minimal polynomial of T must have distinct roots.
 
 * **Gershgorin Disk Theorem**, Each eigenvalue of T is contained in some Gershgorin disk of T, where the Gershgorin disks are defined as follows:
 
@@ -138,9 +138,9 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Cauchy-Schwarz Inequality**, For any two vectors $u, v \in V$, we have $$\|\langle u, v \rangle\| \leq \|u\| \|v\|$$. The equality holds if and only if $u$ and $v$ are linearly dependent.
 
-> 📝 Note
->
-> The Cauchy-Schwarz inequality is arguably the most important inequality in all of linear algebra. Without this inequality, we couldn't define the angle in inner product space. Because the angle is defined as $\cos \theta = \frac{\langle u, v \rangle}{\|u\| \|v\|}$, and the Cauchy-Schwarz inequality guarantees that the absolute value of the cosine is always less than or equal to 1.
+  > 📝 Note
+  >
+  > The Cauchy-Schwarz inequality is arguably the most important inequality in all of linear algebra. Without this inequality, we couldn't define the angle in inner product space. Because the angle is defined as $\cos \theta = \frac{\langle u, v \rangle}{\|u\| \|v\|}$, and the Cauchy-Schwarz inequality guarantees that the absolute value of the cosine is always less than or equal to 1.
 
 * **Triangle Inequality**, For any two vectors $u, v \in V$, we have $$\|u + v\| \leq \|u\| + \|v\|$$. The equality holds if and only if $u$ and $v$ are linearly dependent.
 
@@ -167,14 +167,14 @@ Continuing from what I've left off in my [previous post](https://wayne82.github.
 
 * **Riesz Representation Theorem**, Every continuous linear functional on a finite-dimensional inner product space can be represented as an inner product with a fixed vector in the space. Specifically, for every linear functional $f$ on an inner product space $V$, there exists a unique vector $v \in V$ such that for all $u \in V$, we have $$ f(u) = \langle u, v \rangle $$.
 
-> 📝 Note
->
-> This is a very surprising result, as it shows that every linear functional can be represented as an inner product with a fixed vector in the space.
-> * It does not care what elements are in the vector space, as long as they follow the rules of a **vector space**.
-> * It also does not care how the functional is defined, as long as it is **linear**.
-> * It also does not care which inner product is used, as long as it satisfies the properties of an inner product.
->
-> **Crucial Nuance**: the specific vector $v$ changes depending on the inner product we choose.
+  > 📝 Note
+  >
+  > This is a very surprising result, as it shows that every linear functional can be represented as an inner product with a fixed vector in the space.
+  > * It does not care what elements are in the vector space, as long as they follow the rules of a **vector space**.
+  > * It also does not care how the functional is defined, as long as it is **linear**.
+  > * It also does not care which inner product is used, as long as it satisfies the properties of an inner product.
+  >
+  > **Crucial Nuance**: the specific vector $v$ changes depending on the inner product we choose.
 
 * **Orthogonal Complement**, The orthogonal complement of a subspace $U$ of an inner product space $V$ is the set of all vectors in $V$ that are orthogonal to every vector in $U$. It is denoted by $U^\perp$ and defined as follows:
 
