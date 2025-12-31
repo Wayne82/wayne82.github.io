@@ -6,11 +6,16 @@ mathjax: true
 comments: true
 ---
 
-In the previous post [Large Language Model Notes: Attention and Transformer](https://wayne82.github.io/neural-network/2025/11/02/Large-Language-Model-Notes-Attention-and-Transformer.html), I summarized my learning experience and understanding of the attention mechanism and transformer architecture on a high level and theoretical perspective. Now, it is time to get hands-on experience by implementing a basic transformer model using PyTorch, and training it on classic Chinese poetries and corpus, from which I hope to gain a practical understanding on the end-to-end process of building and training a large language model, just for learning purpose.
+In my [previous post](https://wayne82.github.io/neural-network/2025/11/02/Large-Language-Model-Notes-Attention-and-Transformer.html), I summarized my learning experience and understanding of the Attention mechanism and Transformer architecture from a high-level, theoretical perspective. Now, it is time to get hands-on.
 
-And the actual implementation code is suprisingly concise, thanks to the modularized design of PyTorch and the transformer architecture itself, which allows us to build a functional GPT-like transformer model with just around 200 lines of code!
+This post records my journey of building a basic Transformer model from scratch in PyTorch. By training this model on classic Chinese poetry, I aimed to move beyond theory and gain a deep, practical understanding of how Large Language Models (LLMs) are actually built and trained.
+
+What surprised me most was the conciseness of the implementation. Thanks to the modular design of PyTorch and the elegance of the Transformer architecture itself, it is possible to build a functional, GPT-like model with only around 200 lines of code!
 
 ## Where I Started
+As always, I began my learning journey by seeking out the best online courses, tutorials, and official documentation. I was incredibly grateful to discover Andrej Karpathy's [Neural Networks: Zero to Hero](https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ) series on YouTube. This series provides a crystal-clear, well-structured explanation of the entire landscape — from the basic concepts of neural networks and backpropagation to bigram language models, the attention mechanism, and finally, the implementation of a GPT-like Transformer in PyTorch.
+
+Although the videos are long, Karpathy explains complex concepts in a highly concise and intuitive way. He also shares numerous coding details and tricks that are invaluable for beginners looking to get started quickly. It is also worth noting that my previous studies on neural network fundamentals laid a solid foundation, allowing me to follow his video courses closely without frequent pauses.
 
 ## The Transformer Model Architecture in Depth
 
