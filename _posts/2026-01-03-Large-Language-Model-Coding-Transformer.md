@@ -41,8 +41,8 @@ Here is a brief explanation of the major processing steps inside the model:
 * Output from each head is concatenated and projected back to the embedding vector space.
 * The output of the final Transformer block in the embedding vector space is projected back to the vector space of vocabulary size using a linear layer, producing logits for the next possible token.
 * Finally, the logits are converted to probabilities of every possible token using softmax,
-  * For training, the model computes the cross-entropy loss between predicted probabilities and the expected next token, and then model parameters are updated using backpropagation and an optimizer (AdamW in this case). Besides, training is done in batches of input tokens to improve efficiency.
-  * For inference, the model samples the next token using Weighted Random Sampling based on its predicted probabilities.
+  * For **training**, the model computes the cross-entropy loss between predicted probabilities and the expected next token, and then model parameters are updated using backpropagation and an optimizer (AdamW in this case). Besides, training is done in batches of input tokens to improve efficiency.
+  * For **inference**, the model samples the next token using Weighted Random Sampling based on its predicted probabilities.
 
 > 📝 Notes (What I quoted from Andrej Karpathy's viedo courses)
 >
