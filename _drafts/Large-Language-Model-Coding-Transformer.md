@@ -71,8 +71,8 @@ After playing with the model hyperparameters in [my test function](https://githu
 > 📝 Notes
 >
 > * The test results shown in the table above are not good, even very bad for the first 2 small datasets in terms of validation loss. Further discussion on this is covered in next section.
-> * It will not be wise and practical to train a large transformer model on CPU. For the 3rd dataset with about 10M model parameters, I used google colab with limited free TPU to speed up the training process.
->
+> * I didn't spend much time on the tokenization part. I simply used character-level tokenization, treating each Chinese character as a token. This might also contribute to the poor performance on small datasets due to the large vocabulary size.
+> * It will not be wise and practical to train a large transformer model on CPU. For the 3rd dataset with about 10M model parameters, I used google colab with free GPU to speed up the training process. The free GPU time is limited, so not enough training iterations were done.
 
 ## Overfitting and The Scaling Laws
 During training, I observed that the model struggled when trained on small datasets like Shijing and Lunyu. These texts contain only tens of thousands of characters yet feature a vocabulary of several thousand unique tokens. Consequently, the model found it difficult to minimize both training and validation loss simultaneously. Regardless of the model size, the validation loss remained consistently high and began to increase after just a few thousand iterations. In contrast, the training loss continued to improve steadily as I increased the model size and training iterations.
@@ -86,7 +86,7 @@ These observations align with the Chinchilla Scaling Laws, a set of empirical gu
 ## Conclusion and Next Steps
 I am very satisfied with this hands-on exercise. Building a basic Transformer in PyTorch, training it on classic Chinese texts, and tuning hyperparameters was a rewarding experience — even if the results highlighted the challenges of generalization on small datasets.
 
-Throughout this process, I have found myself pondering a deeper question: Can AGI truly be achieved simply by scaling up model size and training data? How can an architecture constrained by a fixed vocabulary discover new concepts or knowledge that lies beyond the boundaries of the human language it was trained on?
+Throughout this process, I have found myself pondering a deeper question: **Can AGI truly be achieved simply by scaling up model size and training data**? How can an architecture constrained by a fixed vocabulary discover new concepts or knowledge that lies beyond the boundaries of the human language it was trained on?
 
 These questions bring to mind the words of Ludwig Wittgenstein:
 * "The limits of my language mean the limits of my world."
