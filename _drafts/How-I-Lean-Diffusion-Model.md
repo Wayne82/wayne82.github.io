@@ -6,7 +6,8 @@ mathjax: true
 comments: true
 ---
 
-It has been over three months since my last post on building a toy Transformer from scratch. At the time, I was torn between two paths: diving deeper into more theoretical knowledge of AI or getting hands-on with real-world projects with agentic AI. Ultimately, I was pulled in the direction of exploring another intriguing generative model: Diffusion Models.
+It has been over three months since my last post on building a toy Transformer from scratch. At the time, I was torn between two paths: diving deeper into more theoretical knowledge of AI or getting hands-on with real-world projects using agentic AI. Ultimately, I was pulled in the direction of exploring another intriguing subject: Diffusion Models.
+
 To be honest, it is a daunting topic. It demands a level of mathematical depth that I haven't yet mastered, but to understand the mathematics behind it is just what drives me. I am still in the early stages of this journey, but I want to document and share the things I have learned so far.
 
 ## Where I Started
@@ -20,17 +21,18 @@ After several days of exploring the web, reading blog posts, and consulting with
 1. **Conceptual Foundations**: This [guest youtube video from 3Blue1Brown](https://www.youtube.com/watch?v=iv-5mZ_9CPY) gives a good general introduction to diffusion models, besides there are also a ton of good resources listed in the video description. Furthermore, this MIT open course [Generative AI - Text-to-Image Models](https://www.youtube.com/watch?v=NQBhhRG-Pe4) provides a slight more technical yet still accessible introduction to this topic, but still at an entry level.
 2. **Mathematical Explanation**: This is where the real challenge lies. I initially dove into lilianweng's blog post [What are Diffusion Models?](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) and the original paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239) by Ho et al. However, I quickly realized I am not equipped with the necessary mathematical knowledge to understand the flow of the explanation or the descriptions in the paper. This led me to this comprehensive online course [MIT 6.S184: Flow Matching and Diffusion Models](https://www.youtube.com/playlist?list=PL57nT7tSGAAUDnli1LhTOoCxlEPGS19vH) by Peter Holderrieth - a systematic and rigorous resource for understanding the mathematical foundations of flow matching and diffusion models.
 3. **Model Architecture**: The next goal is to understand the model architecture, specifically the **U-Nets** and **Diffusion Transformers (DiTs)**, about how they are structured and trained.
-4. **Hands-on Implementation**: As usual, after understanding the theoretical aspects well enough, I will try to implement a toy diffusion model from scratch.
-5. **Evolution and Research**: Finally, I want to trace the development history of this field to fulfill my curiosity of the process of discovery, and keep up with the latest research papers and advancements in diffusion models, to understand how the field is evolving and where it might be headed in the future.
+4. **Guided Generation**: After understanding the basic architecture, I want to explore how to guide the generation process with additional conditions, such as text prompts. This is a crucial aspect of diffusion models that allows for more control and creativity in the generated outputs.
+5. **Hands-on Implementation**: As usual, after understanding the theoretical aspects well enough, I will try to implement a toy diffusion model from scratch.
+6. **Evolution and Research**: Finally, I want to trace the development history of this field to fulfill my curiosity of the process of discovery, and keep up with the latest research papers and advancements in diffusion models, to understand how the field is evolving and where it might be headed in the future.
 
-At this point, I am deep in the second stage. Navigating the mathematical theory behind the model is a big challenge for me, as I had to pause frequently to build the knowledge base of relevant maths in Probability Theory, Stochastic Differential Equations, Multivariate Normal Distribution, Variational Bayesian methods, etc. The goal is not to become a math expert in these areas, but to reach a level where I can understand the mathematical explanations in the original papers and many of the great blog posts out there without much difficulty. I think I am making some progress, but it is still a long way to go.
+At this point, I am deep in the second stage. Navigating the mathematical theory behind the model is a big challenge for me, as I had to pause frequently to build the knowledge base of relevant maths in Probability Theory, Ordinary and Stochastic Differential Equations, Multivariate Normal Distribution, Variational Bayesian methods, etc. The goal is not to become a math expert in these areas, but to reach a level where I can understand the mathematical explanations in the original papers and many of the great blog posts out there without much difficulty. I think I am making some progress, but it is still a long way to go.
 
 ## What I Understand So Far
 The learning notes I took here focus on the specific construction of generative models using flow models, which is trained using flow matching loss.
 
 ### The Mathematical Definition of the Problem
 
-Given a set of samples $x_1, x_2, \ldots, x_n$ drawn from an unknown, high dimensional data distribution $p_{data}$, how do we build a generative model that can generate new samples that looks like they are drawn from the same distribution?
+Given a set of samples $x_1, x_2, \ldots, x_n$ drawn from an unknown, high dimensional data distribution $p_{data}$, how do we build a generative model that can generate new samples that looks like they are drawn from the same data distribution?
 
 ### Introduce Flow Models
 The generative model can be constructed by flow models. A flow model is described by the Ordinary Differential Equation (ODE):
@@ -165,15 +167,15 @@ which can be derived analytically from our chosen Gaussian probability path.
 * **Loss Equivalence**: Minimizing the CFM loss is mathematically equivalent to minimizing the true Flow Matching (CF) loss (up to a constant). Thus, by training on simple conditional targets, the neural network learns a global vector field that correctly transitions noise to the data distribution along the intended path.
 
 ## The Big Question
-Though I have generally understood the mathematical construction of the flow model, the big question still remains:
+Though I have generally understood the mathematical construction of the flow model, the big question still remains: **Why does this whole thing actually work?**
 
-* **Why does this whole thing actually work?**
 * Why the mathematical definition of this generative model is defined as learning the unknown data distribution and sampling from it?
-* How the ODE method is introduced in the first place, thereof the vector field is spot on as the learning target?
+* How was the ODE method introduced in the first place, and further discovered the vector field to be the learning target?
 * Why the popular Gaussian probability path is chosen, and can work surprisingly well?
 
-All in all, it is still astonishing to me that we can generate high-quality images from pure Gaussian noise by learning the vector field that follows a simple Gaussian probability path!
+All in all, it is still astonishing to me that we can generate high-quality images from pure Gaussian noise by learning the vector field that follows a simple Gaussian probability path.
 
-## Conclusion
+## Conclusion and Next Steps
+I feel like I’ve only just scratched the surface of this generative model. While my current focus is on Flow Matching, there are also many other mathematical frameworks designed to reach the same goal — learning a data distribution from noise. I’ve come across the Markov Chain perspective from the original DDPM paper, DDIMs and their use of ODEs, and the Score Matching approach using SDEs. That’s not even mentioning the predecessors like VAEs and GANs, which each carry their own unique mathematical constructions.
 
-## References
+I’ll be leaving those paths for a later time to keep my focus on Flow Matching, which represents the current state-of-the-art. My next step is to dive into the model architectures like U-Nets or Transformers to understand how they are actually trained.
