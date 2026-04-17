@@ -28,7 +28,7 @@ At this point, I am deep in the second stage. Navigating the mathematical theory
 ## What I Understand So Far
 The learning notes I took here focus on the specific construction of generative models using flow models, which is trained using flow matching loss.
 
-### The mathematical definition of the problem
+### The Mathematical Definition of the Problem
 
 Given a set of samples $x_1, x_2, \ldots, x_n$ drawn from an unknown, high dimensional data distribution $p_{data}$, how do we build a generative model that can generate new samples that looks like they are drawn from the same distribution?
 
@@ -150,7 +150,29 @@ $$u_t(x|z) = (\alpha_t' - (\beta_t'/\beta_t) \alpha_t)z + (\beta_t' / \beta_t)x$
     &= \mathbb{E}_{t \sim \mathcal{U}(0,1), z \sim p_{data}, x \sim p_t(\cdot|z)} \left[ \| u^{\theta}_t(t z + (1-t) \epsilon) - (z - \epsilon) \|^2 \right] \\
     \end{align}$$
 
+### A Quick Visual Summary
+The hand-written diagram below demonstrates how I put them altogether:
+![Flow Matching for Gaussian Probability Paths](/assets/images/flow_matching.jpg)
+
+* **The Continuity Equation as the Foundation**: It serves as the fundamental principle (the "glue") that ensures the evolution of the probability density $P_t$ is consistent with the underlying velocity field $u_t$.
+* **Defining the Probability Path**: We construct a conditional probability path (typically Gaussian) that bridges the source (Gaussian noise $P_0$) and the target (data distribution $P_1$). While the marginal path $P_t(x)$ is complex and intractable, the conditional path
+$P_t(x|z)$
+is simple and easy to sample.
+* **Vector Field Correspondence**: For the probability path, there exists a corresponding vector field $u_t$ that generates that flow evolving along the path. And this vector field is the learning target for the neural network.
+* **Tractability via Conditional Flow Matching (CFM)**: Since the true marginal vector field $u_t(x)$ is impossible to compute directly, we use the Conditional Flow Matching loss. This allows us to regress against the conditional vector field
+$u_t(x|z)$,
+which can be derived analytically from our chosen Gaussian probability path.
+* **Loss Equivalence**: Minimizing the CFM loss is mathematically equivalent to minimizing the true Flow Matching (CF) loss (up to a constant). Thus, by training on simple conditional targets, the neural network learns a global vector field that correctly transitions noise to the data distribution along the intended path.
+
 ## The Big Question
+Though I have generally understood the mathematical construction of the flow model, the big question still remains:
+
+* **Why does this whole thing actually work?**
+* Why the mathematical definition of this generative model is defined as learning the unknown data distribution and sampling from it?
+* How the ODE method is introduced in the first place, thereof the vector field is spot on as the learning target?
+* Why the popular Gaussian probability path is chosen, and can work surprisingly well?
+
+All in all, it is still astonishing to me that we can generate high-quality images from pure Gaussian noise by learning the vector field that follows a simple Gaussian probability path!
 
 ## Conclusion
 
