@@ -164,7 +164,7 @@ is simple and easy to sample.
 * **Tractability via Conditional Flow Matching (CFM)**: Since the true marginal vector field $u_t(x)$ is impossible to compute directly, we use the Conditional Flow Matching loss. This allows us to regress against the conditional vector field
 $u_t(x|z)$,
 which can be derived analytically from our chosen Gaussian probability path.
-* **Loss Equivalence**: Minimizing the CFM loss is mathematically equivalent to minimizing the true Flow Matching (CF) loss (up to a constant). Thus, by training on simple conditional targets, the neural network learns a global vector field that correctly transitions noise to the data distribution along the intended path.
+* **Loss Equivalence**: Minimizing the CFM loss is mathematically equivalent to minimizing the true Flow Matching (CF) loss (up to a constant). Thus, by training on the conditional target, the neural network learns a marginal vector field that correctly transitions noise to the data distribution along the intended path.
 
 ## The Big Question
 Though I have generally understood the mathematical construction of the flow model, the big question still remains: **Why does this whole thing actually work?**
@@ -175,7 +175,7 @@ Though I have generally understood the mathematical construction of the flow mod
 
 All in all, it is still astonishing to me that we can generate high-quality images from pure Gaussian noise by learning the vector field that follows a simple Gaussian probability path.
 
-## Conclusion and Next Steps
+## Conclusion and Next Step
 I feel like I’ve only just scratched the surface of this generative model. While my current focus is on Flow Matching, there are also many other mathematical frameworks designed to reach the same goal — learning a data distribution from noise. I’ve come across the Markov Chain perspective from the original DDPM paper, DDIMs and their use of ODEs, and the Score Matching approach using SDEs. That’s not even mentioning the predecessors like VAEs and GANs, which each carry their own unique mathematical constructions.
 
-I’ll be leaving those paths for a later time to keep my focus on Flow Matching, which represents the current state-of-the-art. My next step is to dive into the model architectures like U-Nets or Transformers to understand how they are actually trained.
+I’ll be leaving those topics for a later time to keep my focus on Flow Matching, which represents the current state-of-the-art. And my next step will follow the learning plan I outlined above, and a separate blog post may be written when I feel I have enough new learnings to share.
