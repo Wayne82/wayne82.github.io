@@ -1,29 +1,34 @@
 ---
 layout: post
-title:  "Understanding Diffusion Models: A Dialogue with Claude"
+title:  "Understanding Diffusion Models Deeper: A Dialogue with Claude"
 categories: neural-network
 mathjax: true
 comments: true
 ---
 
-After I wrote [*How I Learn Diffusion Model*]({% post_url 2026-04-18-How-I-Lean-Diffusion-Model %}),
-I realized I had mastered the mechanics of flow matching but not the *reasoning*
-behind it. Three questions kept nagging me — why this problem framing, why ODEs,
+After I wrote [*How I Learn Diffusion Model*](https://wayne82.github.io/neural-network/2026/04/18/How-I-Lean-Diffusion-Model.html),
+I understood only the basic mechanics of flow matching — not the reasoning behind them.
+Three questions kept nagging me — why this problem framing, why ODEs,
 why the Gaussian path — and they unfolded into a much longer thread once I started
 pulling on them.
 
-What follows is that thread: a dialogue with Claude. I'm keeping my questions in
+What follows is that thread: a dialogue with Claude. I'm keeping my iterative questions in
 because the value, for me, wasn't any single answer — it was how each answer
 triggered the next, deeper question. If you learn the way I do, the *path* of the
 conversation may be more useful than its conclusions.
 
-> **Be humble, be curious** — and let one good answer earn you a better question.
+> Notes: I genuinely enjoy these conversations with Claude. Its
+> responses make me ponder, and each one tends to trigger my next inquiry —
+> gradually pulling me deeper toward the core of the understanding. I'll admit I
+> don't fully grasp every detail of every answer along the way. But I've come to
+> believe that's fine: the process itself is good enough to deepen my
+> understanding, and the iteration of learning will go on.
 
 ---
 
-## The Big Question
+## The Big Questions
 
-**Wayne:** I've grasped the mechanics of flow matching, but three deeper
+**Wayne:** I've grasped the basic mechanics of flow matching, but three deeper
 uncertainties remain. (1) Why is this generative model *defined* as "learn the
 unknown data distribution and sample from it"? (2) How was the ODE method
 introduced in the first place, and how was the *vector field* discovered to be the
