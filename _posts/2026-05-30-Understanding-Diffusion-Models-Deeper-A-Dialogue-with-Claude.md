@@ -13,11 +13,11 @@ why the Gaussian path — and they unfolded into a much longer thread once I sta
 pulling on them.
 
 What follows is that thread: a dialogue with Claude. I'm keeping my iterative questions in
-because the value, for me, wasn't any single answer — it was how each answer
+because the value, for me, wasn't just any single answer — it was how each answer
 triggered the next, deeper question. If you learn the way I do, the *path* of the
 conversation may be more useful than its conclusions.
 
-> Notes: I genuinely enjoy these conversations with Claude. Its
+> 📝 Notes: I genuinely enjoy these conversations with Claude. Its
 > responses make me ponder, and each one tends to trigger my next inquiry —
 > gradually pulling me deeper toward the core of the understanding. I'll admit I
 > don't fully grasp every detail of every answer along the way. But I've come to
