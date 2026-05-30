@@ -38,6 +38,7 @@ work surprisingly well?
 **Claude:**
 
 **(1) Why "learn $p_{\text{data}}$, then sample from it"?**
+
 It's less a choice than a consequence of asking *what generation even means*. The
 only clean definition of "novel but plausible" is *a fresh draw from the same
 distribution that produced the training set* — so the target object must be a
@@ -49,6 +50,7 @@ modern generative models (GANs, VAEs, flows, diffusion) are *implicit* density
 models.
 
 **(2) How did ODEs / the vector field become the target?**
+
 A clean historical chain:
 
 - *Normalizing flows (2014–16)* — exact likelihood via invertible maps; the Jacobian is the bottleneck.
@@ -75,6 +77,7 @@ where the conditional $v_t(x \mid x_1)$ has a closed form. That single identity 
 what makes flow matching trainable.
 
 **(3) Why the Gaussian path, and why does it work so well?**
+
 *Chosen* because everything stays closed-form. With
 
 $$
@@ -133,6 +136,13 @@ How the others relate:
 | Gaussian path (#2) | shape of the marginals $p_t$ | common, not required |
 | SDE with $dW$ (#3) | the actual stochastic process | **this is the strict definition** |
 | "Diffusion model" (#4) | a family / brand | loose; includes non-diffusions |
+
+> A note on time convention: this section uses the *diffusion-time* convention,
+> where $t{=}0$ is data and $t{=}1$ is the Gaussian noise — the opposite of the
+> flow-matching equation $x_t = \alpha_t x_1 + \sigma_t \epsilon$ above, where
+> $t{=}1$ is the data. The literature flips between the two; what never changes is
+> that the Gaussian is the *prior* (the easy distribution generation starts from),
+> regardless of which time label it carries.
 
 A useful disambiguation test when reading a paper: *is the randomness during
 generation essential, or just one valid sampler among many?* Essential → diffusion
@@ -246,6 +256,13 @@ two ways to run it backward. **(2) Determinism gives a latent space** —
 interpolation, DDIM inversion, GAN/VAE-like editing. This turns out to be the
 discrete-time instance of the **probability-flow ODE** — the historical hinge where
 the field began moving from stochastic diffusion toward deterministic ODE transport.
+
+The lineage so far:
+
+- **DDPM (2020):** discrete stochastic chain — slow, foundational.
+- **DDIM (2020):** same model, deterministic sampler — fast, and accidentally the bridge toward the ODE view.
+- **Score SDE (2021):** *unifies both* — reveals DDIM is exactly the probability-flow ODE.
+- **Flow matching (2022+):** define the path directly, dropping the diffusion framing entirely.
 
 ---
 
